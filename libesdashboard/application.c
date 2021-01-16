@@ -148,7 +148,7 @@ static guint EsdashboardApplicationSignals[SIGNAL_LAST]={ 0, };
 #define ESDASHBOARD_ESCONF_CHANNEL			"esdashboard"
 
 #define THEME_NAME_ESCONF_PROP				"/theme"
-#define DEFAULT_THEME_NAME					"tokyo-dark"
+#define DEFAULT_THEME_NAME					"Tokyo-dark"
 
 /* Single instance of application */
 static EsdashboardApplication*		_esdashboard_application=NULL;
