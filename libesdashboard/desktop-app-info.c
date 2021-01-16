@@ -925,13 +925,13 @@ static gboolean _esdashboard_desktop_app_info_launch_appinfo_internal(Esdashboar
 		return(FALSE);
 	}
 
-	/* If a terminal is required, prepend "exo-open" command.
+	/* If a terminal is required, prepend "endo-open" command.
 	 * NOTE: The space at end of command is important to separate
 	 *       the command we prepend from command-line of application.
 	 */
 	if(markon_menu_item_requires_terminal(priv->item))
 	{
-		g_string_prepend(expanded, "exo-open --launch TerminalEmulator ");
+		g_string_prepend(expanded, "endo-open --launch TerminalEmulator ");
 	}
 
 	/* Get command-line arguments as string list */

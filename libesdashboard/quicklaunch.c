@@ -1662,10 +1662,10 @@ static void _esdashboard_quicklaunch_setup_default_favourites(EsdashboardQuickla
 	EsdashboardQuicklaunchPrivate	*priv;
 	guint							i;
 	const gchar						*defaultApplications[]=	{
-																"exo-web-browser.desktop",
-																"exo-mail-reader.desktop",
-																"exo-file-manager.desktop",
-																"exo-terminal-emulator.desktop",
+																"endo-web-browser.desktop",
+																"endo-mail-reader.desktop",
+																"endo-file-manager.desktop",
+																"endo-terminal-emulator.desktop",
 															};
 
 	g_return_if_fail(ESDASHBOARD_IS_QUICKLAUNCH(self));
