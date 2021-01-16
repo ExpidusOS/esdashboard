@@ -24,7 +24,7 @@ hot_corner_la_CFLAGS = \
 	$(GTK_CFLAGS) \
 	$(CLUTTER_CFLAGS) \
 	$(LIBESCONF_CFLAGS) \
-	$(GARCON_CFLAGS) \
+	$(MARKON_CFLAGS) \
 	$(PLATFORM_CFLAGS)
 
 hot_corner_la_LDFLAGS = \
@@ -41,7 +41,7 @@ hot_corner_la_LIBADD = \
 	$(GTK_LIBS) \
 	$(CLUTTER_LIBS) \
 	$(LIBESCONF_LIBS) \
-	$(GARCON_CLIBS) \
+	$(MARKON_CLIBS) \
 	$(top_builddir)/libesdashboard/libesdashboard.la
 
 CLEANFILES = \

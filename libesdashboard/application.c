@@ -41,7 +41,7 @@
 #include <glib/gi18n-lib.h>
 #include <clutter/x11/clutter-x11.h>
 #include <gtk/gtk.h>
-#include <garcon/garcon.h>
+#include <markon/markon.h>
 #include <libexpidus1ui/libexpidus1ui.h>
 
 #include <libesdashboard/stage.h>
@@ -340,7 +340,7 @@ static gboolean _esdashboard_application_initialize_full(EsdashboardApplication 
 {
 	EsdashboardApplicationPrivate	*priv;
 	GError							*error;
-#if !GARCON_CHECK_VERSION(0,3,0)
+#if !MARKON_CHECK_VERSION(0,3,0)
 	const gchar						*desktop;
 #endif
 	ExpidusSMClientRestartStyle		sessionManagementRestartStyle;
@@ -350,8 +350,8 @@ static gboolean _esdashboard_application_initialize_full(EsdashboardApplication 
 	priv=self->priv;
 	error=NULL;
 
-	/* Initialize garcon for current desktop environment */
-#if !GARCON_CHECK_VERSION(0,3,0)
+	/* Initialize markon for current desktop environment */
+#if !MARKON_CHECK_VERSION(0,3,0)
 	desktop=g_getenv("XDG_CURRENT_DESKTOP");
 	if(G_LIKELY(desktop==NULL))
 	{
@@ -365,9 +365,9 @@ static gboolean _esdashboard_application_initialize_full(EsdashboardApplication 
 		 */
 		else if(*desktop==0) desktop=NULL;
 
-	garcon_set_environment(desktop);
+	markon_set_environment(desktop);
 #else
-	garcon_set_environment_xdg(GARCON_ENVIRONMENT_EXPIDUS);
+	markon_set_environment_xdg(MARKON_ENVIRONMENT_EXPIDUS);
 #endif
 
 	/* Setup the session management */

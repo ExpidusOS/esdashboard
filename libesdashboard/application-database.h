@@ -29,7 +29,7 @@
 #error "Only <libesdashboard/libesdashboard.h> can be included directly."
 #endif
 
-#include <garcon/garcon.h>
+#include <markon/markon.h>
 
 G_BEGIN_DECLS
 
@@ -78,7 +78,7 @@ gboolean esdashboard_application_database_load(EsdashboardApplicationDatabase *s
 
 const GList* esdashboard_application_database_get_application_search_paths(const EsdashboardApplicationDatabase *self);
 
-GarconMenu* esdashboard_application_database_get_application_menu(EsdashboardApplicationDatabase *self);
+MarkonMenu* esdashboard_application_database_get_application_menu(EsdashboardApplicationDatabase *self);
 GList* esdashboard_application_database_get_all_applications(EsdashboardApplicationDatabase *self);
 
 GAppInfo* esdashboard_application_database_lookup_desktop_id(EsdashboardApplicationDatabase *self,

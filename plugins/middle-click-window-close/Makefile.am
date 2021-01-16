@@ -22,7 +22,7 @@ middle_click_window_close_la_CFLAGS = \
 	$(GTK_CFLAGS) \
 	$(CLUTTER_CFLAGS) \
 	$(LIBESCONF_CFLAGS) \
-	$(GARCON_CFLAGS) \
+	$(MARKON_CFLAGS) \
 	$(PLATFORM_CFLAGS)
 
 middle_click_window_close_la_LDFLAGS = \
@@ -39,7 +39,7 @@ middle_click_window_close_la_LIBADD = \
 	$(GTK_LIBS) \
 	$(CLUTTER_LIBS) \
 	$(LIBESCONF_LIBS) \
-	$(GARCON_CLIBS) \
+	$(MARKON_CLIBS) \
 	$(top_builddir)/libesdashboard/libesdashboard.la
 
 CLEANFILES = \

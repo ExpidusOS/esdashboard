@@ -24,7 +24,7 @@ clock_view_la_CFLAGS = \
 	$(GTK_CFLAGS) \
 	$(CLUTTER_CFLAGS) \
 	$(LIBESCONF_CFLAGS) \
-	$(GARCON_CFLAGS) \
+	$(MARKON_CFLAGS) \
 	$(PLATFORM_CFLAGS)
 
 clock_view_la_LDFLAGS = \
@@ -41,7 +41,7 @@ clock_view_la_LIBADD = \
 	$(GTK_LIBS) \
 	$(CLUTTER_LIBS) \
 	$(LIBESCONF_LIBS) \
-	$(GARCON_LIBS) \
+	$(MARKON_LIBS) \
 	$(top_builddir)/libesdashboard/libesdashboard.la
 
 CLEANFILES = \

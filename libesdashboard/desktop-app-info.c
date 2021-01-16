@@ -1,5 +1,5 @@
 /*
- * desktop-app-info: A GDesktopAppInfo like object for garcon menu
+ * desktop-app-info: A GDesktopAppInfo like object for markon menu
  *                   items implementing and supporting GAppInfo
  * 
  * Copyright 2012-2020 Stephan Haller <nomad@froevel.de>
@@ -49,7 +49,7 @@ struct _EsdashboardDesktopAppInfoPrivate
 	gboolean			inited;
 	gboolean			isValid;
 
-	GarconMenuItem		*item;
+	MarkonMenuItem		*item;
 	guint				itemChangedID;
 
 	GKeyFile			*secondarySource;
@@ -104,8 +104,8 @@ typedef struct
 
 /* Load secondary source file if not already done.
  * Note: It is called secondary source although it is the same file as used
- * for GarconMenuItem. But it is not the same source because the file is loaded
- * via a GKeyFile object to get access to entries not provided by garcon or
+ * for MarkonMenuItem. But it is not the same source because the file is loaded
+ * via a GKeyFile object to get access to entries not provided by markon or
  * implemented in an unusable way for esdashboard.
  */
 static gboolean _esdashboard_desktop_app_info_load_secondary_source(EsdashboardDesktopAppInfo *self)
@@ -193,7 +193,7 @@ static void _esdashboard_desktop_app_info_update_binary_executable(EsdashboardDe
 		const gchar						*commandStart;
 		const gchar						*commandEnd;
 
-		command=garcon_menu_item_get_command(priv->item);
+		command=markon_menu_item_get_command(priv->item);
 
 		while(*command==' ') command++;
 		commandStart=command;
@@ -225,22 +225,22 @@ static void _esdashboard_desktop_app_info_update_actions(EsdashboardDesktopAppIn
 	}
 
 	/* Get application actions for menu item (desktop entry) */
-#if 0 /*GARCON_CHECK_VERSION(0, 6, 3)*/
+#if 0 /*MARKON_CHECK_VERSION(0, 6, 3)*/
 	if(priv->item)
 	{
 		GList								*itemActions;
 		GList								*iter;
 		const gchar							*itemActionName;
-		GarconMenuItemAction				*itemAction;
+		MarkonMenuItemAction				*itemAction;
 		EsdashboardDesktopAppInfoAction		*action;
 
-		/* Get action from garcon menu item and create desktop info action object
+		/* Get action from markon menu item and create desktop info action object
 		 * for each action iterated.
 		 */
-		itemActions=garcon_menu_item_get_actions(priv->item);
+		itemActions=markon_menu_item_get_actions(priv->item);
 		for(iter=itemActions; iter; iter=g_list_next(iter))
 		{
-			/* Get action currently iterated from garcon menu item */
+			/* Get action currently iterated from markon menu item */
 			itemActionName=(const gchar*)(iter->data);
 			if(!itemActionName)
 			{
@@ -249,7 +249,7 @@ static void _esdashboard_desktop_app_info_update_actions(EsdashboardDesktopAppIn
 				continue;
 			}
 
-			itemAction=garcon_menu_item_get_action(priv->item, itemActionName);
+			itemAction=markon_menu_item_get_action(priv->item, itemActionName);
 			if(!itemAction)
 			{
 				g_warning("Cannot create application action for desktop ID '%s'",
@@ -261,9 +261,9 @@ static void _esdashboard_desktop_app_info_update_actions(EsdashboardDesktopAppIn
 			action=ESDASHBOARD_DESKTOP_APP_INFO_ACTION
 					(
 						g_object_new(ESDASHBOARD_TYPE_DESKTOP_APP_INFO_ACTION,
-										"name", garcon_menu_item_action_get_name(itemAction),
-										"icon-name", garcon_menu_item_action_get_icon_name(itemAction),
-										"command", garcon_menu_item_action_get_command(itemAction),
+										"name", markon_menu_item_action_get_name(itemAction),
+										"icon-name", markon_menu_item_action_get_icon_name(itemAction),
+										"command", markon_menu_item_action_get_command(itemAction),
 										NULL)
 					);
 			priv->actions=g_list_prepend(priv->actions, action);
@@ -279,7 +279,7 @@ static void _esdashboard_desktop_app_info_update_actions(EsdashboardDesktopAppIn
 		g_list_free(itemActions);
 	}
 #else
-	/* Garcon prior to version 0.6.0 does not provide accessor function for
+	/* Markon prior to version 0.6.0 does not provide accessor function for
 	 * application actions of a desktop entry and the first version providing
 	 * these function return the action in an unpredictable order but not the
 	 * order as listed in "Action" keyword of desktop entry. So we need to
@@ -421,13 +421,13 @@ static void _esdashboard_desktop_app_info_update_keywords(EsdashboardDesktopAppI
 	}
 
 	/* Get application actions for menu item (desktop entry) */
-#if 0 /*GARCON_CHECK_VERSION(0, 6, 3)*/
+#if 0 /*MARKON_CHECK_VERSION(0, 6, 3)*/
 	if(priv->item)
 	{
 		const GList							*keywords;
 
-		/* Get keywords from garcon menu item and create a deep copy of list */
-		keywords=garcon_menu_item_get_keywords(priv->item);
+		/* Get keywords from markon menu item and create a deep copy of list */
+		keywords=markon_menu_item_get_keywords(priv->item);
 		for(iter=keywords; iter; iter=g_list_next(iter))
 		{
 			/* Create copy of list entry and prepend to new list */
@@ -441,7 +441,7 @@ static void _esdashboard_desktop_app_info_update_keywords(EsdashboardDesktopAppI
 		priv->keywords=g_list_reverse(priv->keywords);
 	}
 #else
-	/* Garcon does not provide an accessor function to get keywords for desktop
+	/* Markon does not provide an accessor function to get keywords for desktop
 	 * entries in any official released version yet. So load them ourselve from
 	 * secondary source.
 	 */
@@ -581,7 +581,7 @@ static void _esdashboard_desktop_app_info_set_file(EsdashboardDesktopAppInfo *se
 
 		if(priv->file)
 		{
-			priv->item=garcon_menu_item_new(priv->file);
+			priv->item=markon_menu_item_new(priv->file);
 		}
 
 		/* Connect signal to get notified about changes of menu item */
@@ -756,7 +756,7 @@ static gboolean _esdashboard_desktop_app_info_expand_macros(EsdashboardDesktopAp
 					const gchar			*iconName;
 					gchar				*quotedIconName;
 
-					iconName=garcon_menu_item_get_icon_name(priv->item);
+					iconName=markon_menu_item_get_icon_name(priv->item);
 					if(iconName)
 					{
 						quotedIconName=g_shell_quote(iconName);
@@ -774,7 +774,7 @@ static gboolean _esdashboard_desktop_app_info_expand_macros(EsdashboardDesktopAp
 					const gchar			*name;
 					gchar				*quotedName;
 
-					name=garcon_menu_item_get_name(priv->item);
+					name=markon_menu_item_get_name(priv->item);
 					if(name)
 					{
 						quotedName=g_shell_quote(name);
@@ -790,7 +790,7 @@ static gboolean _esdashboard_desktop_app_info_expand_macros(EsdashboardDesktopAp
 					gchar				*filename;
 					gchar				*quotedFilename;
 
-					desktopFile=garcon_menu_item_get_file(priv->item);
+					desktopFile=markon_menu_item_get_file(priv->item);
 					if(desktopFile)
 					{
 						filename=g_file_get_path(desktopFile);
@@ -929,7 +929,7 @@ static gboolean _esdashboard_desktop_app_info_launch_appinfo_internal(Esdashboar
 	 * NOTE: The space at end of command is important to separate
 	 *       the command we prepend from command-line of application.
 	 */
-	if(garcon_menu_item_requires_terminal(priv->item))
+	if(markon_menu_item_requires_terminal(priv->item))
 	{
 		g_string_prepend(expanded, "exo-open --launch TerminalEmulator ");
 	}
@@ -971,7 +971,7 @@ static gboolean _esdashboard_desktop_app_info_launch_appinfo_internal(Esdashboar
 													filesToLaunch);
 
 		/* Get startup notification ID if it is supported by application */
-		if(garcon_menu_item_supports_startup_notification(priv->item))
+		if(markon_menu_item_supports_startup_notification(priv->item))
 		{
 			startupNotificationID=g_app_launch_context_get_startup_notify_id(inContext,
 																				G_APP_INFO(self),
@@ -983,7 +983,7 @@ static gboolean _esdashboard_desktop_app_info_launch_appinfo_internal(Esdashboar
 	}
 
 	/* Get working directory and test if directory exists */
-	workingDirectory=garcon_menu_item_get_path(priv->item);
+	workingDirectory=markon_menu_item_get_path(priv->item);
 	if(!workingDirectory || !*workingDirectory)
 	{
 		/* Working directory was either NULL or is an empty string,
@@ -1023,7 +1023,7 @@ static gboolean _esdashboard_desktop_app_info_launch_appinfo_internal(Esdashboar
 
 		ESDASHBOARD_DEBUG(self, APPLICATIONS,
 							"Launching %s succeeded with PID %ld.",
-							garcon_menu_item_get_name(priv->item),
+							markon_menu_item_get_name(priv->item),
 							(long)launchedPID);
 
 		/* Open connection to DBUS session bus and send notification about
@@ -1118,7 +1118,7 @@ static gboolean _esdashboard_desktop_app_info_launch_appinfo_internal(Esdashboar
 	}
 		else
 		{
-			g_warning("Launching %s failed!", garcon_menu_item_get_name(priv->item));
+			g_warning("Launching %s failed!", markon_menu_item_get_name(priv->item));
 
 			/* Propagate error */
 			g_propagate_error(outError, error);
@@ -1180,12 +1180,12 @@ static gboolean _esdashboard_desktop_app_info_launch_appinfo_internal(Esdashboar
 	error=NULL;
 
 	/* Get command-line with expanded macros */
-	name=garcon_menu_item_get_name(priv->item);
-	uri=garcon_menu_item_get_uri(priv->item);
+	name=markon_menu_item_get_name(priv->item);
+	uri=markon_menu_item_get_uri(priv->item);
 	expanded=expidus_expand_desktop_entry_field_codes(inCommand, (GSList*)inURIs,
-																								garcon_menu_item_get_icon_name(priv->item),
+																								markon_menu_item_get_icon_name(priv->item),
 																								name, uri,
-																								garcon_menu_item_requires_terminal(priv->item));
+																								markon_menu_item_requires_terminal(priv->item));
   g_free(uri);
 
 	if(!expanded)
@@ -1251,7 +1251,7 @@ static gboolean _esdashboard_desktop_app_info_launch_appinfo_internal(Esdashboar
 													filesToLaunch);
 
 		/* Get startup notification ID if it is supported by application */
-		if(garcon_menu_item_supports_startup_notification(priv->item))
+		if(markon_menu_item_supports_startup_notification(priv->item))
 		{
 			startupNotificationID=g_app_launch_context_get_startup_notify_id(inContext,
 																				G_APP_INFO(self),
@@ -1263,7 +1263,7 @@ static gboolean _esdashboard_desktop_app_info_launch_appinfo_internal(Esdashboar
 	}
 
 	/* Get working directory and test if directory exists */
-	workingDirectory=garcon_menu_item_get_path(priv->item);
+	workingDirectory=markon_menu_item_get_path(priv->item);
 	if(!workingDirectory || !*workingDirectory)
 	{
 		/* Working directory was either NULL or is an empty string,
@@ -1458,8 +1458,8 @@ static gboolean _esdashboard_desktop_app_info_gappinfo_equal(GAppInfo *inLeft, G
 	if(!left->priv->item || !right->priv->item) return(FALSE);
 
 	/* Return result of check if menu item of both GAppInfos are equal */
-	return(garcon_menu_element_equal(GARCON_MENU_ELEMENT(left->priv->item),
-										GARCON_MENU_ELEMENT(right->priv->item)));
+	return(markon_menu_element_equal(MARKON_MENU_ELEMENT(left->priv->item),
+										MARKON_MENU_ELEMENT(right->priv->item)));
 }
 
 /* Get ID of GAppInfo */
@@ -1492,7 +1492,7 @@ static const gchar* _esdashboard_desktop_app_info_gappinfo_get_name(GAppInfo *in
 	if(!priv->item) return(NULL);
 
 	/* Return name of menu item */
-	return(garcon_menu_item_get_name(priv->item));
+	return(markon_menu_item_get_name(priv->item));
 }
 
 /* Get description of GAppInfo */
@@ -1510,7 +1510,7 @@ static const gchar* _esdashboard_desktop_app_info_gappinfo_get_description(GAppI
 	if(!priv->item) return(NULL);
 
 	/* Return comment of menu item as description */
-	return(garcon_menu_item_get_comment(priv->item));
+	return(markon_menu_item_get_comment(priv->item));
 }
 
 /* Get path to executable binary of GAppInfo */
@@ -1545,7 +1545,7 @@ static GIcon* _esdashboard_desktop_app_info_gappinfo_get_icon(GAppInfo *inAppInf
 	/* Create icon from path of menu item */
 	if(priv->item)
 	{
-		iconFilename=garcon_menu_item_get_icon_name(priv->item);
+		iconFilename=markon_menu_item_get_icon_name(priv->item);
 		if(iconFilename)
 		{
 			if(!g_path_is_absolute(iconFilename)) icon=g_themed_icon_new(iconFilename);
@@ -1583,7 +1583,7 @@ static gboolean _esdashboard_desktop_app_info_gappinfo_supports_uris(GAppInfo *i
 	 */
 	if(priv->item)
 	{
-		command=garcon_menu_item_get_command(priv->item);
+		command=markon_menu_item_get_command(priv->item);
 		if(command)
 		{
 			if(!result && strstr(command, "%u")) result=TRUE;
@@ -1614,7 +1614,7 @@ static gboolean _esdashboard_desktop_app_info_gappinfo_supports_files(GAppInfo *
 	 */
 	if(priv->item)
 	{
-		command=garcon_menu_item_get_command(priv->item);
+		command=markon_menu_item_get_command(priv->item);
 		if(command)
 		{
 			if(!result && strstr(command, "%f")) result=TRUE;
@@ -1657,7 +1657,7 @@ static gboolean _esdashboard_desktop_app_info_gappinfo_launch(GAppInfo *inAppInf
 
 	/* Call function to launch application of EsdashboardDesktopAppInfo with URIs */
 	result=_esdashboard_desktop_app_info_launch_appinfo_internal(self,
-																	garcon_menu_item_get_command(priv->item),
+																	markon_menu_item_get_command(priv->item),
 																	uris,
 																	inContext,
 																	outError);
@@ -1687,7 +1687,7 @@ static gboolean _esdashboard_desktop_app_info_gappinfo_launch_uris(GAppInfo *inA
 
 	/* Call function to launch application of EsdashboardDesktopAppInfo with URIs */
 	result=_esdashboard_desktop_app_info_launch_appinfo_internal(self,
-																	garcon_menu_item_get_command(priv->item),
+																	markon_menu_item_get_command(priv->item),
 																	inURIs,
 																	inContext,
 																	outError);
@@ -1710,7 +1710,7 @@ static gboolean _esdashboard_desktop_app_info_gappinfo_should_show(GAppInfo *inA
 	if(!priv->item) return(FALSE);
 
 	/* Check if menu item is visible and therefore can be shown */
-	return(garcon_menu_element_get_visible(GARCON_MENU_ELEMENT(priv->item)));
+	return(markon_menu_element_get_visible(MARKON_MENU_ELEMENT(priv->item)));
 }
 
 /* Get command-line of GAppInfo with which the application will be started */
@@ -1728,7 +1728,7 @@ static const gchar* _esdashboard_desktop_app_info_gappinfo_get_commandline(GAppI
 	if(!priv->item) return(NULL);
 
 	/* Return command of menu item */
-	return(garcon_menu_item_get_command(priv->item));
+	return(markon_menu_item_get_command(priv->item));
 }
 
 /* Get display name of GAppInfo */
@@ -1746,7 +1746,7 @@ static const gchar* _esdashboard_desktop_app_info_gappinfo_get_display_name(GApp
 	if(!priv->item) return(NULL);
 
 	/* Return name of menu item */
-	return(garcon_menu_item_get_name(priv->item));
+	return(markon_menu_item_get_name(priv->item));
 }
 
 /* Interface initialization
@@ -2027,22 +2027,22 @@ GAppInfo* esdashboard_desktop_app_info_new_from_file(GFile *inFile)
 									NULL)));
 }
 
-GAppInfo* esdashboard_desktop_app_info_new_from_menu_item(GarconMenuItem *inMenuItem)
+GAppInfo* esdashboard_desktop_app_info_new_from_menu_item(MarkonMenuItem *inMenuItem)
 {
 	EsdashboardDesktopAppInfo	*instance;
 	const gchar					*desktopID;
 	GFile						*file;
 
-	g_return_val_if_fail(GARCON_IS_MENU_ITEM(inMenuItem), NULL);
+	g_return_val_if_fail(MARKON_IS_MENU_ITEM(inMenuItem), NULL);
 
 	/* Create this class instance from menu item loaded from given URI */
 	instance=ESDASHBOARD_DESKTOP_APP_INFO(g_object_new(ESDASHBOARD_TYPE_DESKTOP_APP_INFO, NULL));
 
 	/* Set menu item but increase reference counter */
-	instance->priv->item=GARCON_MENU_ITEM(g_object_ref(inMenuItem));
+	instance->priv->item=MARKON_MENU_ITEM(g_object_ref(inMenuItem));
 
 	/* Copy desktop ID from menu item if available */
-	desktopID=garcon_menu_item_get_desktop_id(inMenuItem);
+	desktopID=markon_menu_item_get_desktop_id(inMenuItem);
 	if(desktopID) g_object_set(instance, "desktop-id", desktopID, NULL);
 
 	/* Copy file object and do not use g_object_set to set it
@@ -2050,7 +2050,7 @@ GAppInfo* esdashboard_desktop_app_info_new_from_menu_item(GarconMenuItem *inMenu
 	 * _esdashboard_desktop_app_info_set_file to be called which
 	 * would unreference the just referenced menu item.
 	 */
-	file=garcon_menu_item_get_file(inMenuItem);
+	file=markon_menu_item_get_file(inMenuItem);
 	instance->priv->file=G_FILE(g_object_ref(file));
 	g_object_unref(file);
 
@@ -2103,11 +2103,11 @@ gboolean esdashboard_desktop_app_info_reload(EsdashboardDesktopAppInfo *self)
 		GError							*error;
 
 		error=NULL;
-		success=garcon_menu_item_reload(priv->item, NULL, &error);
+		success=markon_menu_item_reload(priv->item, NULL, &error);
 		if(!success)
 		{
 			g_warning("Could not reload desktop application information for '%s': %s",
-						garcon_menu_item_get_name(priv->item),
+						markon_menu_item_get_name(priv->item),
 						error ? error->message : "Unknown error");
 			if(error) g_error_free(error);
 		}

@@ -43,7 +43,7 @@ struct _EsdashboardApplicationDatabasePrivate
 	/* Instance related */
 	GList				*searchPaths;
 
-	GarconMenu			*appsMenu;
+	MarkonMenu			*appsMenu;
 	guint				appsMenuReloadRequiredID;
 
 	GHashTable			*applications;
@@ -114,19 +114,19 @@ static void _esdashboard_application_database_add_hashtable_item_to_list(gpointe
 static void _esdashboard_application_database_on_application_menu_reload_required(EsdashboardApplicationDatabase *self,
 																					gpointer inUserData)
 {
-	GarconMenu		*menu;
+	MarkonMenu		*menu;
 	GError			*error;
 
 	g_return_if_fail(ESDASHBOARD_IS_APPLICATION_DATABASE(self));
-	g_return_if_fail(GARCON_IS_MENU(inUserData));
+	g_return_if_fail(MARKON_IS_MENU(inUserData));
 
-	menu=GARCON_MENU(inUserData);
+	menu=MARKON_MENU(inUserData);
 	error=NULL;
 
 	/* Reload application menu. This also emits all necessary signals. */
 	ESDASHBOARD_DEBUG(self, APPLICATIONS,
 						"Menu '%s' changed and requires a reload of application menu",
-						garcon_menu_element_get_name(GARCON_MENU_ELEMENT(menu)));
+						markon_menu_element_get_name(MARKON_MENU_ELEMENT(menu)));
 	if(!_esdashboard_application_database_load_application_menu(self, &error))
 	{
 		g_critical("Could not reload application menu: %s",
@@ -1147,7 +1147,7 @@ static gboolean _esdashboard_application_database_load_applications(EsdashboardA
 static gboolean _esdashboard_application_database_load_application_menu(EsdashboardApplicationDatabase *self, GError **outError)
 {
 	EsdashboardApplicationDatabasePrivate	*priv;
-	GarconMenu								*appsMenu;
+	MarkonMenu								*appsMenu;
 	GError									*error;
 
 	g_return_val_if_fail(ESDASHBOARD_IS_APPLICATION_DATABASE(self), FALSE);
@@ -1157,8 +1157,8 @@ static gboolean _esdashboard_application_database_load_application_menu(Esdashbo
 	error=NULL;
 
 	/* Load menu */
-	appsMenu=garcon_menu_new_applications();
-	if(!garcon_menu_load(appsMenu, NULL, &error))
+	appsMenu=markon_menu_new_applications();
+	if(!markon_menu_load(appsMenu, NULL, &error))
 	{
 		/* Propagate error */
 		g_propagate_error(outError, error);
@@ -1170,7 +1170,7 @@ static gboolean _esdashboard_application_database_load_application_menu(Esdashbo
 	}
 	ESDASHBOARD_DEBUG(self, APPLICATIONS,
 						"Loaded application menu '%s'",
-						garcon_menu_element_get_name(GARCON_MENU_ELEMENT(appsMenu)));
+						markon_menu_element_get_name(MARKON_MENU_ELEMENT(appsMenu)));
 
 	/* Release old menus and set new one */
 	if(priv->appsMenu)
@@ -1532,13 +1532,13 @@ const GList* esdashboard_application_database_get_application_search_paths(const
 /* Get application menu.
  * The return object has to be freed with g_object_unref().
  */
-GarconMenu* esdashboard_application_database_get_application_menu(EsdashboardApplicationDatabase *self)
+MarkonMenu* esdashboard_application_database_get_application_menu(EsdashboardApplicationDatabase *self)
 {
 	g_return_val_if_fail(ESDASHBOARD_IS_APPLICATION_DATABASE(self), NULL);
 
 	if(self->priv->appsMenu)
 	{
-		return(GARCON_MENU(g_object_ref(self->priv->appsMenu)));
+		return(MARKON_MENU(g_object_ref(self->priv->appsMenu)));
 	}
 
 	/* If we get here no application menu is available, so return NULL */

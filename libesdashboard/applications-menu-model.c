@@ -38,7 +38,7 @@
 struct _EsdashboardApplicationsMenuModelPrivate
 {
 	/* Instance related */
-	GarconMenu						*rootMenu;
+	MarkonMenu						*rootMenu;
 
 	EsdashboardApplicationDatabase	*appDB;
 	guint							reloadRequiredSignalID;
@@ -70,9 +70,9 @@ typedef struct _EsdashboardApplicationsMenuModelItem			EsdashboardApplicationsMe
 struct _EsdashboardApplicationsMenuModelItem
 {
 	guint				sequenceID;
-	GarconMenuElement	*menuElement;
-	GarconMenu			*parentMenu;
-	GarconMenu			*section;
+	MarkonMenuElement	*menuElement;
+	MarkonMenu			*parentMenu;
+	MarkonMenu			*section;
 	gchar				*title;
 	gchar				*description;
 };
@@ -150,17 +150,17 @@ static gboolean _esdashboard_applications_menu_model_filter_by_menu(EsdashboardM
 	EsdashboardApplicationsMenuModel			*model;
 	EsdashboardApplicationsMenuModelPrivate		*modelPriv;
 	gboolean									doShow;
-	GarconMenu									*requestedParentMenu;
+	MarkonMenu									*requestedParentMenu;
 	EsdashboardApplicationsMenuModelItem		*item;
-	GarconMenuItemPool							*itemPool;
+	MarkonMenuItemPool							*itemPool;
 	const gchar									*desktopID;
 
 	g_return_val_if_fail(ESDASHBOARD_IS_MODEL_ITER(inIter), FALSE);
-	g_return_val_if_fail(GARCON_IS_MENU(inUserData), FALSE);
+	g_return_val_if_fail(MARKON_IS_MENU(inUserData), FALSE);
 	g_return_val_if_fail(ESDASHBOARD_IS_APPLICATIONS_MENU_MODEL(esdashboard_model_iter_get_model(inIter)), FALSE);
 
 	doShow=FALSE;
-	requestedParentMenu=GARCON_MENU(inUserData);
+	requestedParentMenu=MARKON_MENU(inUserData);
 	model=ESDASHBOARD_APPLICATIONS_MENU_MODEL(esdashboard_model_iter_get_model(inIter));
 	modelPriv=model->priv;
 
@@ -169,13 +169,13 @@ static gboolean _esdashboard_applications_menu_model_filter_by_menu(EsdashboardM
 	if(item->menuElement==NULL) return(FALSE);
 
 	/* Only menu items and sub-menus can be visible */
-	if(!GARCON_IS_MENU(item->menuElement) && !GARCON_IS_MENU_ITEM(item->menuElement))
+	if(!MARKON_IS_MENU(item->menuElement) && !MARKON_IS_MENU_ITEM(item->menuElement))
 	{
 		return(FALSE);
 	}
 
 	/* If menu element is a menu check if it's parent menu is the requested one */
-	if(GARCON_IS_MENU(item->menuElement))
+	if(MARKON_IS_MENU(item->menuElement))
 	{
 		if(requestedParentMenu==item->parentMenu ||
 			(!requestedParentMenu && item->parentMenu==modelPriv->rootMenu))
@@ -187,13 +187,13 @@ static gboolean _esdashboard_applications_menu_model_filter_by_menu(EsdashboardM
 		else
 		{
 			/* Get desktop ID of menu item */
-			desktopID=garcon_menu_item_get_desktop_id(GARCON_MENU_ITEM(item->menuElement));
+			desktopID=markon_menu_item_get_desktop_id(MARKON_MENU_ITEM(item->menuElement));
 
 			/* Get menu items of menu */
-			itemPool=garcon_menu_get_item_pool(item->parentMenu);
+			itemPool=markon_menu_get_item_pool(item->parentMenu);
 
 			/* Determine if menu item at iterator is in menu's item pool */
-			if(garcon_menu_item_pool_lookup(itemPool, desktopID)!=FALSE) doShow=TRUE;
+			if(markon_menu_item_pool_lookup(itemPool, desktopID)!=FALSE) doShow=TRUE;
 		}
 
 	/* If we get here return TRUE to show model data item or FALSE to hide */
@@ -206,15 +206,15 @@ static gboolean _esdashboard_applications_menu_model_filter_by_section(Esdashboa
 	EsdashboardApplicationsMenuModel			*model;
 	EsdashboardApplicationsMenuModelPrivate		*modelPriv;
 	gboolean									doShow;
-	GarconMenu									*requestedSection;
+	MarkonMenu									*requestedSection;
 	EsdashboardApplicationsMenuModelItem		*item;
 
 	g_return_val_if_fail(ESDASHBOARD_IS_MODEL_ITER(inIter), FALSE);
 	g_return_val_if_fail(ESDASHBOARD_IS_APPLICATIONS_MENU_MODEL(esdashboard_model_iter_get_model(inIter)), FALSE);
-	g_return_val_if_fail(GARCON_IS_MENU(inUserData), FALSE);
+	g_return_val_if_fail(MARKON_IS_MENU(inUserData), FALSE);
 
 	doShow=FALSE;
-	requestedSection=GARCON_MENU(inUserData);
+	requestedSection=MARKON_MENU(inUserData);
 	model=ESDASHBOARD_APPLICATIONS_MENU_MODEL(esdashboard_model_iter_get_model(inIter));
 	modelPriv=model->priv;
 
@@ -239,30 +239,30 @@ static gboolean _esdashboard_applications_menu_model_filter_empty(EsdashboardMod
 																	gpointer inUserData)
 {
 	g_return_val_if_fail(ESDASHBOARD_IS_MODEL_ITER(inIter), FALSE);
-	g_return_val_if_fail(GARCON_IS_MENU(inUserData), FALSE);
+	g_return_val_if_fail(MARKON_IS_MENU(inUserData), FALSE);
 
 	/* This functions always returns FALSE because each entry is considered empty and hidden */
 	return(FALSE);
 }
 
 /* Fill model */
-static GarconMenu* _esdashboard_applications_menu_model_find_similar_menu(EsdashboardApplicationsMenuModel *self,
-																			GarconMenu *inMenu,
+static MarkonMenu* _esdashboard_applications_menu_model_find_similar_menu(EsdashboardApplicationsMenuModel *self,
+																			MarkonMenu *inMenu,
 																			EsdashboardApplicationsMenuModelFillData *inFillData)
 {
-	GarconMenu					*parentMenu;
+	MarkonMenu					*parentMenu;
 	GSList						*iter;
-	GarconMenu					*foundMenu;
+	MarkonMenu					*foundMenu;
 
 	g_return_val_if_fail(ESDASHBOARD_IS_APPLICATIONS_MENU_MODEL(self), NULL);
-	g_return_val_if_fail(GARCON_IS_MENU(inMenu), NULL);
+	g_return_val_if_fail(MARKON_IS_MENU(inMenu), NULL);
 	g_return_val_if_fail(inFillData, NULL);
 
 	/* Check if menu is visible. Hidden menus do not need to be checked. */
-	if(!garcon_menu_element_get_visible(GARCON_MENU_ELEMENT(inMenu))) return(NULL);
+	if(!markon_menu_element_get_visible(MARKON_MENU_ELEMENT(inMenu))) return(NULL);
 
 	/* Get parent menu to look for at each menu we iterate */
-	parentMenu=garcon_menu_get_parent(inMenu);
+	parentMenu=markon_menu_get_parent(inMenu);
 	if(!parentMenu) return(NULL);
 
 	/* Iterate through parent menu up to current menu and lookup similar menu.
@@ -272,32 +272,32 @@ static GarconMenu* _esdashboard_applications_menu_model_find_similar_menu(Esdash
 	foundMenu=NULL;
 	for(iter=inFillData->populatedMenus; iter && !foundMenu; iter=g_slist_next(iter))
 	{
-		GarconMenu				*iterMenu;
+		MarkonMenu				*iterMenu;
 
 		/* Get menu element from list */
-		iterMenu=GARCON_MENU(iter->data);
+		iterMenu=MARKON_MENU(iter->data);
 
 		/* We can only process menus which have the same parent menu as the
 		 * requested menu and they need to be visible.
 		 */
-		if(garcon_menu_get_parent(iterMenu) &&
-			garcon_menu_element_get_visible(GARCON_MENU_ELEMENT(iterMenu)))
+		if(markon_menu_get_parent(iterMenu) &&
+			markon_menu_element_get_visible(MARKON_MENU_ELEMENT(iterMenu)))
 		{
 			gboolean			isSimilar;
-			GarconMenuDirectory	*iterMenuDirectory;
-			GarconMenuDirectory	*menuDirectory;
+			MarkonMenuDirectory	*iterMenuDirectory;
+			MarkonMenuDirectory	*menuDirectory;
 
 			/* Check if both menus share the same directory. That will be the
 			 * case if iterator point to the menu which was given as function
 			 * parameter. So it's safe just to iterate through.
 			 */
-			iterMenuDirectory=garcon_menu_get_directory(iterMenu);
-			menuDirectory=garcon_menu_get_directory(inMenu);
+			iterMenuDirectory=markon_menu_get_directory(iterMenu);
+			menuDirectory=markon_menu_get_directory(inMenu);
 
 			isSimilar=FALSE;
 			if(iterMenuDirectory && menuDirectory)
 			{
-				isSimilar=garcon_menu_directory_equal(iterMenuDirectory, menuDirectory);
+				isSimilar=markon_menu_directory_equal(iterMenuDirectory, menuDirectory);
 			}
 
 			/* If both menus do not share the same directory, check if they
@@ -316,8 +316,8 @@ static GarconMenu* _esdashboard_applications_menu_model_find_similar_menu(Esdash
 				/* Check title */
 				if(isSimilar)
 				{
-					left=garcon_menu_element_get_name(GARCON_MENU_ELEMENT(inMenu));
-					right=garcon_menu_element_get_name(GARCON_MENU_ELEMENT(iterMenu));
+					left=markon_menu_element_get_name(MARKON_MENU_ELEMENT(inMenu));
+					right=markon_menu_element_get_name(MARKON_MENU_ELEMENT(iterMenu));
 					if(g_strcmp0(left, right)!=0) isSimilar=FALSE;
 				}
 
@@ -325,8 +325,8 @@ static GarconMenu* _esdashboard_applications_menu_model_find_similar_menu(Esdash
 				/* Check description */
 				if(isSimilar)
 				{
-					left=garcon_menu_element_get_comment(GARCON_MENU_ELEMENT(inMenu));
-					right=garcon_menu_element_get_comment(GARCON_MENU_ELEMENT(iterMenu));
+					left=markon_menu_element_get_comment(MARKON_MENU_ELEMENT(inMenu));
+					right=markon_menu_element_get_comment(MARKON_MENU_ELEMENT(iterMenu));
 					if(g_strcmp0(left, right)!=0) isSimilar=FALSE;
 				}
 
@@ -334,8 +334,8 @@ static GarconMenu* _esdashboard_applications_menu_model_find_similar_menu(Esdash
 				/* Check icon */
 				if(isSimilar)
 				{
-					left=garcon_menu_element_get_icon_name(GARCON_MENU_ELEMENT(inMenu));
-					right=garcon_menu_element_get_icon_name(GARCON_MENU_ELEMENT(iterMenu));
+					left=markon_menu_element_get_icon_name(MARKON_MENU_ELEMENT(inMenu));
+					right=markon_menu_element_get_icon_name(MARKON_MENU_ELEMENT(iterMenu));
 					if(g_strcmp0(left, right)!=0) isSimilar=FALSE;
 				}
 			}
@@ -349,16 +349,16 @@ static GarconMenu* _esdashboard_applications_menu_model_find_similar_menu(Esdash
 	return(foundMenu);
 }
 
-static GarconMenu* _esdashboard_applications_menu_model_find_section(EsdashboardApplicationsMenuModel *self,
-																		GarconMenu *inMenu,
+static MarkonMenu* _esdashboard_applications_menu_model_find_section(EsdashboardApplicationsMenuModel *self,
+																		MarkonMenu *inMenu,
 																		EsdashboardApplicationsMenuModelFillData *inFillData)
 {
 	EsdashboardApplicationsMenuModelPrivate		*priv;
-	GarconMenu									*sectionMenu;
-	GarconMenu									*parentMenu;
+	MarkonMenu									*sectionMenu;
+	MarkonMenu									*parentMenu;
 
 	g_return_val_if_fail(ESDASHBOARD_IS_APPLICATIONS_MENU_MODEL(self), NULL);
-	g_return_val_if_fail(GARCON_IS_MENU(inMenu), NULL);
+	g_return_val_if_fail(MARKON_IS_MENU(inMenu), NULL);
 
 	priv=self->priv;
 
@@ -371,7 +371,7 @@ static GarconMenu* _esdashboard_applications_menu_model_find_section(Esdashboard
 	do
 	{
 		/* Get parent menu */
-		parentMenu=garcon_menu_get_parent(sectionMenu);
+		parentMenu=markon_menu_get_parent(sectionMenu);
 
 		/* Check if parent menu is root menu stop here */
 		if(!parentMenu || parentMenu==priv->rootMenu) break;
@@ -392,18 +392,18 @@ static GarconMenu* _esdashboard_applications_menu_model_find_section(Esdashboard
 }
 
 static void _esdashboard_applications_menu_model_fill_model_collect_menu(EsdashboardApplicationsMenuModel *self,
-																			GarconMenu *inMenu,
-																			GarconMenu *inParentMenu,
+																			MarkonMenu *inMenu,
+																			MarkonMenu *inParentMenu,
 																			EsdashboardApplicationsMenuModelFillData *inFillData)
 {
 	EsdashboardApplicationsMenuModelPrivate			*priv;
-	GarconMenu										*menu;
-	GarconMenu										*section;
+	MarkonMenu										*menu;
+	MarkonMenu										*section;
 	GList											*elements, *element;
 	EsdashboardApplicationsMenuModelItem			*item;
 
 	g_return_if_fail(ESDASHBOARD_IS_APPLICATIONS_MENU_MODEL(self));
-	g_return_if_fail(GARCON_IS_MENU(inMenu));
+	g_return_if_fail(MARKON_IS_MENU(inMenu));
 
 	priv=self->priv;
 	section=NULL;
@@ -429,11 +429,11 @@ static void _esdashboard_applications_menu_model_fill_model_collect_menu(Esdashb
 			/* To increase performance when sorting of filtering this model by title or description
 			 * in a case-insensitive way store title and description in lower case.
 			 */
-			temp=garcon_menu_element_get_name(GARCON_MENU_ELEMENT(inMenu));
+			temp=markon_menu_element_get_name(MARKON_MENU_ELEMENT(inMenu));
 			if(temp) title=g_utf8_strdown(temp, -1);
 				else title=NULL;
 
-			temp=garcon_menu_element_get_comment(GARCON_MENU_ELEMENT(inMenu));
+			temp=markon_menu_element_get_comment(MARKON_MENU_ELEMENT(inMenu));
 			if(temp) description=g_utf8_strdown(temp, -1);
 				else description=NULL;
 
@@ -444,7 +444,7 @@ static void _esdashboard_applications_menu_model_fill_model_collect_menu(Esdashb
 
 			item=_esdashboard_applications_menu_model_item_new();
 			item->sequenceID=inFillData->sequenceID;
-			if(inMenu) item->menuElement=GARCON_MENU_ELEMENT(g_object_ref(inMenu));
+			if(inMenu) item->menuElement=MARKON_MENU_ELEMENT(g_object_ref(inMenu));
 			if(inParentMenu) item->parentMenu=g_object_ref(inParentMenu);
 			if(section) item->section=g_object_ref(section);
 			if(title) item->title=g_strdup(title);
@@ -468,27 +468,27 @@ static void _esdashboard_applications_menu_model_fill_model_collect_menu(Esdashb
 	}
 
 	/* Iterate through menu and add menu items and sub-menus */
-	elements=garcon_menu_get_elements(inMenu);
+	elements=markon_menu_get_elements(inMenu);
 	for(element=elements; element; element=g_list_next(element))
 	{
-		GarconMenuElement							*menuElement;
+		MarkonMenuElement							*menuElement;
 
 		/* Get menu element from list */
-		menuElement=GARCON_MENU_ELEMENT(element->data);
+		menuElement=MARKON_MENU_ELEMENT(element->data);
 
 		/* Check if menu element is visible */
-		if(!menuElement || !garcon_menu_element_get_visible(menuElement)) continue;
+		if(!menuElement || !markon_menu_element_get_visible(menuElement)) continue;
 
 		/* If element is a menu call this function recursively */
-		if(GARCON_IS_MENU(menuElement))
+		if(MARKON_IS_MENU(menuElement))
 		{
-			_esdashboard_applications_menu_model_fill_model_collect_menu(self, GARCON_MENU(menuElement), menu, inFillData);
+			_esdashboard_applications_menu_model_fill_model_collect_menu(self, MARKON_MENU(menuElement), menu, inFillData);
 		}
 
 		/* Insert row into model if menu element is a menu item if it does not
 		 * belong to root menu.
 		 */
-		if(GARCON_IS_MENU_ITEM(menuElement) &&
+		if(MARKON_IS_MENU_ITEM(menuElement) &&
 			menu!=priv->rootMenu)
 		{
 			gchar									*title;
@@ -498,11 +498,11 @@ static void _esdashboard_applications_menu_model_fill_model_collect_menu(Esdashb
 			/* To increase performance when sorting of filtering this model by title or description
 			 * in a case-insensitive way store title and description in lower case.
 			 */
-			temp=garcon_menu_element_get_name(GARCON_MENU_ELEMENT(menuElement));
+			temp=markon_menu_element_get_name(MARKON_MENU_ELEMENT(menuElement));
 			if(temp) title=g_utf8_strdown(temp, -1);
 				else title=NULL;
 
-			temp=garcon_menu_element_get_comment(GARCON_MENU_ELEMENT(menuElement));
+			temp=markon_menu_element_get_comment(MARKON_MENU_ELEMENT(menuElement));
 			if(temp) description=g_utf8_strdown(temp, -1);
 				else description=NULL;
 
@@ -533,7 +533,7 @@ static void _esdashboard_applications_menu_model_fill_model_collect_menu(Esdashb
 static void _esdashboard_applications_menu_model_fill_model(EsdashboardApplicationsMenuModel *self)
 {
 	EsdashboardApplicationsMenuModelPrivate		*priv;
-	GarconMenuItemCache							*cache;
+	MarkonMenuItemCache							*cache;
 	EsdashboardApplicationsMenuModelFillData	fillData;
 
 	g_return_if_fail(ESDASHBOARD_IS_APPLICATIONS_MENU_MODEL(self));
@@ -543,11 +543,11 @@ static void _esdashboard_applications_menu_model_fill_model(EsdashboardApplicati
 	/* Clear model data */
 	_esdashboard_applications_menu_model_clear(self);
 
-	/* Clear garcon's menu item cache otherwise some items will not be loaded
+	/* Clear markon's menu item cache otherwise some items will not be loaded
 	 * if this is a reload of the model or a second(, third, ...) instance of model
 	 */
-	cache=garcon_menu_item_cache_get_default();
-	garcon_menu_item_cache_invalidate(cache);
+	cache=markon_menu_item_cache_get_default();
+	markon_menu_item_cache_invalidate(cache);
 	g_object_unref(cache);
 
 	/* Load root menu */
@@ -768,12 +768,12 @@ void esdashboard_applications_menu_model_get(EsdashboardApplicationsMenuModel *s
 
 /* Filter menu items being a direct child item of requested menu */
 void esdashboard_applications_menu_model_filter_by_menu(EsdashboardApplicationsMenuModel *self,
-														GarconMenu *inMenu)
+														MarkonMenu *inMenu)
 {
 	EsdashboardApplicationsMenuModelPrivate		*priv;
 
 	g_return_if_fail(ESDASHBOARD_IS_APPLICATIONS_MENU_MODEL(self));
-	g_return_if_fail(inMenu==NULL || GARCON_IS_MENU(inMenu));
+	g_return_if_fail(inMenu==NULL || MARKON_IS_MENU(inMenu));
 
 	priv=self->priv;
 
@@ -789,12 +789,12 @@ void esdashboard_applications_menu_model_filter_by_menu(EsdashboardApplicationsM
 
 /* Filter menu items being an indirect child item of requested section */
 void esdashboard_applications_menu_model_filter_by_section(EsdashboardApplicationsMenuModel *self,
-															GarconMenu *inSection)
+															MarkonMenu *inSection)
 {
 	EsdashboardApplicationsMenuModelPrivate		*priv;
 
 	g_return_if_fail(ESDASHBOARD_IS_APPLICATIONS_MENU_MODEL(self));
-	g_return_if_fail(inSection==NULL || GARCON_IS_MENU(inSection));
+	g_return_if_fail(inSection==NULL || MARKON_IS_MENU(inSection));
 
 	priv=self->priv;
 
@@ -806,7 +806,7 @@ void esdashboard_applications_menu_model_filter_by_section(EsdashboardApplicatio
 	{
 		ESDASHBOARD_DEBUG(self, APPLICATIONS,
 							"Filtering section '%s'",
-							garcon_menu_element_get_name(GARCON_MENU_ELEMENT(inSection)));
+							markon_menu_element_get_name(MARKON_MENU_ELEMENT(inSection)));
 		esdashboard_model_set_filter(ESDASHBOARD_MODEL(self),
 										_esdashboard_applications_menu_model_filter_by_section,
 										g_object_ref(inSection),

@@ -29,7 +29,7 @@
 #error "Only <libesdashboard/libesdashboard.h> can be included directly."
 #endif
 
-#include <garcon/garcon.h>
+#include <markon/markon.h>
 
 #include <libesdashboard/model.h>
 
@@ -93,9 +93,9 @@ void esdashboard_applications_menu_model_get(EsdashboardApplicationsMenuModel *s
 												...);
 
 void esdashboard_applications_menu_model_filter_by_menu(EsdashboardApplicationsMenuModel *self,
-														GarconMenu *inMenu);
+														MarkonMenu *inMenu);
 void esdashboard_applications_menu_model_filter_by_section(EsdashboardApplicationsMenuModel *self,
-															GarconMenu *inSection);
+															MarkonMenu *inSection);
 
 G_END_DECLS
 

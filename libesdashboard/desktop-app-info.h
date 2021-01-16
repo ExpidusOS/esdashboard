@@ -1,5 +1,5 @@
 /*
- * desktop-app-info: A GDesktopAppInfo like object for garcon menu
+ * desktop-app-info: A GDesktopAppInfo like object for markon menu
  *                   items implementing and supporting GAppInfo
  * 
  * Copyright 2012-2020 Stephan Haller <nomad@froevel.de>
@@ -30,7 +30,7 @@
 #endif
 
 #include <libesdashboard/desktop-app-info-action.h>
-#include <garcon/garcon.h>
+#include <markon/markon.h>
 
 G_BEGIN_DECLS
 
@@ -72,7 +72,7 @@ GType esdashboard_desktop_app_info_get_type(void) G_GNUC_CONST;
 GAppInfo* esdashboard_desktop_app_info_new_from_desktop_id(const gchar *inDesktopID);
 GAppInfo* esdashboard_desktop_app_info_new_from_path(const gchar *inPath);
 GAppInfo* esdashboard_desktop_app_info_new_from_file(GFile *inFile);
-GAppInfo* esdashboard_desktop_app_info_new_from_menu_item(GarconMenuItem *inMenuItem);
+GAppInfo* esdashboard_desktop_app_info_new_from_menu_item(MarkonMenuItem *inMenuItem);
 
 gboolean esdashboard_desktop_app_info_is_valid(EsdashboardDesktopAppInfo *self);
 

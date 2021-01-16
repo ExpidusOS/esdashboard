@@ -28,7 +28,7 @@
 #error "Only <libesdashboard/libesdashboard.h> can be included directly."
 #endif
 
-#include <garcon/garcon.h>
+#include <markon/markon.h>
 
 G_BEGIN_DECLS
 

@@ -68,7 +68,7 @@ struct _EsdashboardApplicationsViewPrivate
 	/* Instance related */
 	ClutterLayoutManager				*layout;
 	EsdashboardApplicationsMenuModel	*apps;
-	GarconMenuElement					*currentRootMenuElement;
+	MarkonMenuElement					*currentRootMenuElement;
 
 	gpointer							selectedItem;
 
@@ -222,12 +222,12 @@ static void _esdashboard_applications_view_on_menu_clicked(EsdashboardButton *in
 	EsdashboardApplicationsView			*self;
 	EsdashboardApplicationsViewPrivate	*priv;
 	ClutterActor						*parent;
-	GarconMenu							*menu;
+	MarkonMenu							*menu;
 
 	g_return_if_fail(ESDASHBOARD_IS_BUTTON(inButton));
-	g_return_if_fail(GARCON_IS_MENU(inUserData));
+	g_return_if_fail(MARKON_IS_MENU(inUserData));
 
-	menu=GARCON_MENU(inUserData);
+	menu=MARKON_MENU(inUserData);
 
 	/* Find this view's object */
 	parent=clutter_actor_get_parent(CLUTTER_ACTOR(inButton));
@@ -240,7 +240,7 @@ static void _esdashboard_applications_view_on_menu_clicked(EsdashboardButton *in
 	{
 		g_warning("Could not find view of type %s for menu '%s'",
 					g_type_name(ESDASHBOARD_TYPE_APPLICATIONS_VIEW),
-					garcon_menu_element_get_name(GARCON_MENU_ELEMENT(menu)));
+					markon_menu_element_get_name(MARKON_MENU_ELEMENT(menu)));
 		return;
 	}
 
@@ -249,7 +249,7 @@ static void _esdashboard_applications_view_on_menu_clicked(EsdashboardButton *in
 	priv=self->priv;
 
 	/* Change menu */
-	priv->currentRootMenuElement=GARCON_MENU_ELEMENT(menu);
+	priv->currentRootMenuElement=MARKON_MENU_ELEMENT(menu);
 	esdashboard_applications_menu_model_filter_by_section(priv->apps, menu);
 	esdashboard_view_scroll_to(ESDASHBOARD_VIEW(self), -1, 0);
 }
@@ -258,7 +258,7 @@ static void _esdashboard_applications_view_on_menu_clicked(EsdashboardButton *in
 static void _esdashboard_applications_view_on_parent_menu_clicked(EsdashboardApplicationsView *self, gpointer inUserData)
 {
 	EsdashboardApplicationsViewPrivate	*priv;
-	GarconMenuElement					*element;
+	MarkonMenuElement					*element;
 
 	g_return_if_fail(ESDASHBOARD_IS_APPLICATIONS_VIEW(self));
 
@@ -266,12 +266,12 @@ static void _esdashboard_applications_view_on_parent_menu_clicked(EsdashboardApp
 
 	/* Get associated menu element of button */
 	if(priv->currentRootMenuElement &&
-		GARCON_IS_MENU(priv->currentRootMenuElement))
+		MARKON_IS_MENU(priv->currentRootMenuElement))
 	{
-		element=GARCON_MENU_ELEMENT(garcon_menu_get_parent(GARCON_MENU(priv->currentRootMenuElement)));
+		element=MARKON_MENU_ELEMENT(markon_menu_get_parent(MARKON_MENU(priv->currentRootMenuElement)));
 
 		priv->currentRootMenuElement=element;
-		esdashboard_applications_menu_model_filter_by_section(priv->apps, GARCON_MENU(element));
+		esdashboard_applications_menu_model_filter_by_section(priv->apps, MARKON_MENU(element));
 		esdashboard_view_scroll_to(ESDASHBOARD_VIEW(self), -1, 0);
 	}
 }
@@ -622,8 +622,8 @@ static void _esdashboard_applications_view_on_filter_changed(EsdashboardApplicat
 	EsdashboardApplicationsViewPrivate	*priv;
 	EsdashboardModelIter				*iterator;
 	ClutterActor						*actor;
-	GarconMenuElement					*menuElement=NULL;
-	GarconMenu							*parentMenu=NULL;
+	MarkonMenuElement					*menuElement=NULL;
+	MarkonMenu							*parentMenu=NULL;
 	ClutterAction						*clickAction;
 	ClutterAction						*dragAction;
 	GAppInfo							*appInfo;
@@ -639,9 +639,9 @@ static void _esdashboard_applications_view_on_filter_changed(EsdashboardApplicat
 
 	/* Get parent menu */
 	if(priv->currentRootMenuElement &&
-		GARCON_IS_MENU(priv->currentRootMenuElement))
+		MARKON_IS_MENU(priv->currentRootMenuElement))
 	{
-		parentMenu=garcon_menu_get_parent(GARCON_MENU(priv->currentRootMenuElement));
+		parentMenu=markon_menu_get_parent(MARKON_MENU(priv->currentRootMenuElement));
 	}
 
 	/* If menu element to filter by is not the root menu element, add an "up ..." entry */
@@ -721,9 +721,9 @@ static void _esdashboard_applications_view_on_filter_changed(EsdashboardApplicat
 			/* Create actor for menu element. Support drag'n'drop at actor if
 			 * menu element is a menu item.
 			 */
-			if(GARCON_IS_MENU_ITEM(menuElement))
+			if(MARKON_IS_MENU_ITEM(menuElement))
 			{
-				appInfo=esdashboard_desktop_app_info_new_from_menu_item(GARCON_MENU_ITEM(menuElement));
+				appInfo=esdashboard_desktop_app_info_new_from_menu_item(MARKON_MENU_ITEM(menuElement));
 				actor=esdashboard_application_button_new_from_app_info(appInfo);
 				g_object_unref(appInfo);
 
@@ -738,11 +738,11 @@ static void _esdashboard_applications_view_on_filter_changed(EsdashboardApplicat
 
 					actor=esdashboard_button_new();
 
-					iconName=garcon_menu_element_get_icon_name(menuElement);
+					iconName=markon_menu_element_get_icon_name(menuElement);
 					if(iconName) esdashboard_label_set_icon_name(ESDASHBOARD_LABEL(actor), iconName);
 
-					title=garcon_menu_element_get_name(menuElement);
-					description=garcon_menu_element_get_comment(menuElement);
+					title=markon_menu_element_get_name(menuElement);
+					description=markon_menu_element_get_comment(menuElement);
 
 					if(priv->viewMode==ESDASHBOARD_VIEW_MODE_LIST)
 					{
@@ -767,7 +767,7 @@ static void _esdashboard_applications_view_on_filter_changed(EsdashboardApplicat
 			clutter_actor_show(actor);
 
 			/* Set up and add pop-up menu click action and drag action */
-			if(GARCON_IS_MENU_ITEM(menuElement))
+			if(MARKON_IS_MENU_ITEM(menuElement))
 			{
 				clickAction=esdashboard_click_action_new();
 				g_signal_connect_swapped(clickAction, "clicked", G_CALLBACK(_esdashboard_applications_view_on_popup_menu), self);
@@ -810,7 +810,7 @@ static void _esdashboard_applications_view_on_model_loaded(EsdashboardApplicatio
 	 * and re-filter to update view
 	 */
 	priv->currentRootMenuElement=NULL;
-	esdashboard_applications_menu_model_filter_by_section(priv->apps, GARCON_MENU(priv->currentRootMenuElement));
+	esdashboard_applications_menu_model_filter_by_section(priv->apps, MARKON_MENU(priv->currentRootMenuElement));
 }
 
 /* The application will be resumed */
@@ -1835,7 +1835,7 @@ void esdashboard_applications_view_set_show_all_apps(EsdashboardApplicationsView
 
 		/* Update view if currently at root menu */
 		if(!priv->currentRootMenuElement ||
-			!garcon_menu_get_parent(GARCON_MENU(priv->currentRootMenuElement)))
+			!markon_menu_get_parent(MARKON_MENU(priv->currentRootMenuElement)))
 		{
 			_esdashboard_applications_view_on_filter_changed(self, NULL);
 		}

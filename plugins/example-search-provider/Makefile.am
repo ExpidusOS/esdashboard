@@ -22,7 +22,7 @@ example_search_provider_la_CFLAGS = \
 	$(GTK_CFLAGS) \
 	$(CLUTTER_CFLAGS) \
 	$(LIBESCONF_CFLAGS) \
-	$(GARCON_CFLAGS) \
+	$(MARKON_CFLAGS) \
 	$(PLATFORM_CFLAGS)
 
 example_search_provider_la_LDFLAGS = \
@@ -39,7 +39,7 @@ example_search_provider_la_LIBADD = \
 	$(GTK_LIBS) \
 	$(CLUTTER_LIBS) \
 	$(LIBESCONF_LIBS) \
-	$(GARCON_LIBS) \
+	$(MARKON_LIBS) \
 	$(top_builddir)/libesdashboard/libesdashboard.la
 
 CLEANFILES = \
