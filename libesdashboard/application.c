@@ -144,11 +144,11 @@ static guint EsdashboardApplicationSignals[SIGNAL_LAST]={ 0, };
 
 
 /* IMPLEMENTATION: Private variables and methods */
-#define ESDASHBOARD_APP_ID					"de.froevel.nomad.esdashboard"
+#define ESDASHBOARD_APP_ID					"com.expidus.esdashboard"
 #define ESDASHBOARD_ESCONF_CHANNEL			"esdashboard"
 
 #define THEME_NAME_ESCONF_PROP				"/theme"
-#define DEFAULT_THEME_NAME					"esdashboard"
+#define DEFAULT_THEME_NAME					"tokyo-dark"
 
 /* Single instance of application */
 static EsdashboardApplication*		_esdashboard_application=NULL;

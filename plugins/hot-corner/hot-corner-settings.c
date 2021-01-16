@@ -109,7 +109,7 @@ GType esdashboard_hot_corner_settings_activation_corner_get_type(void)
 #define DEFAULT_ACTIVATION_CORNER				ESDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_LEFT
 
 #define ACTIVATION_RADIUS_ESCONF_PROP			"/plugins/"PLUGIN_ID"/activation-radius"
-#define DEFAULT_ACTIVATION_RADIUS				4
+#define DEFAULT_ACTIVATION_RADIUS				20
 
 #define ACTIVATION_DURATION_ESCONF_PROP			"/plugins/"PLUGIN_ID"/activation-duration"
 #define DEFAULT_ACTIVATION_DURATION				300
