@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+_Name=Esdashboard
+_Comment=Maybe a Gnome shell like dashboard for Expidus
+GenericName=Esdashboard
+TryExec=@bindir@/esdashboard
+Exec=@bindir@/esdashboard
+Icon=com.expidus.esdashboard
+Categories=System;
+NotShowIn=GNOME;KDE;Unity;
+Terminal=false

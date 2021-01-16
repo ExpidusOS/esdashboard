@@ -1,0 +1,16 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+_Name=Esdashboard settings
+_Comment=Configure esdashboard
+GenericName=Esdashboard settings
+TryExec=@bindir@/esdashboard-settings
+Exec=@bindir@/esdashboard-settings
+Icon=com.expidus.esdashboard
+Categories=EXPIDUS;GTK;Settings;DesktopSettings;X-EXPIDUS-SettingsDialog;X-EXPIDUS-PersonalSettings;
+NotShowIn=GNOME;KDE;Unity;
+Terminal=false
+StartupNotify=true
+X-ExpidusPluggable=true
+X-ExpidusHelpComponent=esdashboard
+X-ExpidusHelpPage=start
