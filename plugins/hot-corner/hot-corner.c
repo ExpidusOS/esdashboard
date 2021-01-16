@@ -27,7 +27,7 @@
 
 #include "hot-corner.h"
 
-#include <libxfdashboard/libxfdashboard.h>
+#include <libesdashboard/libesdashboard.h>
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 #include <math.h>
@@ -36,11 +36,11 @@
 
 
 /* Define this class in GObject system */
-struct _XfdashboardHotCornerPrivate
+struct _EsdashboardHotCornerPrivate
 {
 	/* Instance related */
-	XfdashboardApplication					*application;
-	XfdashboardWindowTracker				*windowTracker;
+	EsdashboardApplication					*application;
+	EsdashboardWindowTracker				*windowTracker;
 	GdkWindow								*rootWindow;
 #if GTK_CHECK_VERSION(3, 20, 0)
 	GdkSeat									*seat;
@@ -52,21 +52,21 @@ struct _XfdashboardHotCornerPrivate
 	GDateTime								*enteredTime;
 	gboolean								wasHandledRecently;
 
-	XfdashboardHotCornerSettings			*settings;
+	EsdashboardHotCornerSettings			*settings;
 };
 
-G_DEFINE_DYNAMIC_TYPE_EXTENDED(XfdashboardHotCorner,
-								xfdashboard_hot_corner,
+G_DEFINE_DYNAMIC_TYPE_EXTENDED(EsdashboardHotCorner,
+								esdashboard_hot_corner,
 								G_TYPE_OBJECT,
 								0,
-								G_ADD_PRIVATE_DYNAMIC(XfdashboardHotCorner))
+								G_ADD_PRIVATE_DYNAMIC(EsdashboardHotCorner))
 
 /* Define this class in this plugin */
-XFDASHBOARD_DEFINE_PLUGIN_TYPE(xfdashboard_hot_corner);
+ESDASHBOARD_DEFINE_PLUGIN_TYPE(esdashboard_hot_corner);
 
-/* IMPLEMENTATION: Enum XFDASHBOARD_TYPE_HOT_CORNER_ACTIVATION_CORNER */
+/* IMPLEMENTATION: Enum ESDASHBOARD_TYPE_HOT_CORNER_ACTIVATION_CORNER */
 
-GType xfdashboard_hot_corner_activation_corner_get_type(void)
+GType esdashboard_hot_corner_activation_corner_get_type(void)
 {
 	static volatile gsize	g_define_type_id__volatile=0;
 
@@ -74,14 +74,14 @@ GType xfdashboard_hot_corner_activation_corner_get_type(void)
 	{
 		static const GEnumValue values[]=
 		{
-			{ XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_LEFT, "XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_LEFT", "top-left" },
-			{ XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_RIGHT, "XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_RIGHT", "top-right" },
-			{ XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_LEFT, "XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_LEFT", "bottom-left" },
-			{ XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_RIGHT, "XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_RIGHT", "bottom-right" },
+			{ ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_LEFT, "ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_LEFT", "top-left" },
+			{ ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_RIGHT, "ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_RIGHT", "top-right" },
+			{ ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_LEFT, "ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_LEFT", "bottom-left" },
+			{ ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_RIGHT, "ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_RIGHT", "bottom-right" },
 			{ 0, NULL, NULL }
 		};
 
-		GType	g_define_type_id=g_enum_register_static(g_intern_static_string("XfdashboardHotCornerActivationCorner"), values);
+		GType	g_define_type_id=g_enum_register_static(g_intern_static_string("EsdashboardHotCornerActivationCorner"), values);
 		g_once_init_leave(&g_define_type_id__volatile, g_define_type_id);
 	}
 
@@ -92,51 +92,51 @@ GType xfdashboard_hot_corner_activation_corner_get_type(void)
 /* IMPLEMENTATION: Private variables and methods */
 #define POLL_POINTER_POSITION_INTERVAL			100
 
-typedef struct _XfdashboardHotCornerBox		XfdashboardHotCornerBox;
-struct _XfdashboardHotCornerBox
+typedef struct _EsdashboardHotCornerBox		EsdashboardHotCornerBox;
+struct _EsdashboardHotCornerBox
 {
 	gint		x1, y1;
 	gint		x2, y2;
 };
 
 /* Timeout callback to check for activation or suspend via hot corner */
-static gboolean _xfdashboard_hot_corner_check_hot_corner(gpointer inUserData)
+static gboolean _esdashboard_hot_corner_check_hot_corner(gpointer inUserData)
 {
-	XfdashboardHotCorner							*self;
-	XfdashboardHotCornerPrivate						*priv;
-	XfdashboardWindowTrackerWindow					*activeWindow;
+	EsdashboardHotCorner							*self;
+	EsdashboardHotCornerPrivate						*priv;
+	EsdashboardWindowTrackerWindow					*activeWindow;
 	GdkDevice										*pointerDevice;
 	gint											pointerX, pointerY;
-	XfdashboardHotCornerSettingsActivationCorner	activationCorner;
+	EsdashboardHotCornerSettingsActivationCorner	activationCorner;
 	gint											activationRadius;
 	gint64											activationDuration;
 	gboolean										primaryMonitorOnly;
-	XfdashboardWindowTrackerMonitor					*monitor;
-	XfdashboardHotCornerBox							monitorRect;
-	XfdashboardHotCornerBox							hotCornerRect;
+	EsdashboardWindowTrackerMonitor					*monitor;
+	EsdashboardHotCornerBox							monitorRect;
+	EsdashboardHotCornerBox							hotCornerRect;
 	GDateTime										*currentTime;
 	GTimeSpan										timeDiff;
 
-	g_return_val_if_fail(XFDASHBOARD_IS_HOT_CORNER(inUserData), G_SOURCE_CONTINUE);
+	g_return_val_if_fail(ESDASHBOARD_IS_HOT_CORNER(inUserData), G_SOURCE_CONTINUE);
 
-	self=XFDASHBOARD_HOT_CORNER(inUserData);
+	self=ESDASHBOARD_HOT_CORNER(inUserData);
 	priv=self->priv;
 
 	/* Get all settings now which are used within this function */
-	activationCorner=xfdashboard_hot_corner_settings_get_activation_corner(priv->settings);
-	activationRadius=xfdashboard_hot_corner_settings_get_activation_radius(priv->settings);
-	activationDuration=xfdashboard_hot_corner_settings_get_activation_duration(priv->settings);
-	primaryMonitorOnly=xfdashboard_hot_corner_settings_get_primary_monitor_only(priv->settings);
+	activationCorner=esdashboard_hot_corner_settings_get_activation_corner(priv->settings);
+	activationRadius=esdashboard_hot_corner_settings_get_activation_radius(priv->settings);
+	activationDuration=esdashboard_hot_corner_settings_get_activation_duration(priv->settings);
+	primaryMonitorOnly=esdashboard_hot_corner_settings_get_primary_monitor_only(priv->settings);
 
 	/* Do nothing if current window is fullscreen but not this application */
-	activeWindow=xfdashboard_window_tracker_get_active_window(priv->windowTracker);
+	activeWindow=esdashboard_window_tracker_get_active_window(priv->windowTracker);
 	if(activeWindow)
 	{
-		XfdashboardWindowTrackerWindowState			activeWindowState;
+		EsdashboardWindowTrackerWindowState			activeWindowState;
 
-		activeWindowState=xfdashboard_window_tracker_window_get_state(activeWindow);
-		if((activeWindowState & XFDASHBOARD_WINDOW_TRACKER_WINDOW_STATE_FULLSCREEN) &&
-			!xfdashboard_window_tracker_window_is_stage(activeWindow))
+		activeWindowState=esdashboard_window_tracker_window_get_state(activeWindow);
+		if((activeWindowState & ESDASHBOARD_WINDOW_TRACKER_WINDOW_STATE_FULLSCREEN) &&
+			!esdashboard_window_tracker_window_is_stage(activeWindow))
 		{
 			return(G_SOURCE_CONTINUE);
 		}
@@ -157,12 +157,12 @@ static gboolean _xfdashboard_hot_corner_check_hot_corner(gpointer inUserData)
 	gdk_window_get_device_position(priv->rootWindow, pointerDevice, &pointerX, &pointerY, NULL);
 
 	/* Get monitor and its position and size at pointer position */
-	monitor=xfdashboard_window_tracker_get_monitor_by_position(priv->windowTracker, pointerX, pointerY);
+	monitor=esdashboard_window_tracker_get_monitor_by_position(priv->windowTracker, pointerX, pointerY);
 	if(monitor)
 	{
 		gint										monitorWidth, monitorHeight;
 
-		xfdashboard_window_tracker_monitor_get_geometry(monitor,
+		esdashboard_window_tracker_monitor_get_geometry(monitor,
 														&monitorRect.x1,
 														&monitorRect.y1,
 														&monitorWidth,
@@ -174,13 +174,13 @@ static gboolean _xfdashboard_hot_corner_check_hot_corner(gpointer inUserData)
 		{
 			/* Set position to 0,0 and size to screen size */
 			monitorRect.x1=monitorRect.y1=0;
-			xfdashboard_window_tracker_get_screen_size(priv->windowTracker, &monitorRect.x2, &monitorRect.y2);
+			esdashboard_window_tracker_get_screen_size(priv->windowTracker, &monitorRect.x2, &monitorRect.y2);
 		}
 
 	/* Check pointer in currently iterated monitor should be checked */
 	if(primaryMonitorOnly &&
 		monitor &&
-		!xfdashboard_window_tracker_monitor_is_primary(monitor))
+		!esdashboard_window_tracker_monitor_is_primary(monitor))
 	{
 		return(G_SOURCE_CONTINUE);
 	}
@@ -188,28 +188,28 @@ static gboolean _xfdashboard_hot_corner_check_hot_corner(gpointer inUserData)
 	/* Get rectangle where pointer must be inside to activate hot corner */
 	switch(activationCorner)
 	{
-		case XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_RIGHT:
+		case ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_RIGHT:
 			hotCornerRect.x2=monitorRect.x2;
 			hotCornerRect.x1=MAX(monitorRect.x2-activationRadius, monitorRect.x1);
 			hotCornerRect.y1=monitorRect.y1;
 			hotCornerRect.y2=MIN(monitorRect.y1+activationRadius, monitorRect.y2);
 			break;
 
-		case XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_LEFT:
+		case ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_LEFT:
 			hotCornerRect.x1=monitorRect.x1;
 			hotCornerRect.x2=MIN(monitorRect.x1+activationRadius, monitorRect.x2);
 			hotCornerRect.y2=monitorRect.y2;
 			hotCornerRect.y1=MAX(monitorRect.y2-activationRadius, monitorRect.y1);
 			break;
 
-		case XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_RIGHT:
+		case ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_RIGHT:
 			hotCornerRect.x2=monitorRect.x2;
 			hotCornerRect.x1=MAX(monitorRect.x2-activationRadius, monitorRect.x1);
 			hotCornerRect.y2=monitorRect.y2;
 			hotCornerRect.y1=MAX(monitorRect.y2-activationRadius, monitorRect.y1);
 			break;
 
-		case XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_LEFT:
+		case ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_LEFT:
 		default:
 			hotCornerRect.x1=monitorRect.x1;
 			hotCornerRect.x2=MIN(monitorRect.x1+activationRadius, monitorRect.x2);
@@ -266,9 +266,9 @@ static gboolean _xfdashboard_hot_corner_check_hot_corner(gpointer inUserData)
 	/* Activation duration reached so activate application if suspended or suspend it
 	 * if active currently.
 	 */
-	if(!xfdashboard_application_is_suspended(priv->application))
+	if(!esdashboard_application_is_suspended(priv->application))
 	{
-		xfdashboard_application_suspend_or_quit(priv->application);
+		esdashboard_application_suspend_or_quit(priv->application);
 	}
 		else
 		{
@@ -284,10 +284,10 @@ static gboolean _xfdashboard_hot_corner_check_hot_corner(gpointer inUserData)
 /* IMPLEMENTATION: GObject */
 
 /* Dispose this object */
-static void _xfdashboard_hot_corner_dispose(GObject *inObject)
+static void _esdashboard_hot_corner_dispose(GObject *inObject)
 {
-	XfdashboardHotCorner			*self=XFDASHBOARD_HOT_CORNER(inObject);
-	XfdashboardHotCornerPrivate		*priv=self->priv;
+	EsdashboardHotCorner			*self=ESDASHBOARD_HOT_CORNER(inObject);
+	EsdashboardHotCornerPrivate		*priv=self->priv;
 
 	/* Release allocated resources */
 	if(priv->enteredTime)
@@ -320,40 +320,40 @@ static void _xfdashboard_hot_corner_dispose(GObject *inObject)
 	}
 
 	/* Call parent's class dispose method */
-	G_OBJECT_CLASS(xfdashboard_hot_corner_parent_class)->dispose(inObject);
+	G_OBJECT_CLASS(esdashboard_hot_corner_parent_class)->dispose(inObject);
 }
 
 /* Class initialization
  * Override functions in parent classes and define properties
  * and signals
  */
-void xfdashboard_hot_corner_class_init(XfdashboardHotCornerClass *klass)
+void esdashboard_hot_corner_class_init(EsdashboardHotCornerClass *klass)
 {
 	GObjectClass			*gobjectClass=G_OBJECT_CLASS(klass);
 
 	/* Override functions */
-	gobjectClass->dispose=_xfdashboard_hot_corner_dispose;
+	gobjectClass->dispose=_esdashboard_hot_corner_dispose;
 }
 
 /* Class finalization */
-void xfdashboard_hot_corner_class_finalize(XfdashboardHotCornerClass *klass)
+void esdashboard_hot_corner_class_finalize(EsdashboardHotCornerClass *klass)
 {
 }
 
 /* Object initialization
  * Create private structure and set up default values
  */
-void xfdashboard_hot_corner_init(XfdashboardHotCorner *self)
+void esdashboard_hot_corner_init(EsdashboardHotCorner *self)
 {
-	XfdashboardHotCornerPrivate		*priv;
+	EsdashboardHotCornerPrivate		*priv;
 	GdkScreen						*screen;
 	GdkDisplay						*display;
 
-	self->priv=priv=xfdashboard_hot_corner_get_instance_private(self);
+	self->priv=priv=esdashboard_hot_corner_get_instance_private(self);
 
 	/* Set up default values */
-	priv->application=xfdashboard_application_get_default();
-	priv->windowTracker=xfdashboard_window_tracker_get_default();
+	priv->application=esdashboard_application_get_default();
+	priv->windowTracker=esdashboard_window_tracker_get_default();
 	priv->rootWindow=NULL;
 #if GTK_CHECK_VERSION(3, 20, 0)
 	priv->seat=NULL;
@@ -366,10 +366,10 @@ void xfdashboard_hot_corner_init(XfdashboardHotCorner *self)
 	priv->wasHandledRecently=FALSE;
 
 	/* Set up settings */
-	priv->settings=xfdashboard_hot_corner_settings_new();
+	priv->settings=esdashboard_hot_corner_settings_new();
 
 	/* Get device manager for polling pointer position */
-	if(xfdashboard_application_is_daemonized(priv->application))
+	if(esdashboard_application_is_daemonized(priv->application))
 	{
 		screen=gdk_screen_get_default();
 		priv->rootWindow=gdk_screen_get_root_window(screen);
@@ -395,7 +395,7 @@ void xfdashboard_hot_corner_init(XfdashboardHotCorner *self)
 		{
 			/* Start polling pointer position */
 			priv->timeoutID=g_timeout_add(POLL_POINTER_POSITION_INTERVAL,
-											(GSourceFunc)_xfdashboard_hot_corner_check_hot_corner,
+											(GSourceFunc)_esdashboard_hot_corner_check_hot_corner,
 											self);
 		}
 			else
@@ -413,12 +413,12 @@ void xfdashboard_hot_corner_init(XfdashboardHotCorner *self)
 /* IMPLEMENTATION: Public API */
 
 /* Create new instance */
-XfdashboardHotCorner* xfdashboard_hot_corner_new(void)
+EsdashboardHotCorner* esdashboard_hot_corner_new(void)
 {
 	GObject		*hotCorner;
 
-	hotCorner=g_object_new(XFDASHBOARD_TYPE_HOT_CORNER, NULL);
+	hotCorner=g_object_new(ESDASHBOARD_TYPE_HOT_CORNER, NULL);
 	if(!hotCorner) return(NULL);
 
-	return(XFDASHBOARD_HOT_CORNER(hotCorner));
+	return(ESDASHBOARD_HOT_CORNER(hotCorner));
 }

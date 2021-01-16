@@ -4,4 +4,4 @@ EXTRA_DIST =		\
 Datadir = $(datadir)/icons/hicolor/scalable/apps
 
 Data_DATA =		\
-	org.xfce.xfdashboard.svg
+	com.expidus.esdashboard.svg

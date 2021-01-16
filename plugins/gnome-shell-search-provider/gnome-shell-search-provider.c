@@ -33,7 +33,7 @@
 
 
 /* Define this class in GObject system */
-struct _XfdashboardGnomeShellSearchProviderPrivate
+struct _EsdashboardGnomeShellSearchProviderPrivate
 {
 	/* Instance related */
 	gchar			*gnomeShellID;
@@ -49,29 +49,29 @@ struct _XfdashboardGnomeShellSearchProviderPrivate
 	gchar			*providerIcon;
 };
 
-G_DEFINE_DYNAMIC_TYPE_EXTENDED(XfdashboardGnomeShellSearchProvider,
-								xfdashboard_gnome_shell_search_provider,
-								XFDASHBOARD_TYPE_SEARCH_PROVIDER,
+G_DEFINE_DYNAMIC_TYPE_EXTENDED(EsdashboardGnomeShellSearchProvider,
+								esdashboard_gnome_shell_search_provider,
+								ESDASHBOARD_TYPE_SEARCH_PROVIDER,
 								0,
-								G_ADD_PRIVATE_DYNAMIC(XfdashboardGnomeShellSearchProvider))
+								G_ADD_PRIVATE_DYNAMIC(EsdashboardGnomeShellSearchProvider))
 
 /* Define this class in this plugin */
-XFDASHBOARD_DEFINE_PLUGIN_TYPE(xfdashboard_gnome_shell_search_provider);
+ESDASHBOARD_DEFINE_PLUGIN_TYPE(esdashboard_gnome_shell_search_provider);
 
 /* IMPLEMENTATION: Private variables and methods */
-#define XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_KEYFILE_GROUP		"Shell Search Provider"
+#define ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_KEYFILE_GROUP		"Shell Search Provider"
 
 
-/* IMPLEMENTATION: XfdashboardSearchProvider */
+/* IMPLEMENTATION: EsdashboardSearchProvider */
 
 /* Update information about Gnome-Shell search provider from file */
-static gboolean _xfdashboard_gnome_shell_search_provider_update_from_file(XfdashboardGnomeShellSearchProvider *self,
+static gboolean _esdashboard_gnome_shell_search_provider_update_from_file(EsdashboardGnomeShellSearchProvider *self,
 																			GError **outError)
 {
-	XfdashboardGnomeShellSearchProviderPrivate		*priv;
+	EsdashboardGnomeShellSearchProviderPrivate		*priv;
 	gchar											*filePath;
 	GKeyFile										*providerKeyFile;
-	XfdashboardApplicationDatabase					*appDB;
+	EsdashboardApplicationDatabase					*appDB;
 	GAppInfo										*appInfo;
 	gchar											*desktopID;
 	gchar											*dbusBusName;
@@ -81,7 +81,7 @@ static gboolean _xfdashboard_gnome_shell_search_provider_update_from_file(Xfdash
 	gchar											*providerIcon;
 	GError											*error;
 
-	g_return_val_if_fail(XFDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(self), FALSE);
+	g_return_val_if_fail(ESDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(self), FALSE);
 	g_return_val_if_fail(outError==NULL || *outError==NULL, FALSE);
 
 	priv=self->priv;
@@ -109,7 +109,7 @@ static gboolean _xfdashboard_gnome_shell_search_provider_update_from_file(Xfdash
 
 	/* Get desktop ID from search provider's data file */
 	desktopID=g_key_file_get_string(providerKeyFile,
-									XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_KEYFILE_GROUP,
+									ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_KEYFILE_GROUP,
 									"DesktopId",
 									&error);
 	if(!desktopID)
@@ -126,7 +126,7 @@ static gboolean _xfdashboard_gnome_shell_search_provider_update_from_file(Xfdash
 
 	/* Get bus name from search provider's data file */
 	dbusBusName=g_key_file_get_string(providerKeyFile,
-										XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_KEYFILE_GROUP,
+										ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_KEYFILE_GROUP,
 										"BusName",
 										&error);
 	if(!dbusBusName)
@@ -144,7 +144,7 @@ static gboolean _xfdashboard_gnome_shell_search_provider_update_from_file(Xfdash
 
 	/* Get object path from search provider's data file */
 	dbusObjectPath=g_key_file_get_string(providerKeyFile,
-											XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_KEYFILE_GROUP,
+											ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_KEYFILE_GROUP,
 											"ObjectPath",
 											&error);
 	if(!dbusObjectPath)
@@ -163,7 +163,7 @@ static gboolean _xfdashboard_gnome_shell_search_provider_update_from_file(Xfdash
 
 	/* Get version from search provider's data file */
 	searchProviderVersion=g_key_file_get_integer(providerKeyFile,
-													XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_KEYFILE_GROUP,
+													ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_KEYFILE_GROUP,
 													"Version",
 													&error);
 	if(!searchProviderVersion)
@@ -187,9 +187,9 @@ static gboolean _xfdashboard_gnome_shell_search_provider_update_from_file(Xfdash
 	providerName=NULL;
 	providerIcon=NULL;
 
-	appDB=xfdashboard_application_database_get_default();
+	appDB=esdashboard_application_database_get_default();
 
-	appInfo=xfdashboard_application_database_lookup_desktop_id(appDB, desktopID);
+	appInfo=esdashboard_application_database_lookup_desktop_id(appDB, desktopID);
 	if(appInfo)
 	{
 		GIcon										*appIcon;
@@ -248,7 +248,7 @@ static gboolean _xfdashboard_gnome_shell_search_provider_update_from_file(Xfdash
 
 	/* If we get here we could update from file successfully */
 	g_debug("Updated search provider '%s' of type %s for Gnome-Shell search provider interface version %d using DBUS name '%s' and object path '%s' displayed as '%s' with icon '%s' from desktop ID '%s'",
-				xfdashboard_search_provider_get_id(XFDASHBOARD_SEARCH_PROVIDER(self)),
+				esdashboard_search_provider_get_id(ESDASHBOARD_SEARCH_PROVIDER(self)),
 				G_OBJECT_TYPE_NAME(self),
 				priv->searchProviderVersion,
 				priv->dbusBusName,
@@ -261,15 +261,15 @@ static gboolean _xfdashboard_gnome_shell_search_provider_update_from_file(Xfdash
 }
 
 /* The data file of Gnome-Shell search provider has changed */
-static void _xfdashboard_gnome_shell_search_provider_on_data_file_changed(XfdashboardGnomeShellSearchProvider *self,
+static void _esdashboard_gnome_shell_search_provider_on_data_file_changed(EsdashboardGnomeShellSearchProvider *self,
 																			GFile *inFile,
 																			GFile *inOtherFile,
 																			GFileMonitorEvent inEventType,
 																			gpointer inUserData)
 {
-	XfdashboardGnomeShellSearchProviderPrivate		*priv;
+	EsdashboardGnomeShellSearchProviderPrivate		*priv;
 
-	g_return_if_fail(XFDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(self));
+	g_return_if_fail(ESDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(self));
 	g_return_if_fail(G_IS_FILE_MONITOR(inUserData));
 
 	priv=self->priv;
@@ -283,7 +283,7 @@ static void _xfdashboard_gnome_shell_search_provider_on_data_file_changed(Xfdash
 		error=NULL;
 
 		/* Update information about Gnome-Shell search provider from modified data file */
-		if(!_xfdashboard_gnome_shell_search_provider_update_from_file(self, &error))
+		if(!_esdashboard_gnome_shell_search_provider_update_from_file(self, &error))
 		{
 			/* Show warning message */
 			g_warning("Cannot update information about Gnome-Shell search provider '%s': %s",
@@ -302,21 +302,21 @@ static void _xfdashboard_gnome_shell_search_provider_on_data_file_changed(Xfdash
 				g_debug("Updated Gnome-Shell search provider '%s' of type %s with ID '%s' from modified data file successfully",
 							priv->gnomeShellID,
 							G_OBJECT_TYPE_NAME(self),
-							xfdashboard_search_provider_get_id(XFDASHBOARD_SEARCH_PROVIDER(self)));
+							esdashboard_search_provider_get_id(ESDASHBOARD_SEARCH_PROVIDER(self)));
 			}
 	}
 }
 
 /* One-time initialization of search provider */
-static void _xfdashboard_gnome_shell_search_provider_initialize(XfdashboardSearchProvider *inProvider)
+static void _esdashboard_gnome_shell_search_provider_initialize(EsdashboardSearchProvider *inProvider)
 {
-	XfdashboardGnomeShellSearchProvider				*self;
-	XfdashboardGnomeShellSearchProviderPrivate		*priv;
+	EsdashboardGnomeShellSearchProvider				*self;
+	EsdashboardGnomeShellSearchProviderPrivate		*priv;
 	GError											*error;
 
-	g_return_if_fail(XFDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider));
+	g_return_if_fail(ESDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider));
 
-	self=XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
+	self=ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
 	priv=self->priv;
 	error=NULL;
 
@@ -325,11 +325,11 @@ static void _xfdashboard_gnome_shell_search_provider_initialize(XfdashboardSearc
 	{
 		const gchar									*providerID;
 
-		providerID=xfdashboard_search_provider_get_id(inProvider);
+		providerID=esdashboard_search_provider_get_id(inProvider);
 		priv->gnomeShellID=g_strdup(providerID+strlen(PLUGIN_ID)+1);
 	}
 	g_debug("Initializing search provider '%s' of type %s for Gnome-Shell search provider ID '%s'",
-				xfdashboard_search_provider_get_id(inProvider),
+				esdashboard_search_provider_get_id(inProvider),
 				G_OBJECT_TYPE_NAME(self),
 				priv->gnomeShellID);
 
@@ -365,7 +365,7 @@ static void _xfdashboard_gnome_shell_search_provider_initialize(XfdashboardSearc
 
 			g_signal_connect_swapped(priv->fileMonitor,
 										"changed",
-										G_CALLBACK(_xfdashboard_gnome_shell_search_provider_on_data_file_changed),
+										G_CALLBACK(_esdashboard_gnome_shell_search_provider_on_data_file_changed),
 										self);
 		}
 			else
@@ -385,7 +385,7 @@ static void _xfdashboard_gnome_shell_search_provider_initialize(XfdashboardSearc
 	}
 
 	/* Get information about Gnome-Shell search provider from file */
-	if(!_xfdashboard_gnome_shell_search_provider_update_from_file(self, &error))
+	if(!_esdashboard_gnome_shell_search_provider_update_from_file(self, &error))
 	{
 		/* Show warning message */
 		g_warning("Cannot load information about Gnome-Shell search provider '%s': %s",
@@ -404,56 +404,56 @@ static void _xfdashboard_gnome_shell_search_provider_initialize(XfdashboardSearc
 			g_debug("Initialized Gnome-Shell search provider '%s' of type %s with ID '%s' successfully",
 						priv->gnomeShellID,
 						G_OBJECT_TYPE_NAME(self),
-						xfdashboard_search_provider_get_id(inProvider));
+						esdashboard_search_provider_get_id(inProvider));
 		}
 }
 
 /* Get display name for this search provider */
-static const gchar* _xfdashboard_gnome_shell_search_provider_get_name(XfdashboardSearchProvider *inProvider)
+static const gchar* _esdashboard_gnome_shell_search_provider_get_name(EsdashboardSearchProvider *inProvider)
 {
-	XfdashboardGnomeShellSearchProvider				*self;
-	XfdashboardGnomeShellSearchProviderPrivate		*priv;
+	EsdashboardGnomeShellSearchProvider				*self;
+	EsdashboardGnomeShellSearchProviderPrivate		*priv;
 
-	g_return_val_if_fail(XFDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider), NULL);
+	g_return_val_if_fail(ESDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider), NULL);
 
-	self=XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
+	self=ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
 	priv=self->priv;
 
 	return(priv->providerName);
 }
 
 /* Get icon-name for this search provider */
-static const gchar* _xfdashboard_gnome_shell_search_provider_get_icon(XfdashboardSearchProvider *inProvider)
+static const gchar* _esdashboard_gnome_shell_search_provider_get_icon(EsdashboardSearchProvider *inProvider)
 {
-	XfdashboardGnomeShellSearchProvider				*self;
-	XfdashboardGnomeShellSearchProviderPrivate		*priv;
+	EsdashboardGnomeShellSearchProvider				*self;
+	EsdashboardGnomeShellSearchProviderPrivate		*priv;
 
-	g_return_val_if_fail(XFDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider), NULL);
+	g_return_val_if_fail(ESDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider), NULL);
 
-	self=XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
+	self=ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
 	priv=self->priv;
 
 	return(priv->providerIcon);
 }
 
 /* Get result set for requested search terms */
-static XfdashboardSearchResultSet* _xfdashboard_gnome_shell_search_provider_get_result_set(XfdashboardSearchProvider *inProvider,
+static EsdashboardSearchResultSet* _esdashboard_gnome_shell_search_provider_get_result_set(EsdashboardSearchProvider *inProvider,
 																							const gchar **inSearchTerms,
-																							XfdashboardSearchResultSet *inPreviousResultSet)
+																							EsdashboardSearchResultSet *inPreviousResultSet)
 {
-	XfdashboardGnomeShellSearchProvider				*self;
-	XfdashboardGnomeShellSearchProviderPrivate		*priv;
+	EsdashboardGnomeShellSearchProvider				*self;
+	EsdashboardGnomeShellSearchProviderPrivate		*priv;
 	GError											*error;
-	XfdashboardSearchResultSet						*resultSet;
+	EsdashboardSearchResultSet						*resultSet;
 	GVariant										*resultItem;
 	GDBusProxy										*proxy;
 	GVariant										*proxyResult;
 	gchar											**proxyResultSet;
 	gchar											**iter;
 
-	g_return_val_if_fail(XFDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider), NULL);
+	g_return_val_if_fail(ESDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider), NULL);
 
-	self=XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
+	self=ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
 	priv=self->priv;
 	error=NULL;
 	resultSet=NULL;
@@ -513,7 +513,7 @@ static XfdashboardSearchResultSet* _xfdashboard_gnome_shell_search_provider_get_
 			/* For each result item in previous result set add a string
 			 * to GVariant builder.
 			 */
-			allPrevResults=xfdashboard_search_result_set_get_all(inPreviousResultSet);
+			allPrevResults=esdashboard_search_result_set_get_all(inPreviousResultSet);
 			for(allPrevIter=allPrevResults; allPrevIter; allPrevIter=g_list_next(allPrevIter))
 			{
 				g_variant_builder_add(&builder, "s", g_variant_get_string((GVariant*)allPrevIter->data, NULL));
@@ -564,7 +564,7 @@ static XfdashboardSearchResultSet* _xfdashboard_gnome_shell_search_provider_get_
 	if(proxyResultSet)
 	{
 		/* Initialize result set */
-		resultSet=xfdashboard_search_result_set_new();
+		resultSet=esdashboard_search_result_set_new();
 
 		/* For each string in returned result set of search provider create a GVariant
 		 * which gets added with full score to result set for this application.
@@ -574,15 +574,15 @@ static XfdashboardSearchResultSet* _xfdashboard_gnome_shell_search_provider_get_
 			resultItem=g_variant_new_string(*iter);
 			if(resultItem)
 			{
-				xfdashboard_search_result_set_add_item(resultSet, g_variant_ref(resultItem));
-				xfdashboard_search_result_set_set_item_score(resultSet, resultItem, 1.0f);
+				esdashboard_search_result_set_add_item(resultSet, g_variant_ref(resultItem));
+				esdashboard_search_result_set_set_item_score(resultSet, resultItem, 1.0f);
 
 				/* Release result item added */
 				g_variant_unref(resultItem);
 			}
 		}
 		g_debug("Got result set with %u entries for Gnome Shell search provider '%s' of type %s",
-					xfdashboard_search_result_set_get_size(resultSet),
+					esdashboard_search_result_set_get_size(resultSet),
 					priv->gnomeShellID,
 					G_OBJECT_TYPE_NAME(self));
 	}
@@ -597,11 +597,11 @@ static XfdashboardSearchResultSet* _xfdashboard_gnome_shell_search_provider_get_
 }
 
 /* Create actor for a result item of the result set returned from a search request */
-static ClutterActor* _xfdashboard_gnome_shell_search_provider_create_result_actor(XfdashboardSearchProvider *inProvider,
+static ClutterActor* _esdashboard_gnome_shell_search_provider_create_result_actor(EsdashboardSearchProvider *inProvider,
 																					GVariant *inResultItem)
 {
-	XfdashboardGnomeShellSearchProvider				*self;
-	XfdashboardGnomeShellSearchProviderPrivate		*priv;
+	EsdashboardGnomeShellSearchProvider				*self;
+	EsdashboardGnomeShellSearchProviderPrivate		*priv;
 	GError											*error;
 	const gchar										*identifier[2];
 	ClutterActor									*actor;
@@ -613,10 +613,10 @@ static ClutterActor* _xfdashboard_gnome_shell_search_provider_create_result_acto
 	GIcon											*icon;
 	ClutterContent									*iconImage;
 
-	g_return_val_if_fail(XFDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider), NULL);
+	g_return_val_if_fail(ESDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider), NULL);
 	g_return_val_if_fail(inResultItem, NULL);
 
-	self=XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
+	self=ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
 	priv=self->priv;
 	actor=NULL;
 	name=NULL;
@@ -803,17 +803,17 @@ static ClutterActor* _xfdashboard_gnome_shell_search_provider_create_result_acto
 			else buttonText=g_markup_printf_escaped("<b>%s</b>", name);
 
 		/* Create actor and set icon if available */
-		actor=xfdashboard_button_new_with_text(buttonText);
+		actor=esdashboard_button_new_with_text(buttonText);
 
 		if(icon)
 		{
-			xfdashboard_label_set_style(XFDASHBOARD_LABEL(actor), XFDASHBOARD_LABEL_STYLE_BOTH);
-			xfdashboard_label_set_gicon(XFDASHBOARD_LABEL(actor), icon);
+			esdashboard_label_set_style(ESDASHBOARD_LABEL(actor), ESDASHBOARD_LABEL_STYLE_BOTH);
+			esdashboard_label_set_gicon(ESDASHBOARD_LABEL(actor), icon);
 		}
 			else if(iconImage)
 			{
-				xfdashboard_label_set_style(XFDASHBOARD_LABEL(actor), XFDASHBOARD_LABEL_STYLE_BOTH);
-				xfdashboard_label_set_icon_image(XFDASHBOARD_LABEL(actor), CLUTTER_IMAGE(iconImage));
+				esdashboard_label_set_style(ESDASHBOARD_LABEL(actor), ESDASHBOARD_LABEL_STYLE_BOTH);
+				esdashboard_label_set_icon_image(ESDASHBOARD_LABEL(actor), CLUTTER_IMAGE(iconImage));
 			}
 
 		clutter_actor_show(actor);
@@ -836,22 +836,22 @@ static ClutterActor* _xfdashboard_gnome_shell_search_provider_create_result_acto
 }
 
 /* Activate result item */
-static gboolean _xfdashboard_gnome_shell_search_provider_activate_result(XfdashboardSearchProvider* inProvider,
+static gboolean _esdashboard_gnome_shell_search_provider_activate_result(EsdashboardSearchProvider* inProvider,
 																			GVariant *inResultItem,
 																			ClutterActor *inActor,
 																			const gchar **inSearchTerms)
 {
-	XfdashboardGnomeShellSearchProvider				*self;
-	XfdashboardGnomeShellSearchProviderPrivate		*priv;
+	EsdashboardGnomeShellSearchProvider				*self;
+	EsdashboardGnomeShellSearchProviderPrivate		*priv;
 	GError											*error;
 	const gchar										*identifier;
 	GDBusProxy										*proxy;
 	GVariant										*proxyResult;
 
-	g_return_val_if_fail(XFDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider), FALSE);
+	g_return_val_if_fail(ESDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider), FALSE);
 	g_return_val_if_fail(inResultItem, FALSE);
 
-	self=XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
+	self=ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
 	priv=self->priv;
 	error=NULL;
 
@@ -916,19 +916,19 @@ static gboolean _xfdashboard_gnome_shell_search_provider_activate_result(Xfdashb
 }
 
 /* Launch search in external service or application of search provider */
-static gboolean _xfdashboard_gnome_shell_search_provider_launch_search(XfdashboardSearchProvider* inProvider,
+static gboolean _esdashboard_gnome_shell_search_provider_launch_search(EsdashboardSearchProvider* inProvider,
 																		const gchar **inSearchTerms)
 {
-	XfdashboardGnomeShellSearchProvider				*self;
-	XfdashboardGnomeShellSearchProviderPrivate		*priv;
+	EsdashboardGnomeShellSearchProvider				*self;
+	EsdashboardGnomeShellSearchProviderPrivate		*priv;
 	GError											*error;
 	GDBusProxy										*proxy;
 	GVariant										*proxyResult;
 
-	g_return_val_if_fail(XFDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider), FALSE);
+	g_return_val_if_fail(ESDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(inProvider), FALSE);
 	g_return_val_if_fail(inSearchTerms, FALSE);
 
-	self=XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
+	self=ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inProvider);
 	priv=self->priv;
 	error=NULL;
 
@@ -990,10 +990,10 @@ static gboolean _xfdashboard_gnome_shell_search_provider_launch_search(Xfdashboa
 /* IMPLEMENTATION: GObject */
 
 /* Dispose this object */
-static void _xfdashboard_gnome_shell_search_provider_dispose(GObject *inObject)
+static void _esdashboard_gnome_shell_search_provider_dispose(GObject *inObject)
 {
-	XfdashboardGnomeShellSearchProvider			*self=XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inObject);
-	XfdashboardGnomeShellSearchProviderPrivate	*priv=self->priv;
+	EsdashboardGnomeShellSearchProvider			*self=ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(inObject);
+	EsdashboardGnomeShellSearchProviderPrivate	*priv=self->priv;
 
 	/* Release allocated resources */
 	if(priv->gnomeShellID)
@@ -1045,43 +1045,43 @@ static void _xfdashboard_gnome_shell_search_provider_dispose(GObject *inObject)
 	}
 
 	/* Call parent's class dispose method */
-	G_OBJECT_CLASS(xfdashboard_gnome_shell_search_provider_parent_class)->dispose(inObject);
+	G_OBJECT_CLASS(esdashboard_gnome_shell_search_provider_parent_class)->dispose(inObject);
 }
 
 /* Class initialization
  * Override functions in parent classes and define properties
  * and signals
  */
-void xfdashboard_gnome_shell_search_provider_class_init(XfdashboardGnomeShellSearchProviderClass *klass)
+void esdashboard_gnome_shell_search_provider_class_init(EsdashboardGnomeShellSearchProviderClass *klass)
 {
-	XfdashboardSearchProviderClass	*providerClass=XFDASHBOARD_SEARCH_PROVIDER_CLASS(klass);
+	EsdashboardSearchProviderClass	*providerClass=ESDASHBOARD_SEARCH_PROVIDER_CLASS(klass);
 	GObjectClass					*gobjectClass=G_OBJECT_CLASS(klass);
 
 	/* Override functions */
-	gobjectClass->dispose=_xfdashboard_gnome_shell_search_provider_dispose;
+	gobjectClass->dispose=_esdashboard_gnome_shell_search_provider_dispose;
 
-	providerClass->initialize=_xfdashboard_gnome_shell_search_provider_initialize;
-	providerClass->get_icon=_xfdashboard_gnome_shell_search_provider_get_icon;
-	providerClass->get_name=_xfdashboard_gnome_shell_search_provider_get_name;
-	providerClass->get_result_set=_xfdashboard_gnome_shell_search_provider_get_result_set;
-	providerClass->create_result_actor=_xfdashboard_gnome_shell_search_provider_create_result_actor;
-	providerClass->activate_result=_xfdashboard_gnome_shell_search_provider_activate_result;
-	providerClass->launch_search=_xfdashboard_gnome_shell_search_provider_launch_search;
+	providerClass->initialize=_esdashboard_gnome_shell_search_provider_initialize;
+	providerClass->get_icon=_esdashboard_gnome_shell_search_provider_get_icon;
+	providerClass->get_name=_esdashboard_gnome_shell_search_provider_get_name;
+	providerClass->get_result_set=_esdashboard_gnome_shell_search_provider_get_result_set;
+	providerClass->create_result_actor=_esdashboard_gnome_shell_search_provider_create_result_actor;
+	providerClass->activate_result=_esdashboard_gnome_shell_search_provider_activate_result;
+	providerClass->launch_search=_esdashboard_gnome_shell_search_provider_launch_search;
 }
 
 /* Class finalization */
-void xfdashboard_gnome_shell_search_provider_class_finalize(XfdashboardGnomeShellSearchProviderClass *klass)
+void esdashboard_gnome_shell_search_provider_class_finalize(EsdashboardGnomeShellSearchProviderClass *klass)
 {
 }
 
 /* Object initialization
  * Create private structure and set up default values
  */
-void xfdashboard_gnome_shell_search_provider_init(XfdashboardGnomeShellSearchProvider *self)
+void esdashboard_gnome_shell_search_provider_init(EsdashboardGnomeShellSearchProvider *self)
 {
-	XfdashboardGnomeShellSearchProviderPrivate		*priv;
+	EsdashboardGnomeShellSearchProviderPrivate		*priv;
 
-	self->priv=priv=xfdashboard_gnome_shell_search_provider_get_instance_private(self);
+	self->priv=priv=esdashboard_gnome_shell_search_provider_get_instance_private(self);
 
 	/* Set up default values */
 	priv->gnomeShellID=NULL;

@@ -16,10 +16,10 @@ DISTCLEANFILES = \
 SUBDIRS = \
 	data \
 	po \
-	libxfdashboard \
+	libesdashboard \
 	plugins \
 	settings \
-	xfdashboard
+	esdashboard
 
 distuninstallcheck_listfiles =                                          \
         find . -type f -print | grep -v ./share/icons/hicolor/icon-theme.cache

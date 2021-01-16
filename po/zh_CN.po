@@ -6,7 +6,7 @@
 # Translators:
 # elhuevogrande <kbusch21@yahoo.com>, 2020
 # Chipong Luo <chipong.luo@yahoo.com>, 2020
-# Nick Schermer <nick@xfce.org>, 2020
+# Nick Schermer <nick@expidus.org>, 2020
 # Mingcong Bai <jeffbai@aosc.xyz>, 2020
 # No Body, 2020
 # YuHeng Chou <wojiushixxx@126.com>, 2020
@@ -20,67 +20,67 @@ msgstr ""
 "POT-Creation-Date: 2020-12-23 12:48+0100\n"
 "PO-Revision-Date: 2020-10-07 10:59+0000\n"
 "Last-Translator: 玉堂白鹤 <yjwork@qq.com>, 2020\n"
-"Language-Team: Chinese (China) (https://www.transifex.com/xfce/teams/16840/zh_CN/)\n"
+"Language-Team: Chinese (China) (https://www.transifex.com/expidus/teams/16840/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../data/xfdashboard.desktop.in.in.h:1
-#: ../data/xfdashboard-autostart.desktop.in.in.h:1
-msgid "Xfdashboard"
-msgstr "Xfdashboard"
+#: ../data/esdashboard.desktop.in.in.h:1
+#: ../data/esdashboard-autostart.desktop.in.in.h:1
+msgid "Esdashboard"
+msgstr "Esdashboard"
 
-#: ../data/xfdashboard.desktop.in.in.h:2
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:1
-msgid "Maybe a Gnome shell like dashboard for Xfce"
-msgstr "也许是一个适用于 Xfce，像仪表板的 Gnome shell"
+#: ../data/esdashboard.desktop.in.in.h:2
+#: ../data/appdata/esdashboard.appdata.xml.in.h:1
+msgid "Maybe a Gnome shell like dashboard for Expidus"
+msgstr "也许是一个适用于 Expidus，像仪表板的 Gnome shell"
 
-#: ../data/xfdashboard-autostart.desktop.in.in.h:2
-msgid "Start xfdashboard as daemon in background"
-msgstr "xfdashboard 以守护进程启动"
+#: ../data/esdashboard-autostart.desktop.in.in.h:2
+msgid "Start esdashboard as daemon in background"
+msgstr "esdashboard 以守护进程启动"
 
-#: ../data/xfdashboard-settings.desktop.in.in.h:1
-msgid "Xfdashboard settings"
-msgstr "Xfdashboard 设置"
+#: ../data/esdashboard-settings.desktop.in.in.h:1
+msgid "Esdashboard settings"
+msgstr "Esdashboard 设置"
 
-#: ../data/xfdashboard-settings.desktop.in.in.h:2
-msgid "Configure xfdashboard"
-msgstr "配置 xfdashboard"
+#: ../data/esdashboard-settings.desktop.in.in.h:2
+msgid "Configure esdashboard"
+msgstr "配置 esdashboard"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:2
+#: ../data/appdata/esdashboard.appdata.xml.in.h:2
 msgid ""
-"Xfdashboard provides a GNOME shell dashboard like interface for use with "
-"Xfce desktop."
-msgstr "Xfdashboard 提供了一个 GNOME shell 仪表盘的接口，用于与Xfce桌面使用。"
+"Esdashboard provides a GNOME shell dashboard like interface for use with "
+"Expidus desktop."
+msgstr "Esdashboard 提供了一个 GNOME shell 仪表盘的接口，用于与Expidus桌面使用。"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:3
+#: ../data/appdata/esdashboard.appdata.xml.in.h:3
 msgid ""
 "It can be configured to run to any keyboard shortcut and when executed "
 "provides an overview of applications currently open enabling the user to "
-"switch between different applications. The search feature works like Xfce's "
+"switch between different applications. The search feature works like Expidus's "
 "app finder which makes it convenient to search for and start applications."
 msgstr ""
-"可以将其配置为运行到任何键盘快捷键，并且在执行时可以概述当前打开的应用程序，从而使用户可以在不同的应用程序之间进行切换。 搜索功能的作用类似于 Xfce"
+"可以将其配置为运行到任何键盘快捷键，并且在执行时可以概述当前打开的应用程序，从而使用户可以在不同的应用程序之间进行切换。 搜索功能的作用类似于 Expidus"
 " 的 app finder，它使搜索和启动应用程序变得非常方便。"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:4
+#: ../data/appdata/esdashboard.appdata.xml.in.h:4
 msgid "Browsing applications"
 msgstr "浏览应用"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:5
+#: ../data/appdata/esdashboard.appdata.xml.in.h:5
 msgid "Searching applications"
 msgstr "搜索应用"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:6
+#: ../data/appdata/esdashboard.appdata.xml.in.h:6
 msgid ""
 "This stable version introduces lots of new features like animations, pop-up "
 "menus, multiple backend and support for jumplists etc. It also includes lots"
 " of new and updated translations."
 msgstr "这个稳定的版本引入了许多新功能，比如动画，弹出菜单，多个后端和支持跳转列表等。它还包括许多新增和更新的翻译。"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:7
+#: ../data/appdata/esdashboard.appdata.xml.in.h:7
 msgid ""
 "This stable version introduces lots of new features like plugins and "
 "application tracker. It also contains a huge collection of other larger and "
@@ -88,8 +88,8 @@ msgid ""
 msgstr "此稳定版本引入了许多新的特性(比如插件和应用追踪器).它还包含大量较大或较小的改进。"
 
 #: ../data/data/preferences.ui.h:1
-msgid "<span size=\"large\"><b>Xfdashboard settings</b></span>"
-msgstr "<span size=\"large\"><b>Xfdashboard 设置</b></span>"
+msgid "<span size=\"large\"><b>Esdashboard settings</b></span>"
+msgstr "<span size=\"large\"><b>Esdashboard 设置</b></span>"
 
 #: ../data/data/preferences.ui.h:2
 msgid "Configure plugin"
@@ -97,11 +97,11 @@ msgstr "配置插件"
 
 #: ../data/data/preferences.ui.h:3
 msgid ""
-"<span size=\"large\"><b>Xfdashboard settings</b></span>\n"
-"Configure xfdashboard"
+"<span size=\"large\"><b>Esdashboard settings</b></span>\n"
+"Configure esdashboard"
 msgstr ""
-"<span size=\"large\"><b>Xfdashboard 设置</b></span>\n"
-"配置 xfdashboard"
+"<span size=\"large\"><b>Esdashboard 设置</b></span>\n"
+"配置 esdashboard"
 
 #: ../data/data/preferences.ui.h:5
 msgid "<b>General settings:</b>"
@@ -113,23 +113,23 @@ msgstr "恢复时重置搜索视图"
 
 #: ../data/data/preferences.ui.h:7
 msgid ""
-"If enabled the search view will be resetted when xfdashboard is resumed. That means the active view is switched back to last view active before last search was started and search box will be emptied.\n"
+"If enabled the search view will be resetted when esdashboard is resumed. That means the active view is switched back to last view active before last search was started and search box will be emptied.\n"
 "\n"
-"<b>NOTE:</b> This setting only takes effect if xfdashboard is running in daemon mode. "
+"<b>NOTE:</b> This setting only takes effect if esdashboard is running in daemon mode. "
 msgstr ""
-"如果启用, 则在恢复 xfdashboard 时重置搜索视图。这意味着活动视图将切换回上次搜索开始前的最后一个活动视图，搜索框将清空。\n"
+"如果启用, 则在恢复 esdashboard 时重置搜索视图。这意味着活动视图将切换回上次搜索开始前的最后一个活动视图，搜索框将清空。\n"
 "\n"
-"<b>备注: </b>此设置仅在 xfdashboard 以守护进程运行时生效。"
+"<b>备注: </b>此设置仅在 esdashboard 以守护进程运行时生效。"
 
 #: ../data/data/preferences.ui.h:10
 msgid ""
-"When xfdashboard resumes the selected view will be activated.\n"
+"When esdashboard resumes the selected view will be activated.\n"
 "\n"
-"<b>NOTE:</b> This setting only takes effect if xfdashboard is running in daemon mode."
+"<b>NOTE:</b> This setting only takes effect if esdashboard is running in daemon mode."
 msgstr ""
-"当 xfdashboard 恢复时，所选视图将被激活。\n"
+"当 esdashboard 恢复时，所选视图将被激活。\n"
 "\n"
-"<b>注意: </b> 此设置仅在 xfdashboard 以守护进程运行时生效。"
+"<b>注意: </b> 此设置仅在 esdashboard 以守护进程运行时生效。"
 
 #: ../data/data/preferences.ui.h:13
 msgid "Switch to view when resumed:"
@@ -165,11 +165,11 @@ msgstr ""
 
 #: ../data/data/preferences.ui.h:22
 msgid ""
-"This value defines how fast the window content should be created. While the value 'immediate' tells xfdashboard to create the window content at the time it is requested, all other values will set up a queue and value defines how fast the queue will be processed.\n"
+"This value defines how fast the window content should be created. While the value 'immediate' tells esdashboard to create the window content at the time it is requested, all other values will set up a queue and value defines how fast the queue will be processed.\n"
 "\n"
 "<b>NOTE:</b> Only change this value from 'immediate' to other value if your graphics card, driver or system is too slow to create the window contents immediately. You have to try each value to find the one fitting your system."
 msgstr ""
-"此值定义应多快创建窗口内容。 虽然 '立即' 这个值告诉 xfdashboard 在请求时立即创建窗口内容，但所有其它值将建立一个队列，而该值定义队列将被处理的速度。\n"
+"此值定义应多快创建窗口内容。 虽然 '立即' 这个值告诉 esdashboard 在请求时立即创建窗口内容，但所有其它值将建立一个队列，而该值定义队列将被处理的速度。\n"
 "\n"
 "<b>注意:</b>仅在显卡，驱动程序或系统太慢而无法立即创建窗口内容时，才将此值从 '立即' 更改为其他值。 您须尝试每个值才可能找到适合您系统的值。"
 
@@ -284,252 +284,252 @@ msgstr "<b>许可:</b>"
 msgid "Plugins"
 msgstr "插件"
 
-#: ../data/themes/xfdashboard/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard"
-msgstr "xfdashboard"
+#: ../data/themes/esdashboard/esdashboard.theme.in.in.h:1
+msgid "esdashboard"
+msgstr "esdashboard"
 
-#: ../data/themes/xfdashboard/xfdashboard.theme.in.in.h:2
-msgid "Default theme for xfdashboard"
-msgstr "xfdashboard 默认主题"
+#: ../data/themes/esdashboard/esdashboard.theme.in.in.h:2
+msgid "Default theme for esdashboard"
+msgstr "esdashboard 默认主题"
 
-#: ../data/themes/xfdashboard-auber/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-auber"
-msgstr "xfdashboard-auber"
+#: ../data/themes/esdashboard-auber/esdashboard.theme.in.in.h:1
+msgid "esdashboard-auber"
+msgstr "esdashboard-auber"
 
-#: ../data/themes/xfdashboard-auber/xfdashboard.theme.in.in.h:2
-msgid "Aubergine theme for xfdashboard"
-msgstr "xfdashboard Aubergine 主题"
+#: ../data/themes/esdashboard-auber/esdashboard.theme.in.in.h:2
+msgid "Aubergine theme for esdashboard"
+msgstr "esdashboard Aubergine 主题"
 
-#: ../data/themes/xfdashboard-blue/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-blue"
-msgstr "xfdashboard-blue"
+#: ../data/themes/esdashboard-blue/esdashboard.theme.in.in.h:1
+msgid "esdashboard-blue"
+msgstr "esdashboard-blue"
 
-#: ../data/themes/xfdashboard-blue/xfdashboard.theme.in.in.h:2
-msgid "Blue theme for xfdashboard"
-msgstr "xfdashboard 蓝色主题"
+#: ../data/themes/esdashboard-blue/esdashboard.theme.in.in.h:2
+msgid "Blue theme for esdashboard"
+msgstr "esdashboard 蓝色主题"
 
-#: ../data/themes/xfdashboard-dark/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-dark"
-msgstr "xfdashboard-dark"
+#: ../data/themes/esdashboard-dark/esdashboard.theme.in.in.h:1
+msgid "esdashboard-dark"
+msgstr "esdashboard-dark"
 
-#: ../data/themes/xfdashboard-dark/xfdashboard.theme.in.in.h:2
-msgid "Dark theme for xfdashboard"
-msgstr "xfdashboard 暗色主题"
+#: ../data/themes/esdashboard-dark/esdashboard.theme.in.in.h:2
+msgid "Dark theme for esdashboard"
+msgstr "esdashboard 暗色主题"
 
-#: ../data/themes/xfdashboard-mint/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-mint"
-msgstr "xfdashboard-mint"
+#: ../data/themes/esdashboard-mint/esdashboard.theme.in.in.h:1
+msgid "esdashboard-mint"
+msgstr "esdashboard-mint"
 
-#: ../data/themes/xfdashboard-mint/xfdashboard.theme.in.in.h:2
-msgid "Fresh-green flavored theme for xfdashboard"
-msgstr "xfdashboard 清新绿色主题"
+#: ../data/themes/esdashboard-mint/esdashboard.theme.in.in.h:2
+msgid "Fresh-green flavored theme for esdashboard"
+msgstr "esdashboard 清新绿色主题"
 
-#: ../data/themes/xfdashboard-moranga/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-moranga"
-msgstr "xfdashboard-moranga"
+#: ../data/themes/esdashboard-moranga/esdashboard.theme.in.in.h:1
+msgid "esdashboard-moranga"
+msgstr "esdashboard-moranga"
 
-#: ../data/themes/xfdashboard-moranga/xfdashboard.theme.in.in.h:2
-msgid "Moranga theme for xfdashboard"
-msgstr "xfdashboard 的 Moranga 主题"
+#: ../data/themes/esdashboard-moranga/esdashboard.theme.in.in.h:2
+msgid "Moranga theme for esdashboard"
+msgstr "esdashboard 的 Moranga 主题"
 
-#: ../data/themes/xfdashboard-wine/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-wine"
-msgstr "xfdashboard-wine"
+#: ../data/themes/esdashboard-wine/esdashboard.theme.in.in.h:1
+msgid "esdashboard-wine"
+msgstr "esdashboard-wine"
 
-#: ../data/themes/xfdashboard-wine/xfdashboard.theme.in.in.h:2
-msgid "Red wine theme for xfdashboard"
-msgstr "xfdashboard 红色 wine 主题"
+#: ../data/themes/esdashboard-wine/esdashboard.theme.in.in.h:2
+msgid "Red wine theme for esdashboard"
+msgstr "esdashboard 红色 wine 主题"
 
-#: ../libxfdashboard/application-button.c:262
+#: ../libesdashboard/application-button.c:262
 #, c-format
 msgid "Could not execute action '%s' for application '%s': %s"
 msgstr "无法对应用 ‘’%s 处理动作 '%s': '%s'"
 
-#: ../libxfdashboard/application-button.c:265 ../settings/plugins.c:826
+#: ../libesdashboard/application-button.c:265 ../settings/plugins.c:826
 #: ../settings/main.c:63
 msgid "Unknown error"
 msgstr "未知错误"
 
-#: ../libxfdashboard/application-button.c:282
+#: ../libesdashboard/application-button.c:282
 #, c-format
 msgid "Executed action '%s' for application '%s'"
 msgstr "已处理对应用 ‘%s’ 的动作 '%s'"
 
-#: ../libxfdashboard/application-button.c:743
-#: ../libxfdashboard/application-button.c:761
-#: ../libxfdashboard/applications-search-provider.c:754
-#: ../libxfdashboard/applications-view.c:334
-#: ../libxfdashboard/quicklaunch.c:352 ../libxfdashboard/quicklaunch.c:400
-#: ../libxfdashboard/quicklaunch.c:458
+#: ../libesdashboard/application-button.c:743
+#: ../libesdashboard/application-button.c:761
+#: ../libesdashboard/applications-search-provider.c:754
+#: ../libesdashboard/applications-view.c:334
+#: ../libesdashboard/quicklaunch.c:352 ../libesdashboard/quicklaunch.c:400
+#: ../libesdashboard/quicklaunch.c:458
 #, c-format
 msgid "Launching application '%s' failed: %s"
 msgstr "启动应用'%s'错误:'%s'"
 
-#: ../libxfdashboard/application-button.c:745
-#: ../libxfdashboard/quicklaunch.c:354
+#: ../libesdashboard/application-button.c:745
+#: ../libesdashboard/quicklaunch.c:354
 msgid "No information available for application"
 msgstr "此应用没有可获得的介绍"
 
-#: ../libxfdashboard/application-button.c:763
-#: ../libxfdashboard/application.c:308 ../libxfdashboard/application.c:618
-#: ../libxfdashboard/applications-search-provider.c:756
-#: ../libxfdashboard/applications-view.c:336
-#: ../libxfdashboard/quicklaunch.c:460
+#: ../libesdashboard/application-button.c:763
+#: ../libesdashboard/application.c:308 ../libesdashboard/application.c:618
+#: ../libesdashboard/applications-search-provider.c:756
+#: ../libesdashboard/applications-view.c:336
+#: ../libesdashboard/quicklaunch.c:460
 msgid "unknown error"
 msgstr "未知错误"
 
-#: ../libxfdashboard/application-button.c:774
-#: ../libxfdashboard/applications-search-provider.c:767
-#: ../libxfdashboard/applications-view.c:347
-#: ../libxfdashboard/quicklaunch.c:471
+#: ../libesdashboard/application-button.c:774
+#: ../libesdashboard/applications-search-provider.c:767
+#: ../libesdashboard/applications-view.c:347
+#: ../libesdashboard/quicklaunch.c:471
 #, c-format
 msgid "Application '%s' launched"
 msgstr "应用'%s'已启动"
 
-#: ../libxfdashboard/application.c:306
+#: ../libesdashboard/application.c:306
 #, c-format
 msgid "Could not load theme '%s': %s"
 msgstr "无法加载主题'%s': %s"
 
-#: ../libxfdashboard/application.c:527
+#: ../libesdashboard/application.c:527
 #, c-format
 msgid "Welcome to %s (%s)!"
 msgstr "欢迎使用 %s (%s)!"
 
-#: ../libxfdashboard/application.c:529
+#: ../libesdashboard/application.c:529
 #, c-format
 msgid "Welcome to %s!"
 msgstr "欢迎使用 %s!"
 
-#: ../libxfdashboard/application.c:576
+#: ../libesdashboard/application.c:576
 msgid "Fork to background"
 msgstr "分叉到背景"
 
-#: ../libxfdashboard/application.c:577
+#: ../libesdashboard/application.c:577
 msgid "Quit running instance"
 msgstr "退出运行中的实例"
 
-#: ../libxfdashboard/application.c:578
+#: ../libesdashboard/application.c:578
 msgid "Restart running instance"
 msgstr "重启运行实例"
 
-#: ../libxfdashboard/application.c:579
+#: ../libesdashboard/application.c:579
 msgid ""
 "Toggles visibility if running instance was started in daemon mode otherwise "
 "it quits running non-daemon instance"
 msgstr "如果以守护程序模式启动的此正在运行的程序实例，则切换可见性，否则它会退出以非守护程序模式运行中的实例"
 
-#: ../libxfdashboard/application.c:580
+#: ../libesdashboard/application.c:580
 msgid "The ID of view to switch to on startup or resume"
 msgstr "在启动或唤醒时切换到的视图的 ID"
 
-#: ../libxfdashboard/application.c:581
+#: ../libesdashboard/application.c:581
 msgid "Show version"
 msgstr "显示版本"
 
-#: ../libxfdashboard/application.c:600
-msgid "A Gnome Shell like dashboard for Xfce4 - version "
-msgstr "为 Xfce4 - 版本开发的一个类似仪表板的 Gnome Shell"
+#: ../libesdashboard/application.c:600
+msgid "A Gnome Shell like dashboard for Expidus1 - version "
+msgstr "为 Expidus1 - 版本开发的一个类似仪表板的 Gnome Shell"
 
 #. Show error
-#: ../libxfdashboard/application.c:617
+#: ../libesdashboard/application.c:617
 #, c-format
 msgid "%s\n"
 msgstr "%s\n"
 
-#: ../libxfdashboard/applications-search-provider.c:838
-#: ../libxfdashboard/applications-view.c:417
-#: ../libxfdashboard/quicklaunch.c:682
+#: ../libesdashboard/applications-search-provider.c:838
+#: ../libesdashboard/applications-view.c:417
+#: ../libesdashboard/quicklaunch.c:682
 msgid "Launch"
 msgstr "启动"
 
 #. Set up view
 #. Add "applications" button
-#: ../libxfdashboard/applications-search-provider.c:1175
-#: ../libxfdashboard/applications-view.c:1587
-#: ../libxfdashboard/quicklaunch.c:3288
+#: ../libesdashboard/applications-search-provider.c:1175
+#: ../libesdashboard/applications-view.c:1587
+#: ../libesdashboard/quicklaunch.c:3288
 msgid "Applications"
 msgstr "应用"
 
-#: ../libxfdashboard/applications-view.c:545
-#: ../libxfdashboard/applications-view.c:546
-#: ../libxfdashboard/applications-view.c:657
-#: ../libxfdashboard/applications-view.c:658
+#: ../libesdashboard/applications-view.c:545
+#: ../libesdashboard/applications-view.c:546
+#: ../libesdashboard/applications-view.c:657
+#: ../libesdashboard/applications-view.c:658
 msgid "Back"
 msgstr "后退"
 
-#: ../libxfdashboard/applications-view.c:545
-#: ../libxfdashboard/applications-view.c:657
+#: ../libesdashboard/applications-view.c:545
+#: ../libesdashboard/applications-view.c:657
 msgid "Go back to previous menu"
 msgstr "返回到上一级菜单"
 
-#: ../libxfdashboard/applications-view.c:685
-#: ../libxfdashboard/applications-view.c:686
+#: ../libesdashboard/applications-view.c:685
+#: ../libesdashboard/applications-view.c:686
 msgid "All applications"
 msgstr "所有应用"
 
-#: ../libxfdashboard/applications-view.c:685
+#: ../libesdashboard/applications-view.c:685
 msgid "List of all installed applications"
 msgstr "所有已安装的应用列表"
 
-#: ../libxfdashboard/quicklaunch.c:402
+#: ../libesdashboard/quicklaunch.c:402
 msgid "No windows to activate for application"
 msgstr "没有可以为应用激活的窗口"
 
-#: ../libxfdashboard/quicklaunch.c:525 ../libxfdashboard/quicklaunch.c:1261
-#: ../libxfdashboard/quicklaunch.c:2130
+#: ../libesdashboard/quicklaunch.c:525 ../libesdashboard/quicklaunch.c:1261
+#: ../libesdashboard/quicklaunch.c:2130
 #, c-format
 msgid "Favourite '%s' removed"
 msgstr "收藏 '%s' 已删除"
 
-#: ../libxfdashboard/quicklaunch.c:624 ../libxfdashboard/quicklaunch.c:943
-#: ../libxfdashboard/quicklaunch.c:2063
+#: ../libesdashboard/quicklaunch.c:624 ../libesdashboard/quicklaunch.c:943
+#: ../libesdashboard/quicklaunch.c:2063
 #, c-format
 msgid "Favourite '%s' added"
 msgstr "收藏 '%s' 已添加"
 
-#: ../libxfdashboard/quicklaunch.c:705
+#: ../libesdashboard/quicklaunch.c:705
 msgid "Remove from favourites"
 msgstr "从收藏中移除"
 
-#: ../libxfdashboard/quicklaunch.c:719
+#: ../libesdashboard/quicklaunch.c:719
 msgid "Add to favourites"
 msgstr "添加到收藏"
 
 #. Next add trash button to box but initially hidden and register as drop
 #. target
-#: ../libxfdashboard/quicklaunch.c:3295
+#: ../libesdashboard/quicklaunch.c:3295
 msgid "Remove"
 msgstr "移除"
 
-#: ../libxfdashboard/search-result-container.c:664
-#: ../libxfdashboard/search-result-container.c:1734
+#: ../libesdashboard/search-result-container.c:664
+#: ../libesdashboard/search-result-container.c:1734
 #, c-format
 msgid "Show %d more results..."
 msgstr "显示 %d 更多结果..."
 
 #. Get text to set at "all"-label
-#: ../libxfdashboard/search-result-container.c:686
+#: ../libesdashboard/search-result-container.c:686
 #, c-format
 msgid "Show all %d results..."
 msgstr "显示全部 %d 结果..."
 
-#: ../libxfdashboard/search-view.c:979
+#: ../libesdashboard/search-view.c:979
 #, c-format
 msgid "No results found for '%s'"
 msgstr "在 ‘%s’ 中没有找到结果"
 
 #. Set up view (Note: Search view is disabled by default!)
-#: ../libxfdashboard/search-view.c:1715
+#: ../libesdashboard/search-view.c:1715
 msgid "Search"
 msgstr "搜索"
 
-#: ../libxfdashboard/stage.c:1124
+#: ../libesdashboard/stage.c:1124
 msgid "Just type to search..."
 msgstr "只需键入搜索..."
 
 #. Set up view
-#: ../libxfdashboard/windows-view.c:2317
+#: ../libesdashboard/windows-view.c:2317
 msgid "Windows"
 msgstr "窗口"
 
@@ -637,9 +637,9 @@ msgstr "触发角"
 
 #: ../plugins/hot-corner/plugin.c:468
 msgid ""
-"Activates xfdashboard when pointer is moved to a configured corner of "
+"Activates esdashboard when pointer is moved to a configured corner of "
 "monitor"
-msgstr "当指针移动到显示器的配置角时激活 xfdashboard"
+msgstr "当指针移动到显示器的配置角时激活 esdashboard"
 
 #: ../plugins/middle-click-window-close/plugin.c:71
 msgid "Middle-click window close"

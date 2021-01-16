@@ -1,7 +1,7 @@
 EXTRA_DIST = \
 	$(Data_DATA)
 
-Datadir = $(datadir)/xfdashboard
+Datadir = $(datadir)/esdashboard
 
 Data_DATA = \
 	bindings.xml \

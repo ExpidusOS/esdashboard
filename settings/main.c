@@ -25,20 +25,20 @@
 #include "config.h"
 #endif
 
-#include <libxfdashboard/utils.h>
+#include <libesdashboard/utils.h>
 #include <glib/gi18n-lib.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <gtk/gtkx.h>
-#include <libxfce4util/libxfce4util.h>
-#include <xfconf/xfconf.h>
+#include <libexpidus1util/libexpidus1util.h>
+#include <esconf/esconf.h>
 
 #include "settings.h"
 
 /* Main entry point */
 int main(int argc, char **argv)
 {
-	XfdashboardSettings		*settings=NULL;
+	EsdashboardSettings		*settings=NULL;
 	GError					*error=NULL;
 	gboolean				optionsVersion=FALSE;
 	Window					optionsSocketID=0;
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 
 #ifdef ENABLE_NLS
 	/* Set up localization */
-	xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+	expidus_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 #endif
 
 	/* Initialize GTK+ */
@@ -76,12 +76,12 @@ int main(int argc, char **argv)
 		return(0);
 	}
 
-	/* Initialize Xfconf */
-	if(G_UNLIKELY(!xfconf_init(&error)))
+	/* Initialize Esconf */
+	if(G_UNLIKELY(!esconf_init(&error)))
 	{
 		if(G_LIKELY(error))
 		{
-			g_error("Failed to initialize xfconf: %s",
+			g_error("Failed to initialize esconf: %s",
 					error ? error->message : "Unknown error");
 			if(error) g_error_free(error);
 		}
@@ -90,29 +90,29 @@ int main(int argc, char **argv)
 	}
 
 	/* Create settings instance */
-	settings=xfdashboard_settings_new();
+	settings=esdashboard_settings_new();
 	if(G_UNLIKELY(!settings))
 	{
 		g_error("Could not create the settings dialog.");
 
-		/* Shutdown xfconf */
-		xfconf_shutdown();
+		/* Shutdown esconf */
+		esconf_shutdown();
 
 		return(1);
 	}
 
 	/* Register GValue transformation functions */
-	xfdashboard_register_gvalue_transformation_funcs();
+	esdashboard_register_gvalue_transformation_funcs();
 
 	/* Create and show settings dialog as normal application window
-	 * if no socket ID for xfce settings manager is given ...
+	 * if no socket ID for expidus settings manager is given ...
 	 */
 	if(G_UNLIKELY(!optionsSocketID))
 	{
 		GtkWidget			*dialog;
 
 		/* Create and show dialog */
-		dialog=xfdashboard_settings_create_dialog(settings);
+		dialog=esdashboard_settings_create_dialog(settings);
 		gtk_widget_show(dialog);
 
 		/* Connect signals */
@@ -127,15 +127,15 @@ int main(int argc, char **argv)
 		/* Release allocated resources */
 		gtk_widget_destroy(dialog);
 	}
-		/* ... otherwise show dialog in xfce settings manager
+		/* ... otherwise show dialog in expidus settings manager
 		 * by plugging in the dialog via given socket ID
 		 */
 		else
 		{
 			GtkWidget		*plug;
 
-			/* Create "pluggable" dialog for xfce settings manager */
-			plug=xfdashboard_settings_create_plug(settings, optionsSocketID);
+			/* Create "pluggable" dialog for expidus settings manager */
+			plug=esdashboard_settings_create_plug(settings, optionsSocketID);
 			gtk_widget_show(plug);
 
 			/* Connect signals */
@@ -154,8 +154,8 @@ int main(int argc, char **argv)
 	/* Release allocated resources */
 	g_object_unref(settings);
 
-	/* Shutdown xfconf */
-	xfconf_shutdown();
+	/* Shutdown esconf */
+	esconf_shutdown();
 
 	/* Return from application */
 	return(0);

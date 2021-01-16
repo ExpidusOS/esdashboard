@@ -27,37 +27,37 @@
 
 #include "hot-corner-settings.h"
 
-#include <libxfdashboard/libxfdashboard.h>
+#include <libesdashboard/libesdashboard.h>
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 #include <math.h>
 
 
 /* Define this class in GObject system */
-struct _XfdashboardHotCornerSettingsPrivate
+struct _EsdashboardHotCornerSettingsPrivate
 {
 	/* Properties related */
-	XfdashboardHotCornerSettingsActivationCorner	activationCorner;
+	EsdashboardHotCornerSettingsActivationCorner	activationCorner;
 	gint											activationRadius;
 	gint64											activationDuration;
 	gboolean										primaryMonitorOnly;
 
 	/* Instance related */
-	XfconfChannel									*xfconfChannel;
-	guint											xfconfActivationCornerBindingID;
-	guint											xfconfActivationRadiusBindingID;
-	guint											xfconfActivationDurationBindingID;
-	guint											xfconfPrimaryMonitorOnlyBindingID;
+	EsconfChannel									*esconfChannel;
+	guint											esconfActivationCornerBindingID;
+	guint											esconfActivationRadiusBindingID;
+	guint											esconfActivationDurationBindingID;
+	guint											esconfPrimaryMonitorOnlyBindingID;
 };
 
-G_DEFINE_DYNAMIC_TYPE_EXTENDED(XfdashboardHotCornerSettings,
-								xfdashboard_hot_corner_settings,
+G_DEFINE_DYNAMIC_TYPE_EXTENDED(EsdashboardHotCornerSettings,
+								esdashboard_hot_corner_settings,
 								G_TYPE_OBJECT,
 								0,
-								G_ADD_PRIVATE_DYNAMIC(XfdashboardHotCornerSettings))
+								G_ADD_PRIVATE_DYNAMIC(EsdashboardHotCornerSettings))
 
 /* Define this class in this plugin */
-XFDASHBOARD_DEFINE_PLUGIN_TYPE(xfdashboard_hot_corner_settings);
+ESDASHBOARD_DEFINE_PLUGIN_TYPE(esdashboard_hot_corner_settings);
 
 /* Properties */
 enum
@@ -72,12 +72,12 @@ enum
 	PROP_LAST
 };
 
-static GParamSpec* XfdashboardHotCornerSettingsProperties[PROP_LAST]={ 0, };
+static GParamSpec* EsdashboardHotCornerSettingsProperties[PROP_LAST]={ 0, };
 
 
-/* IMPLEMENTATION: Enum XFDASHBOARD_TYPE_HOT_CORNER_SETTINGS_ACTIVATION_CORNER */
+/* IMPLEMENTATION: Enum ESDASHBOARD_TYPE_HOT_CORNER_SETTINGS_ACTIVATION_CORNER */
 
-GType xfdashboard_hot_corner_settings_activation_corner_get_type(void)
+GType esdashboard_hot_corner_settings_activation_corner_get_type(void)
 {
 	static volatile gsize	g_define_type_id__volatile=0;
 
@@ -85,14 +85,14 @@ GType xfdashboard_hot_corner_settings_activation_corner_get_type(void)
 	{
 		static const GEnumValue values[]=
 		{
-			{ XFDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_LEFT, "XFDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_LEFT", "top-left" },
-			{ XFDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_RIGHT, "XFDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_RIGHT", "top-right" },
-			{ XFDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_BOTTOM_LEFT, "XFDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_BOTTOM_LEFT", "bottom-left" },
-			{ XFDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_BOTTOM_RIGHT, "XFDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_BOTTOM_RIGHT", "bottom-right" },
+			{ ESDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_LEFT, "ESDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_LEFT", "top-left" },
+			{ ESDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_RIGHT, "ESDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_RIGHT", "top-right" },
+			{ ESDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_BOTTOM_LEFT, "ESDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_BOTTOM_LEFT", "bottom-left" },
+			{ ESDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_BOTTOM_RIGHT, "ESDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_BOTTOM_RIGHT", "bottom-right" },
 			{ 0, NULL, NULL }
 		};
 
-		GType	g_define_type_id=g_enum_register_static(g_intern_static_string("XfdashboardHotCornerSettingsActivationCorner"), values);
+		GType	g_define_type_id=g_enum_register_static(g_intern_static_string("EsdashboardHotCornerSettingsActivationCorner"), values);
 		g_once_init_leave(&g_define_type_id__volatile, g_define_type_id);
 	}
 
@@ -103,23 +103,23 @@ GType xfdashboard_hot_corner_settings_activation_corner_get_type(void)
 /* IMPLEMENTATION: Private variables and methods */
 #define POLL_POINTER_POSITION_INTERVAL			100
 
-#define XFDASHBOARD_XFCONF_CHANNEL				"xfdashboard"
+#define ESDASHBOARD_ESCONF_CHANNEL				"esdashboard"
 
-#define ACTIVATION_CORNER_XFCONF_PROP			"/plugins/"PLUGIN_ID"/activation-corner"
-#define DEFAULT_ACTIVATION_CORNER				XFDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_LEFT
+#define ACTIVATION_CORNER_ESCONF_PROP			"/plugins/"PLUGIN_ID"/activation-corner"
+#define DEFAULT_ACTIVATION_CORNER				ESDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_LEFT
 
-#define ACTIVATION_RADIUS_XFCONF_PROP			"/plugins/"PLUGIN_ID"/activation-radius"
+#define ACTIVATION_RADIUS_ESCONF_PROP			"/plugins/"PLUGIN_ID"/activation-radius"
 #define DEFAULT_ACTIVATION_RADIUS				4
 
-#define ACTIVATION_DURATION_XFCONF_PROP			"/plugins/"PLUGIN_ID"/activation-duration"
+#define ACTIVATION_DURATION_ESCONF_PROP			"/plugins/"PLUGIN_ID"/activation-duration"
 #define DEFAULT_ACTIVATION_DURATION				300
 
-#define PRIMARY_MONITOR_ONLY_XFCONF_PROP		"/plugins/"PLUGIN_ID"/primary-monitor-only"
+#define PRIMARY_MONITOR_ONLY_ESCONF_PROP		"/plugins/"PLUGIN_ID"/primary-monitor-only"
 #define DEFAULT_PRIMARY_MONITOR_ONLY			TRUE
 
 
-typedef struct _XfdashboardHotCornerSettingsBox		XfdashboardHotCornerSettingsBox;
-struct _XfdashboardHotCornerSettingsBox
+typedef struct _EsdashboardHotCornerSettingsBox		EsdashboardHotCornerSettingsBox;
+struct _EsdashboardHotCornerSettingsBox
 {
 	gint		x1, y1;
 	gint		x2, y2;
@@ -129,69 +129,69 @@ struct _XfdashboardHotCornerSettingsBox
 /* IMPLEMENTATION: GObject */
 
 /* Dispose this object */
-static void _xfdashboard_hot_corner_settings_dispose(GObject *inObject)
+static void _esdashboard_hot_corner_settings_dispose(GObject *inObject)
 {
-	XfdashboardHotCornerSettings			*self=XFDASHBOARD_HOT_CORNER_SETTINGS(inObject);
-	XfdashboardHotCornerSettingsPrivate		*priv=self->priv;
+	EsdashboardHotCornerSettings			*self=ESDASHBOARD_HOT_CORNER_SETTINGS(inObject);
+	EsdashboardHotCornerSettingsPrivate		*priv=self->priv;
 
 	/* Release allocated resources */
-	if(priv->xfconfActivationCornerBindingID)
+	if(priv->esconfActivationCornerBindingID)
 	{
-		xfconf_g_property_unbind(priv->xfconfActivationCornerBindingID);
-		priv->xfconfActivationCornerBindingID=0;
+		esconf_g_property_unbind(priv->esconfActivationCornerBindingID);
+		priv->esconfActivationCornerBindingID=0;
 	}
 
-	if(priv->xfconfActivationRadiusBindingID)
+	if(priv->esconfActivationRadiusBindingID)
 	{
-		xfconf_g_property_unbind(priv->xfconfActivationRadiusBindingID);
-		priv->xfconfActivationRadiusBindingID=0;
+		esconf_g_property_unbind(priv->esconfActivationRadiusBindingID);
+		priv->esconfActivationRadiusBindingID=0;
 	}
 
-	if(priv->xfconfActivationDurationBindingID)
+	if(priv->esconfActivationDurationBindingID)
 	{
-		xfconf_g_property_unbind(priv->xfconfActivationDurationBindingID);
-		priv->xfconfActivationDurationBindingID=0;
+		esconf_g_property_unbind(priv->esconfActivationDurationBindingID);
+		priv->esconfActivationDurationBindingID=0;
 	}
 
-	if(priv->xfconfPrimaryMonitorOnlyBindingID)
+	if(priv->esconfPrimaryMonitorOnlyBindingID)
 	{
-		xfconf_g_property_unbind(priv->xfconfPrimaryMonitorOnlyBindingID);
-		priv->xfconfPrimaryMonitorOnlyBindingID=0;
+		esconf_g_property_unbind(priv->esconfPrimaryMonitorOnlyBindingID);
+		priv->esconfPrimaryMonitorOnlyBindingID=0;
 	}
 
-	if(priv->xfconfChannel)
+	if(priv->esconfChannel)
 	{
-		priv->xfconfChannel=NULL;
+		priv->esconfChannel=NULL;
 	}
 
 	/* Call parent's class dispose method */
-	G_OBJECT_CLASS(xfdashboard_hot_corner_settings_parent_class)->dispose(inObject);
+	G_OBJECT_CLASS(esdashboard_hot_corner_settings_parent_class)->dispose(inObject);
 }
 
 /* Set/get properties */
-static void _xfdashboard_hot_corner_settings_set_property(GObject *inObject,
+static void _esdashboard_hot_corner_settings_set_property(GObject *inObject,
 													guint inPropID,
 													const GValue *inValue,
 													GParamSpec *inSpec)
 {
-	XfdashboardHotCornerSettings			*self=XFDASHBOARD_HOT_CORNER_SETTINGS(inObject);
+	EsdashboardHotCornerSettings			*self=ESDASHBOARD_HOT_CORNER_SETTINGS(inObject);
 
 	switch(inPropID)
 	{
 		case PROP_ACTIVATION_CORNER:
-			xfdashboard_hot_corner_settings_set_activation_corner(self, g_value_get_enum(inValue));
+			esdashboard_hot_corner_settings_set_activation_corner(self, g_value_get_enum(inValue));
 			break;
 
 		case PROP_ACTIVATION_RADIUS:
-			xfdashboard_hot_corner_settings_set_activation_radius(self, g_value_get_int(inValue));
+			esdashboard_hot_corner_settings_set_activation_radius(self, g_value_get_int(inValue));
 			break;
 
 		case PROP_ACTIVATION_DURATION:
-			xfdashboard_hot_corner_settings_set_activation_duration(self, g_value_get_uint64(inValue));
+			esdashboard_hot_corner_settings_set_activation_duration(self, g_value_get_uint64(inValue));
 			break;
 
 		case PROP_PRIMARY_MONITOR_ONLY:
-			xfdashboard_hot_corner_settings_set_primary_monitor_only(self, g_value_get_boolean(inValue));
+			esdashboard_hot_corner_settings_set_primary_monitor_only(self, g_value_get_boolean(inValue));
 			break;
 
 		default:
@@ -200,13 +200,13 @@ static void _xfdashboard_hot_corner_settings_set_property(GObject *inObject,
 	}
 }
 
-static void _xfdashboard_hot_corner_settings_get_property(GObject *inObject,
+static void _esdashboard_hot_corner_settings_get_property(GObject *inObject,
 													guint inPropID,
 													GValue *outValue,
 													GParamSpec *inSpec)
 {
-	XfdashboardHotCornerSettings			*self=XFDASHBOARD_HOT_CORNER_SETTINGS(inObject);
-	XfdashboardHotCornerSettingsPrivate		*priv=self->priv;
+	EsdashboardHotCornerSettings			*self=ESDASHBOARD_HOT_CORNER_SETTINGS(inObject);
+	EsdashboardHotCornerSettingsPrivate		*priv=self->priv;
 
 	switch(inPropID)
 	{
@@ -235,25 +235,25 @@ static void _xfdashboard_hot_corner_settings_get_property(GObject *inObject,
  * Override functions in parent classes and define properties
  * and signals
  */
-void xfdashboard_hot_corner_settings_class_init(XfdashboardHotCornerSettingsClass *klass)
+void esdashboard_hot_corner_settings_class_init(EsdashboardHotCornerSettingsClass *klass)
 {
 	GObjectClass			*gobjectClass=G_OBJECT_CLASS(klass);
 
 	/* Override functions */
-	gobjectClass->dispose=_xfdashboard_hot_corner_settings_dispose;
-	gobjectClass->set_property=_xfdashboard_hot_corner_settings_set_property;
-	gobjectClass->get_property=_xfdashboard_hot_corner_settings_get_property;
+	gobjectClass->dispose=_esdashboard_hot_corner_settings_dispose;
+	gobjectClass->set_property=_esdashboard_hot_corner_settings_set_property;
+	gobjectClass->get_property=_esdashboard_hot_corner_settings_get_property;
 
 	/* Define properties */
-	XfdashboardHotCornerSettingsProperties[PROP_ACTIVATION_CORNER]=
+	EsdashboardHotCornerSettingsProperties[PROP_ACTIVATION_CORNER]=
 		g_param_spec_enum("activation-corner",
 							"Activation corner",
 							"The hot corner where to trigger the application to suspend or to resume",
-							XFDASHBOARD_TYPE_HOT_CORNER_SETTINGS_ACTIVATION_CORNER,
+							ESDASHBOARD_TYPE_HOT_CORNER_SETTINGS_ACTIVATION_CORNER,
 							DEFAULT_ACTIVATION_CORNER,
 							G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-	XfdashboardHotCornerSettingsProperties[PROP_ACTIVATION_RADIUS]=
+	EsdashboardHotCornerSettingsProperties[PROP_ACTIVATION_RADIUS]=
 		g_param_spec_int("activation-radius",
 							"Activation radius",
 							"The radius around hot corner where the pointer must be inside",
@@ -261,7 +261,7 @@ void xfdashboard_hot_corner_settings_class_init(XfdashboardHotCornerSettingsClas
 							DEFAULT_ACTIVATION_RADIUS,
 							G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-	XfdashboardHotCornerSettingsProperties[PROP_ACTIVATION_DURATION]=
+	EsdashboardHotCornerSettingsProperties[PROP_ACTIVATION_DURATION]=
 		g_param_spec_uint64("activation-duration",
 							"Activation duration",
 							"The time in milliseconds the pointer must stay inside the radius at hot corner to trigger",
@@ -269,62 +269,62 @@ void xfdashboard_hot_corner_settings_class_init(XfdashboardHotCornerSettingsClas
 							DEFAULT_ACTIVATION_DURATION,
 							G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-	XfdashboardHotCornerSettingsProperties[PROP_PRIMARY_MONITOR_ONLY]=
+	EsdashboardHotCornerSettingsProperties[PROP_PRIMARY_MONITOR_ONLY]=
 		g_param_spec_boolean("primary-monitor-only",
 								"Primary monitor only",
 								"A flag indicating if all monitors or only the primary one should be check for hot corner",
 								DEFAULT_PRIMARY_MONITOR_ONLY,
 								G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-	g_object_class_install_properties(gobjectClass, PROP_LAST, XfdashboardHotCornerSettingsProperties);
+	g_object_class_install_properties(gobjectClass, PROP_LAST, EsdashboardHotCornerSettingsProperties);
 }
 
 /* Class finalization */
-void xfdashboard_hot_corner_settings_class_finalize(XfdashboardHotCornerSettingsClass *klass)
+void esdashboard_hot_corner_settings_class_finalize(EsdashboardHotCornerSettingsClass *klass)
 {
 }
 
 /* Object initialization
  * Create private structure and set up default values
  */
-void xfdashboard_hot_corner_settings_init(XfdashboardHotCornerSettings *self)
+void esdashboard_hot_corner_settings_init(EsdashboardHotCornerSettings *self)
 {
-	XfdashboardHotCornerSettingsPrivate		*priv;
+	EsdashboardHotCornerSettingsPrivate		*priv;
 
-	self->priv=priv=xfdashboard_hot_corner_settings_get_instance_private(self);
+	self->priv=priv=esdashboard_hot_corner_settings_get_instance_private(self);
 
 	/* Set up default values */
 	priv->activationCorner=DEFAULT_ACTIVATION_CORNER;
 	priv->activationRadius=DEFAULT_ACTIVATION_RADIUS;
 	priv->activationDuration=DEFAULT_ACTIVATION_DURATION;
 	priv->primaryMonitorOnly=DEFAULT_PRIMARY_MONITOR_ONLY;
-	priv->xfconfChannel=xfconf_channel_get(XFDASHBOARD_XFCONF_CHANNEL);
+	priv->esconfChannel=esconf_channel_get(ESDASHBOARD_ESCONF_CHANNEL);
 
-	/* Bind to xfconf to react on changes */
-	priv->xfconfActivationCornerBindingID=
-		xfconf_g_property_bind(priv->xfconfChannel,
-								ACTIVATION_CORNER_XFCONF_PROP,
+	/* Bind to esconf to react on changes */
+	priv->esconfActivationCornerBindingID=
+		esconf_g_property_bind(priv->esconfChannel,
+								ACTIVATION_CORNER_ESCONF_PROP,
 								G_TYPE_STRING,
 								self,
 								"activation-corner");
 
-	priv->xfconfActivationRadiusBindingID=
-		xfconf_g_property_bind(priv->xfconfChannel,
-								ACTIVATION_RADIUS_XFCONF_PROP,
+	priv->esconfActivationRadiusBindingID=
+		esconf_g_property_bind(priv->esconfChannel,
+								ACTIVATION_RADIUS_ESCONF_PROP,
 								G_TYPE_INT,
 								self,
 								"activation-radius");
 
-	priv->xfconfActivationDurationBindingID=
-		xfconf_g_property_bind(priv->xfconfChannel,
-								ACTIVATION_DURATION_XFCONF_PROP,
+	priv->esconfActivationDurationBindingID=
+		esconf_g_property_bind(priv->esconfChannel,
+								ACTIVATION_DURATION_ESCONF_PROP,
 								G_TYPE_INT64,
 								self,
 								"activation-duration");
 
-	priv->xfconfPrimaryMonitorOnlyBindingID=
-		xfconf_g_property_bind(priv->xfconfChannel,
-								PRIMARY_MONITOR_ONLY_XFCONF_PROP,
+	priv->esconfPrimaryMonitorOnlyBindingID=
+		esconf_g_property_bind(priv->esconfChannel,
+								PRIMARY_MONITOR_ONLY_ESCONF_PROP,
 								G_TYPE_BOOLEAN,
 								self,
 								"primary-monitor-only");
@@ -334,30 +334,30 @@ void xfdashboard_hot_corner_settings_init(XfdashboardHotCornerSettings *self)
 /* IMPLEMENTATION: Public API */
 
 /* Create new instance */
-XfdashboardHotCornerSettings* xfdashboard_hot_corner_settings_new(void)
+EsdashboardHotCornerSettings* esdashboard_hot_corner_settings_new(void)
 {
 	GObject		*hotCorner;
 
-	hotCorner=g_object_new(XFDASHBOARD_TYPE_HOT_CORNER_SETTINGS, NULL);
+	hotCorner=g_object_new(ESDASHBOARD_TYPE_HOT_CORNER_SETTINGS, NULL);
 	if(!hotCorner) return(NULL);
 
-	return(XFDASHBOARD_HOT_CORNER_SETTINGS(hotCorner));
+	return(ESDASHBOARD_HOT_CORNER_SETTINGS(hotCorner));
 }
 
 /* Get/set hot corner */
-XfdashboardHotCornerSettingsActivationCorner xfdashboard_hot_corner_settings_get_activation_corner(XfdashboardHotCornerSettings *self)
+EsdashboardHotCornerSettingsActivationCorner esdashboard_hot_corner_settings_get_activation_corner(EsdashboardHotCornerSettings *self)
 {
-	g_return_val_if_fail(XFDASHBOARD_IS_HOT_CORNER_SETTINGS(self), XFDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_LEFT);
+	g_return_val_if_fail(ESDASHBOARD_IS_HOT_CORNER_SETTINGS(self), ESDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_TOP_LEFT);
 
 	return(self->priv->activationCorner);
 }
 
-void xfdashboard_hot_corner_settings_set_activation_corner(XfdashboardHotCornerSettings *self, XfdashboardHotCornerSettingsActivationCorner inCorner)
+void esdashboard_hot_corner_settings_set_activation_corner(EsdashboardHotCornerSettings *self, EsdashboardHotCornerSettingsActivationCorner inCorner)
 {
-	XfdashboardHotCornerSettingsPrivate		*priv;
+	EsdashboardHotCornerSettingsPrivate		*priv;
 
-	g_return_if_fail(XFDASHBOARD_IS_HOT_CORNER_SETTINGS(self));
-	g_return_if_fail(inCorner<=XFDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_BOTTOM_RIGHT);
+	g_return_if_fail(ESDASHBOARD_IS_HOT_CORNER_SETTINGS(self));
+	g_return_if_fail(inCorner<=ESDASHBOARD_HOT_CORNER_SETTINGS_ACTIVATION_CORNER_BOTTOM_RIGHT);
 
 	priv=self->priv;
 
@@ -368,23 +368,23 @@ void xfdashboard_hot_corner_settings_set_activation_corner(XfdashboardHotCornerS
 		priv->activationCorner=inCorner;
 
 		/* Notify about property change */
-		g_object_notify_by_pspec(G_OBJECT(self), XfdashboardHotCornerSettingsProperties[PROP_ACTIVATION_CORNER]);
+		g_object_notify_by_pspec(G_OBJECT(self), EsdashboardHotCornerSettingsProperties[PROP_ACTIVATION_CORNER]);
 	}
 }
 
 /* Get/set radius around hot corner */
-gint xfdashboard_hot_corner_settings_get_activation_radius(XfdashboardHotCornerSettings *self)
+gint esdashboard_hot_corner_settings_get_activation_radius(EsdashboardHotCornerSettings *self)
 {
-	g_return_val_if_fail(XFDASHBOARD_IS_HOT_CORNER_SETTINGS(self), 0);
+	g_return_val_if_fail(ESDASHBOARD_IS_HOT_CORNER_SETTINGS(self), 0);
 
 	return(self->priv->activationRadius);
 }
 
-void xfdashboard_hot_corner_settings_set_activation_radius(XfdashboardHotCornerSettings *self, gint inRadius)
+void esdashboard_hot_corner_settings_set_activation_radius(EsdashboardHotCornerSettings *self, gint inRadius)
 {
-	XfdashboardHotCornerSettingsPrivate		*priv;
+	EsdashboardHotCornerSettingsPrivate		*priv;
 
-	g_return_if_fail(XFDASHBOARD_IS_HOT_CORNER_SETTINGS(self));
+	g_return_if_fail(ESDASHBOARD_IS_HOT_CORNER_SETTINGS(self));
 	g_return_if_fail(inRadius>0);
 
 	priv=self->priv;
@@ -396,23 +396,23 @@ void xfdashboard_hot_corner_settings_set_activation_radius(XfdashboardHotCornerS
 		priv->activationRadius=inRadius;
 
 		/* Notify about property change */
-		g_object_notify_by_pspec(G_OBJECT(self), XfdashboardHotCornerSettingsProperties[PROP_ACTIVATION_RADIUS]);
+		g_object_notify_by_pspec(G_OBJECT(self), EsdashboardHotCornerSettingsProperties[PROP_ACTIVATION_RADIUS]);
 	}
 }
 
 /* Get/set duration when to trigger hot corner */
-gint64 xfdashboard_hot_corner_settings_get_activation_duration(XfdashboardHotCornerSettings *self)
+gint64 esdashboard_hot_corner_settings_get_activation_duration(EsdashboardHotCornerSettings *self)
 {
-	g_return_val_if_fail(XFDASHBOARD_IS_HOT_CORNER_SETTINGS(self), 0);
+	g_return_val_if_fail(ESDASHBOARD_IS_HOT_CORNER_SETTINGS(self), 0);
 
 	return(self->priv->activationDuration);
 }
 
-void xfdashboard_hot_corner_settings_set_activation_duration(XfdashboardHotCornerSettings *self, gint64 inDuration)
+void esdashboard_hot_corner_settings_set_activation_duration(EsdashboardHotCornerSettings *self, gint64 inDuration)
 {
-	XfdashboardHotCornerSettingsPrivate		*priv;
+	EsdashboardHotCornerSettingsPrivate		*priv;
 
-	g_return_if_fail(XFDASHBOARD_IS_HOT_CORNER_SETTINGS(self));
+	g_return_if_fail(ESDASHBOARD_IS_HOT_CORNER_SETTINGS(self));
 	g_return_if_fail(inDuration>0);
 
 	priv=self->priv;
@@ -424,23 +424,23 @@ void xfdashboard_hot_corner_settings_set_activation_duration(XfdashboardHotCorne
 		priv->activationDuration=inDuration;
 
 		/* Notify about property change */
-		g_object_notify_by_pspec(G_OBJECT(self), XfdashboardHotCornerSettingsProperties[PROP_ACTIVATION_DURATION]);
+		g_object_notify_by_pspec(G_OBJECT(self), EsdashboardHotCornerSettingsProperties[PROP_ACTIVATION_DURATION]);
 	}
 }
 
 /* Get/set flag to check primary monitor only if hot corner was entered */
-gboolean xfdashboard_hot_corner_settings_get_primary_monitor_only(XfdashboardHotCornerSettings *self)
+gboolean esdashboard_hot_corner_settings_get_primary_monitor_only(EsdashboardHotCornerSettings *self)
 {
-	g_return_val_if_fail(XFDASHBOARD_IS_HOT_CORNER_SETTINGS(self), 0);
+	g_return_val_if_fail(ESDASHBOARD_IS_HOT_CORNER_SETTINGS(self), 0);
 
 	return(self->priv->primaryMonitorOnly);
 }
 
-void xfdashboard_hot_corner_settings_set_primary_monitor_only(XfdashboardHotCornerSettings *self, gboolean inPrimaryOnly)
+void esdashboard_hot_corner_settings_set_primary_monitor_only(EsdashboardHotCornerSettings *self, gboolean inPrimaryOnly)
 {
-	XfdashboardHotCornerSettingsPrivate		*priv;
+	EsdashboardHotCornerSettingsPrivate		*priv;
 
-	g_return_if_fail(XFDASHBOARD_IS_HOT_CORNER_SETTINGS(self));
+	g_return_if_fail(ESDASHBOARD_IS_HOT_CORNER_SETTINGS(self));
 
 	priv=self->priv;
 
@@ -451,6 +451,6 @@ void xfdashboard_hot_corner_settings_set_primary_monitor_only(XfdashboardHotCorn
 		priv->primaryMonitorOnly=inPrimaryOnly;
 
 		/* Notify about property change */
-		g_object_notify_by_pspec(G_OBJECT(self), XfdashboardHotCornerSettingsProperties[PROP_PRIMARY_MONITOR_ONLY]);
+		g_object_notify_by_pspec(G_OBJECT(self), EsdashboardHotCornerSettingsProperties[PROP_PRIMARY_MONITOR_ONLY]);
 	}
 }

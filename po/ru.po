@@ -5,11 +5,11 @@
 # 
 # Translators:
 # Владимир <vladi105@yandex.ru>, 2020
-# Nick Schermer <nick@xfce.org>, 2020
+# Nick Schermer <nick@expidus.org>, 2020
 # Aleksey Kabanov <ak099@mail.ru>, 2020
 # Aleksandr P, 2020
 # Igor <f2404@yandex.ru>, 2020
-# Xfce Bot <transifex@xfce.org>, 2020
+# Expidus Bot <transifex@expidus.org>, 2020
 # ivmazurenko <ivmazurenko@yandex.ru>, 2020
 # 
 #, fuzzy
@@ -20,93 +20,93 @@ msgstr ""
 "POT-Creation-Date: 2020-11-17 12:52+0100\n"
 "PO-Revision-Date: 2020-10-07 10:59+0000\n"
 "Last-Translator: ivmazurenko <ivmazurenko@yandex.ru>, 2020\n"
-"Language-Team: Russian (https://www.transifex.com/xfce/teams/16840/ru/)\n"
+"Language-Team: Russian (https://www.transifex.com/expidus/teams/16840/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: ../data/xfdashboard.desktop.in.in.h:1
-#: ../data/xfdashboard-autostart.desktop.in.in.h:1
-msgid "Xfdashboard"
-msgstr "Xfdashboard"
+#: ../data/esdashboard.desktop.in.in.h:1
+#: ../data/esdashboard-autostart.desktop.in.in.h:1
+msgid "Esdashboard"
+msgstr "Esdashboard"
 
-#: ../data/xfdashboard.desktop.in.in.h:2
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:1
-msgid "Maybe a Gnome shell like dashboard for Xfce"
-msgstr "Интерфейс GNOME shell, для среды Xfce"
+#: ../data/esdashboard.desktop.in.in.h:2
+#: ../data/appdata/esdashboard.appdata.xml.in.h:1
+msgid "Maybe a Gnome shell like dashboard for Expidus"
+msgstr "Интерфейс GNOME shell, для среды Expidus"
 
-#: ../data/xfdashboard-autostart.desktop.in.in.h:2
-msgid "Start xfdashboard as daemon in background"
-msgstr "Запустить xfdashboard в фоновом режиме"
+#: ../data/esdashboard-autostart.desktop.in.in.h:2
+msgid "Start esdashboard as daemon in background"
+msgstr "Запустить esdashboard в фоновом режиме"
 
-#: ../data/xfdashboard-settings.desktop.in.in.h:1
-msgid "Xfdashboard settings"
-msgstr "Настройки Xfdashboard"
+#: ../data/esdashboard-settings.desktop.in.in.h:1
+msgid "Esdashboard settings"
+msgstr "Настройки Esdashboard"
 
-#: ../data/xfdashboard-settings.desktop.in.in.h:2
-msgid "Configure xfdashboard"
-msgstr "Настройка xfdashboard"
+#: ../data/esdashboard-settings.desktop.in.in.h:2
+msgid "Configure esdashboard"
+msgstr "Настройка esdashboard"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:2
+#: ../data/appdata/esdashboard.appdata.xml.in.h:2
 msgid ""
-"Xfdashboard provides a GNOME shell dashboard like interface for use with "
-"Xfce desktop."
+"Esdashboard provides a GNOME shell dashboard like interface for use with "
+"Expidus desktop."
 msgstr ""
-"Xfdashboard представляет собой аналог обзорного режима GNOME shell для "
-"использования в окружении Xfce."
+"Esdashboard представляет собой аналог обзорного режима GNOME shell для "
+"использования в окружении Expidus."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:3
+#: ../data/appdata/esdashboard.appdata.xml.in.h:3
 msgid ""
 "It can be configured to run to any keyboard shortcut and when executed "
 "provides an overview of applications currently open enabling the user to "
-"switch between different applications. The search feature works like Xfce's "
+"switch between different applications. The search feature works like Expidus's "
 "app finder which makes it convenient to search for and start applications."
 msgstr ""
 "Он может быть сконфигурирован для работы с любым сочетанием клавиш и при "
 "выполнении обеспечивает обзор приложений открытых в настоящее время, "
 "позволяет пользователю переключаться между различными приложениями. Функция "
-"поиска работает как xfce App finder, что делает его удобным для поиска и "
+"поиска работает как expidus App finder, что делает его удобным для поиска и "
 "запуска приложений."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:4
+#: ../data/appdata/esdashboard.appdata.xml.in.h:4
 msgid "Browsing applications"
 msgstr "Просмотр приложений"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:5
+#: ../data/appdata/esdashboard.appdata.xml.in.h:5
 msgid "Searching applications"
 msgstr "Поиск приложений"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:6
+#: ../data/appdata/esdashboard.appdata.xml.in.h:6
 msgid "This release candidate adds also more animations as well as fixes."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:7
+#: ../data/appdata/esdashboard.appdata.xml.in.h:7
 msgid ""
 "This unstable development adds more animations as well as some smaller "
 "fixes."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:8
+#: ../data/appdata/esdashboard.appdata.xml.in.h:8
 msgid "This unstable development adds animations."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:9
+#: ../data/appdata/esdashboard.appdata.xml.in.h:9
 msgid ""
 "This unstable development adds support for touchpads and application actions"
 " (Jumplists, Quicklists) as well as new and updated translations."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:10
+#: ../data/appdata/esdashboard.appdata.xml.in.h:10
 msgid ""
 "This unstable development adds lots of new and updated translations and "
-"support for newer xfconf versions."
+"support for newer esconf versions."
 msgstr ""
 "Проект добавляет много новых и обновленных переводов и поддержку для новых "
-"версий xfconf."
+"версий esconf."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:11
+#: ../data/appdata/esdashboard.appdata.xml.in.h:11
 msgid ""
 "This unstable development implements a new experimental backend for GDK as "
 "well as it supports user stylesheets now."
@@ -114,7 +114,7 @@ msgstr ""
 "Проект реализует новый экспериментальный бэкэнд для GDK, а также "
 "поддерживает пользовательские таблицы стилей."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:12
+#: ../data/appdata/esdashboard.appdata.xml.in.h:12
 msgid ""
 "This unstable development improves loading performance of images and icon, "
 "adds a fine-grained debugging system and introduces an interface for "
@@ -124,13 +124,13 @@ msgstr ""
 " систему детальной отладки и вводит интерфейс для нескольких бэкэндов, но "
 "поддерживается только один X11."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:13
+#: ../data/appdata/esdashboard.appdata.xml.in.h:13
 msgid ""
 "This unstable development introduces child windows shown next to the main "
 "window."
 msgstr "Проект представляет дочерние окна, показанные рядом с главным окном."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:14
+#: ../data/appdata/esdashboard.appdata.xml.in.h:14
 msgid ""
 "This stable version fixes a bug setting the correct default applications at "
 "first use."
@@ -138,11 +138,11 @@ msgstr ""
 "Эта версия исправляет ошибку определения правильных приложений по умолчанию "
 "при первом использовании."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:15
+#: ../data/appdata/esdashboard.appdata.xml.in.h:15
 msgid "This unstable development introduces pop-up menus."
 msgstr "Проект представляет всплывающие меню."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:16
+#: ../data/appdata/esdashboard.appdata.xml.in.h:16
 msgid ""
 "This stable version introduces lots of new features like plugins and "
 "application tracker. It also contains a huge collection of other larger and "
@@ -153,8 +153,8 @@ msgstr ""
 "улучшений."
 
 #: ../data/data/preferences.ui.h:1
-msgid "<span size=\"large\"><b>Xfdashboard settings</b></span>"
-msgstr "<span size=\"large\"><b>Настройки Xfdashboard</b></span>"
+msgid "<span size=\"large\"><b>Esdashboard settings</b></span>"
+msgstr "<span size=\"large\"><b>Настройки Esdashboard</b></span>"
 
 #: ../data/data/preferences.ui.h:2
 msgid "Configure plugin"
@@ -162,11 +162,11 @@ msgstr "Настройка плагина"
 
 #: ../data/data/preferences.ui.h:3
 msgid ""
-"<span size=\"large\"><b>Xfdashboard settings</b></span>\n"
-"Configure xfdashboard"
+"<span size=\"large\"><b>Esdashboard settings</b></span>\n"
+"Configure esdashboard"
 msgstr ""
-"<span size=\"large\"><b>Настройки Xfdashboard </b></span>\n"
-"Настройка xfdashboard"
+"<span size=\"large\"><b>Настройки Esdashboard </b></span>\n"
+"Настройка esdashboard"
 
 #: ../data/data/preferences.ui.h:5
 msgid "<b>General settings:</b>"
@@ -178,23 +178,23 @@ msgstr "Сбрасывать вид поиска при каждом запус�
 
 #: ../data/data/preferences.ui.h:7
 msgid ""
-"If enabled the search view will be resetted when xfdashboard is resumed. That means the active view is switched back to last view active before last search was started and search box will be emptied.\n"
+"If enabled the search view will be resetted when esdashboard is resumed. That means the active view is switched back to last view active before last search was started and search box will be emptied.\n"
 "\n"
-"<b>NOTE:</b> This setting only takes effect if xfdashboard is running in daemon mode. "
+"<b>NOTE:</b> This setting only takes effect if esdashboard is running in daemon mode. "
 msgstr ""
-"Поиск будет сбрасываться при каждом запуске xfdashboard. Активное представление переключится обратно в режим последнего просмотра до начала предыдущего поиска и окно поиска будет очищено.\n"
+"Поиск будет сбрасываться при каждом запуске esdashboard. Активное представление переключится обратно в режим последнего просмотра до начала предыдущего поиска и окно поиска будет очищено.\n"
 "\n"
-"<b> ПРИМЕЧАНИЕ:</b> Данный параметр действует только при работе xfdashboard в служебном режиме."
+"<b> ПРИМЕЧАНИЕ:</b> Данный параметр действует только при работе esdashboard в служебном режиме."
 
 #: ../data/data/preferences.ui.h:10
 msgid ""
-"When xfdashboard resumes the selected view will be activated.\n"
+"When esdashboard resumes the selected view will be activated.\n"
 "\n"
-"<b>NOTE:</b> This setting only takes effect if xfdashboard is running in daemon mode."
+"<b>NOTE:</b> This setting only takes effect if esdashboard is running in daemon mode."
 msgstr ""
-"При запуске xfdashboard, будет активен выбранный режим просмотра.\n"
+"При запуске esdashboard, будет активен выбранный режим просмотра.\n"
 "\n"
-"<b>ПРИМЕЧАНИЕ:</b> Данный параметр действует только при работе xfdashboard в  режиме демона."
+"<b>ПРИМЕЧАНИЕ:</b> Данный параметр действует только при работе esdashboard в  режиме демона."
 
 #: ../data/data/preferences.ui.h:13
 msgid "Switch to view when resumed:"
@@ -230,11 +230,11 @@ msgstr ""
 
 #: ../data/data/preferences.ui.h:22
 msgid ""
-"This value defines how fast the window content should be created. While the value 'immediate' tells xfdashboard to create the window content at the time it is requested, all other values will set up a queue and value defines how fast the queue will be processed.\n"
+"This value defines how fast the window content should be created. While the value 'immediate' tells esdashboard to create the window content at the time it is requested, all other values will set up a queue and value defines how fast the queue will be processed.\n"
 "\n"
 "<b>NOTE:</b> Only change this value from 'immediate' to other value if your graphics card, driver or system is too slow to create the window contents immediately. You have to try each value to find the one fitting your system."
 msgstr ""
-"Эти параметры определяют скорость создания содержимого окна. Параметр «Очень высокий» сообщает xfdashboard о создании содержимого окна во время его запроса, все остальные параметры будут устанавливать очередь и определять скорость её обработки.\n"
+"Эти параметры определяют скорость создания содержимого окна. Параметр «Очень высокий» сообщает esdashboard о создании содержимого окна во время его запроса, все остальные параметры будут устанавливать очередь и определять скорость её обработки.\n"
 "\n"
 "<b>ПРИМЕЧАНИЕ. </b> Измените параметр с «Очень высокого» на другой, если у вас слабое железо. Попробуйте все параметры и определите тот, который больше подходит вашей системе."
 
@@ -358,136 +358,136 @@ msgstr "<b>Лицензия: </b>"
 msgid "Plugins"
 msgstr "Плагины"
 
-#: ../data/themes/xfdashboard/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard"
-msgstr "xfdashboard"
+#: ../data/themes/esdashboard/esdashboard.theme.in.in.h:1
+msgid "esdashboard"
+msgstr "esdashboard"
 
-#: ../data/themes/xfdashboard/xfdashboard.theme.in.in.h:2
-msgid "Default theme for xfdashboard"
+#: ../data/themes/esdashboard/esdashboard.theme.in.in.h:2
+msgid "Default theme for esdashboard"
 msgstr "Тема по умолчанию"
 
-#: ../data/themes/xfdashboard-auber/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-auber"
+#: ../data/themes/esdashboard-auber/esdashboard.theme.in.in.h:1
+msgid "esdashboard-auber"
 msgstr "Аuber"
 
-#: ../data/themes/xfdashboard-auber/xfdashboard.theme.in.in.h:2
-msgid "Aubergine theme for xfdashboard"
+#: ../data/themes/esdashboard-auber/esdashboard.theme.in.in.h:2
+msgid "Aubergine theme for esdashboard"
 msgstr "Тема - Aubergine"
 
-#: ../data/themes/xfdashboard-blue/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-blue"
+#: ../data/themes/esdashboard-blue/esdashboard.theme.in.in.h:1
+msgid "esdashboard-blue"
 msgstr "Blue"
 
-#: ../data/themes/xfdashboard-blue/xfdashboard.theme.in.in.h:2
-msgid "Blue theme for xfdashboard"
+#: ../data/themes/esdashboard-blue/esdashboard.theme.in.in.h:2
+msgid "Blue theme for esdashboard"
 msgstr "Тема - Blue"
 
-#: ../data/themes/xfdashboard-dark/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-dark"
+#: ../data/themes/esdashboard-dark/esdashboard.theme.in.in.h:1
+msgid "esdashboard-dark"
 msgstr "Dark"
 
-#: ../data/themes/xfdashboard-dark/xfdashboard.theme.in.in.h:2
-msgid "Dark theme for xfdashboard"
+#: ../data/themes/esdashboard-dark/esdashboard.theme.in.in.h:2
+msgid "Dark theme for esdashboard"
 msgstr "Тема - Dark"
 
-#: ../data/themes/xfdashboard-mint/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-mint"
+#: ../data/themes/esdashboard-mint/esdashboard.theme.in.in.h:1
+msgid "esdashboard-mint"
 msgstr "Mint"
 
-#: ../data/themes/xfdashboard-mint/xfdashboard.theme.in.in.h:2
-msgid "Fresh-green flavored theme for xfdashboard"
+#: ../data/themes/esdashboard-mint/esdashboard.theme.in.in.h:2
+msgid "Fresh-green flavored theme for esdashboard"
 msgstr "Тема - Mint"
 
-#: ../data/themes/xfdashboard-moranga/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-moranga"
+#: ../data/themes/esdashboard-moranga/esdashboard.theme.in.in.h:1
+msgid "esdashboard-moranga"
 msgstr "Moranga"
 
-#: ../data/themes/xfdashboard-moranga/xfdashboard.theme.in.in.h:2
-msgid "Moranga theme for xfdashboard"
+#: ../data/themes/esdashboard-moranga/esdashboard.theme.in.in.h:2
+msgid "Moranga theme for esdashboard"
 msgstr "Тема - Moranga"
 
-#: ../data/themes/xfdashboard-wine/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-wine"
+#: ../data/themes/esdashboard-wine/esdashboard.theme.in.in.h:1
+msgid "esdashboard-wine"
 msgstr "Wine"
 
-#: ../data/themes/xfdashboard-wine/xfdashboard.theme.in.in.h:2
-msgid "Red wine theme for xfdashboard"
+#: ../data/themes/esdashboard-wine/esdashboard.theme.in.in.h:2
+msgid "Red wine theme for esdashboard"
 msgstr "Тема - Red Wine"
 
-#: ../libxfdashboard/application-button.c:262
+#: ../libesdashboard/application-button.c:262
 #, c-format
 msgid "Could not execute action '%s' for application '%s': %s"
 msgstr "Не удалось выполнить действие '%s' для приложения '%s': %s"
 
-#: ../libxfdashboard/application-button.c:265 ../settings/plugins.c:826
+#: ../libesdashboard/application-button.c:265 ../settings/plugins.c:826
 #: ../settings/main.c:63
 msgid "Unknown error"
 msgstr "Неизвестная ошибка"
 
-#: ../libxfdashboard/application-button.c:282
+#: ../libesdashboard/application-button.c:282
 #, c-format
 msgid "Executed action '%s' for application '%s'"
 msgstr "Выполнить  '%s' для приложения '%s'"
 
-#: ../libxfdashboard/application-button.c:743
-#: ../libxfdashboard/application-button.c:761
-#: ../libxfdashboard/applications-search-provider.c:754
-#: ../libxfdashboard/applications-view.c:334
-#: ../libxfdashboard/quicklaunch.c:352 ../libxfdashboard/quicklaunch.c:400
-#: ../libxfdashboard/quicklaunch.c:458
+#: ../libesdashboard/application-button.c:743
+#: ../libesdashboard/application-button.c:761
+#: ../libesdashboard/applications-search-provider.c:754
+#: ../libesdashboard/applications-view.c:334
+#: ../libesdashboard/quicklaunch.c:352 ../libesdashboard/quicklaunch.c:400
+#: ../libesdashboard/quicklaunch.c:458
 #, c-format
 msgid "Launching application '%s' failed: %s"
 msgstr "Запуск приложения '%s' не удался: %s"
 
-#: ../libxfdashboard/application-button.c:745
-#: ../libxfdashboard/quicklaunch.c:354
+#: ../libesdashboard/application-button.c:745
+#: ../libesdashboard/quicklaunch.c:354
 msgid "No information available for application"
 msgstr "Нет доступной информации"
 
-#: ../libxfdashboard/application-button.c:763
-#: ../libxfdashboard/application.c:308 ../libxfdashboard/application.c:618
-#: ../libxfdashboard/applications-search-provider.c:756
-#: ../libxfdashboard/applications-view.c:336
-#: ../libxfdashboard/quicklaunch.c:460
+#: ../libesdashboard/application-button.c:763
+#: ../libesdashboard/application.c:308 ../libesdashboard/application.c:618
+#: ../libesdashboard/applications-search-provider.c:756
+#: ../libesdashboard/applications-view.c:336
+#: ../libesdashboard/quicklaunch.c:460
 msgid "unknown error"
 msgstr "неизвестная ошибка"
 
-#: ../libxfdashboard/application-button.c:774
-#: ../libxfdashboard/applications-search-provider.c:767
-#: ../libxfdashboard/applications-view.c:347
-#: ../libxfdashboard/quicklaunch.c:471
+#: ../libesdashboard/application-button.c:774
+#: ../libesdashboard/applications-search-provider.c:767
+#: ../libesdashboard/applications-view.c:347
+#: ../libesdashboard/quicklaunch.c:471
 #, c-format
 msgid "Application '%s' launched"
 msgstr "Приложение '%s' запущено"
 
-#: ../libxfdashboard/application.c:306
+#: ../libesdashboard/application.c:306
 #, c-format
 msgid "Could not load theme '%s': %s"
 msgstr "Не удалось загрузить тему '%s': %s"
 
-#: ../libxfdashboard/application.c:527
+#: ../libesdashboard/application.c:527
 #, c-format
 msgid "Welcome to %s (%s)!"
 msgstr "Добро пожаловать в %s (%s)!"
 
-#: ../libxfdashboard/application.c:529
+#: ../libesdashboard/application.c:529
 #, c-format
 msgid "Welcome to %s!"
 msgstr "Добро пожаловать в %s!"
 
-#: ../libxfdashboard/application.c:576
+#: ../libesdashboard/application.c:576
 msgid "Fork to background"
 msgstr "На задний план"
 
-#: ../libxfdashboard/application.c:577
+#: ../libesdashboard/application.c:577
 msgid "Quit running instance"
 msgstr "Выход"
 
-#: ../libxfdashboard/application.c:578
+#: ../libesdashboard/application.c:578
 msgid "Restart running instance"
 msgstr "Перезапустить"
 
-#: ../libxfdashboard/application.c:579
+#: ../libesdashboard/application.c:579
 msgid ""
 "Toggles visibility if running instance was started in daemon mode otherwise "
 "it quits running non-daemon instance"
@@ -495,117 +495,117 @@ msgstr ""
 "Переключает видимость, если запущенный экземпляр находиться в режиме демона,"
 " в противном случае он прекращает работу экземпляра, не являющегося демоном"
 
-#: ../libxfdashboard/application.c:580
+#: ../libesdashboard/application.c:580
 msgid "The ID of view to switch to on startup or resume"
 msgstr "Идентификатор вида для переключения при запуске или возобновлении"
 
-#: ../libxfdashboard/application.c:581
+#: ../libesdashboard/application.c:581
 msgid "Show version"
 msgstr "Показать версию"
 
-#: ../libxfdashboard/application.c:600
-msgid "A Gnome Shell like dashboard for Xfce4 - version "
-msgstr "Панель инструментов Gnome Shell для Xfce4 - версия"
+#: ../libesdashboard/application.c:600
+msgid "A Gnome Shell like dashboard for Expidus1 - version "
+msgstr "Панель инструментов Gnome Shell для Expidus1 - версия"
 
 #. Show error
-#: ../libxfdashboard/application.c:617
+#: ../libesdashboard/application.c:617
 #, c-format
 msgid "%s\n"
 msgstr "%s\n"
 
-#: ../libxfdashboard/applications-search-provider.c:838
-#: ../libxfdashboard/applications-view.c:417
-#: ../libxfdashboard/quicklaunch.c:682
+#: ../libesdashboard/applications-search-provider.c:838
+#: ../libesdashboard/applications-view.c:417
+#: ../libesdashboard/quicklaunch.c:682
 msgid "Launch"
 msgstr "Запуск"
 
 #. Set up view
 #. Add "applications" button
-#: ../libxfdashboard/applications-search-provider.c:1175
-#: ../libxfdashboard/applications-view.c:1587
-#: ../libxfdashboard/quicklaunch.c:3288
+#: ../libesdashboard/applications-search-provider.c:1175
+#: ../libesdashboard/applications-view.c:1587
+#: ../libesdashboard/quicklaunch.c:3288
 msgid "Applications"
 msgstr "Приложения"
 
-#: ../libxfdashboard/applications-view.c:545
-#: ../libxfdashboard/applications-view.c:546
-#: ../libxfdashboard/applications-view.c:657
-#: ../libxfdashboard/applications-view.c:658
+#: ../libesdashboard/applications-view.c:545
+#: ../libesdashboard/applications-view.c:546
+#: ../libesdashboard/applications-view.c:657
+#: ../libesdashboard/applications-view.c:658
 msgid "Back"
 msgstr "Назад"
 
-#: ../libxfdashboard/applications-view.c:545
-#: ../libxfdashboard/applications-view.c:657
+#: ../libesdashboard/applications-view.c:545
+#: ../libesdashboard/applications-view.c:657
 msgid "Go back to previous menu"
 msgstr "Вернуться в предыдущее меню"
 
-#: ../libxfdashboard/applications-view.c:685
-#: ../libxfdashboard/applications-view.c:686
+#: ../libesdashboard/applications-view.c:685
+#: ../libesdashboard/applications-view.c:686
 msgid "All applications"
 msgstr "Все приложения"
 
-#: ../libxfdashboard/applications-view.c:685
+#: ../libesdashboard/applications-view.c:685
 msgid "List of all installed applications"
 msgstr "Список всех установленных приложений"
 
-#: ../libxfdashboard/quicklaunch.c:402
+#: ../libesdashboard/quicklaunch.c:402
 msgid "No windows to activate for application"
 msgstr "Нет окон для активации приложения"
 
-#: ../libxfdashboard/quicklaunch.c:525 ../libxfdashboard/quicklaunch.c:1261
-#: ../libxfdashboard/quicklaunch.c:2130
+#: ../libesdashboard/quicklaunch.c:525 ../libesdashboard/quicklaunch.c:1261
+#: ../libesdashboard/quicklaunch.c:2130
 #, c-format
 msgid "Favourite '%s' removed"
 msgstr "Удалено из избранного '%s'"
 
-#: ../libxfdashboard/quicklaunch.c:624 ../libxfdashboard/quicklaunch.c:943
-#: ../libxfdashboard/quicklaunch.c:2063
+#: ../libesdashboard/quicklaunch.c:624 ../libesdashboard/quicklaunch.c:943
+#: ../libesdashboard/quicklaunch.c:2063
 #, c-format
 msgid "Favourite '%s' added"
 msgstr "Добавлено в избранное '%s'"
 
-#: ../libxfdashboard/quicklaunch.c:705
+#: ../libesdashboard/quicklaunch.c:705
 msgid "Remove from favourites"
 msgstr "Удалить из избранного"
 
-#: ../libxfdashboard/quicklaunch.c:719
+#: ../libesdashboard/quicklaunch.c:719
 msgid "Add to favourites"
 msgstr "Добавить в избранное"
 
 #. Next add trash button to box but initially hidden and register as drop
 #. target
-#: ../libxfdashboard/quicklaunch.c:3295
+#: ../libesdashboard/quicklaunch.c:3295
 msgid "Remove"
 msgstr "Удалить"
 
-#: ../libxfdashboard/search-result-container.c:664
-#: ../libxfdashboard/search-result-container.c:1734
+#: ../libesdashboard/search-result-container.c:664
+#: ../libesdashboard/search-result-container.c:1734
 #, c-format
 msgid "Show %d more results..."
 msgstr "Показать %d больше результатов..."
 
 #. Get text to set at "all"-label
-#: ../libxfdashboard/search-result-container.c:686
+#: ../libesdashboard/search-result-container.c:686
 #, c-format
 msgid "Show all %d results..."
 msgstr "Показать все %d результаты..."
 
-#: ../libxfdashboard/search-view.c:979
+#: ../libesdashboard/search-view.c:979
 #, c-format
 msgid "No results found for '%s'"
 msgstr ""
 
 #. Set up view (Note: Search view is disabled by default!)
-#: ../libxfdashboard/search-view.c:1715
+#: ../libesdashboard/search-view.c:1715
 msgid "Search"
 msgstr "Поиск"
 
-#: ../libxfdashboard/stage.c:1124
+#: ../libesdashboard/stage.c:1124
 msgid "Just type to search..."
 msgstr "Введите имя для поиска..."
 
 #. Set up view
-#: ../libxfdashboard/windows-view.c:2317
+#: ../libesdashboard/windows-view.c:2317
 msgid "Windows"
 msgstr "Окна"
 
@@ -715,10 +715,10 @@ msgstr "Горячие углы"
 
 #: ../plugins/hot-corner/plugin.c:468
 msgid ""
-"Activates xfdashboard when pointer is moved to a configured corner of "
+"Activates esdashboard when pointer is moved to a configured corner of "
 "monitor"
 msgstr ""
-"Активирует xfdashboard, при наведении курсора в настроенный угол монитора"
+"Активирует esdashboard, при наведении курсора в настроенный угол монитора"
 
 #: ../plugins/middle-click-window-close/plugin.c:71
 msgid "Middle-click window close"

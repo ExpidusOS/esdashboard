@@ -21,45 +21,45 @@
  * 
  */
 
-#ifndef __XFDASHBOARD_EXAMPLE_SEARCH_PROVIDER__
-#define __XFDASHBOARD_EXAMPLE_SEARCH_PROVIDER__
+#ifndef __ESDASHBOARD_EXAMPLE_SEARCH_PROVIDER__
+#define __ESDASHBOARD_EXAMPLE_SEARCH_PROVIDER__
 
-#include <libxfdashboard/libxfdashboard.h>
+#include <libesdashboard/libesdashboard.h>
 
 G_BEGIN_DECLS
 
-#define XFDASHBOARD_TYPE_EXAMPLE_SEARCH_PROVIDER			(xfdashboard_example_search_provider_get_type())
-#define XFDASHBOARD_EXAMPLE_SEARCH_PROVIDER(obj)			(G_TYPE_CHECK_INSTANCE_CAST((obj), XFDASHBOARD_TYPE_EXAMPLE_SEARCH_PROVIDER, XfdashboardExampleSearchProvider))
-#define XFDASHBOARD_IS_EXAMPLE_SEARCH_PROVIDER(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), XFDASHBOARD_TYPE_EXAMPLE_SEARCH_PROVIDER))
-#define XFDASHBOARD_EXAMPLE_SEARCH_PROVIDER_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST((klass), XFDASHBOARD_TYPE_EXAMPLE_SEARCH_PROVIDER, XfdashboardExampleSearchProviderClass))
-#define XFDASHBOARD_IS_EXAMPLE_SEARCH_PROVIDER_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), XFDASHBOARD_TYPE_EXAMPLE_SEARCH_PROVIDER))
-#define XFDASHBOARD_EXAMPLE_SEARCH_PROVIDER_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), XFDASHBOARD_TYPE_EXAMPLE_SEARCH_PROVIDER, XfdashboardExampleSearchProviderClass))
+#define ESDASHBOARD_TYPE_EXAMPLE_SEARCH_PROVIDER			(esdashboard_example_search_provider_get_type())
+#define ESDASHBOARD_EXAMPLE_SEARCH_PROVIDER(obj)			(G_TYPE_CHECK_INSTANCE_CAST((obj), ESDASHBOARD_TYPE_EXAMPLE_SEARCH_PROVIDER, EsdashboardExampleSearchProvider))
+#define ESDASHBOARD_IS_EXAMPLE_SEARCH_PROVIDER(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), ESDASHBOARD_TYPE_EXAMPLE_SEARCH_PROVIDER))
+#define ESDASHBOARD_EXAMPLE_SEARCH_PROVIDER_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST((klass), ESDASHBOARD_TYPE_EXAMPLE_SEARCH_PROVIDER, EsdashboardExampleSearchProviderClass))
+#define ESDASHBOARD_IS_EXAMPLE_SEARCH_PROVIDER_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), ESDASHBOARD_TYPE_EXAMPLE_SEARCH_PROVIDER))
+#define ESDASHBOARD_EXAMPLE_SEARCH_PROVIDER_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), ESDASHBOARD_TYPE_EXAMPLE_SEARCH_PROVIDER, EsdashboardExampleSearchProviderClass))
 
-typedef struct _XfdashboardExampleSearchProvider			XfdashboardExampleSearchProvider; 
-typedef struct _XfdashboardExampleSearchProviderPrivate		XfdashboardExampleSearchProviderPrivate;
-typedef struct _XfdashboardExampleSearchProviderClass		XfdashboardExampleSearchProviderClass;
+typedef struct _EsdashboardExampleSearchProvider			EsdashboardExampleSearchProvider; 
+typedef struct _EsdashboardExampleSearchProviderPrivate		EsdashboardExampleSearchProviderPrivate;
+typedef struct _EsdashboardExampleSearchProviderClass		EsdashboardExampleSearchProviderClass;
 
-struct _XfdashboardExampleSearchProvider
+struct _EsdashboardExampleSearchProvider
 {
 	/* Parent instance */
-	XfdashboardSearchProvider					parent_instance;
+	EsdashboardSearchProvider					parent_instance;
 
 	/* Private structure */
-	XfdashboardExampleSearchProviderPrivate		*priv;
+	EsdashboardExampleSearchProviderPrivate		*priv;
 };
 
-struct _XfdashboardExampleSearchProviderClass
+struct _EsdashboardExampleSearchProviderClass
 {
 	/*< private >*/
 	/* Parent class */
-	XfdashboardSearchProviderClass				parent_class;
+	EsdashboardSearchProviderClass				parent_class;
 };
 
 /* Public API */
-GType xfdashboard_example_search_provider_get_type(void) G_GNUC_CONST;
-void xfdashboard_example_search_provider_type_register(GTypeModule *inModule);
+GType esdashboard_example_search_provider_get_type(void) G_GNUC_CONST;
+void esdashboard_example_search_provider_type_register(GTypeModule *inModule);
 
-XFDASHBOARD_DECLARE_PLUGIN_TYPE(xfdashboard_example_search_provider);
+ESDASHBOARD_DECLARE_PLUGIN_TYPE(esdashboard_example_search_provider);
 
 G_END_DECLS
 

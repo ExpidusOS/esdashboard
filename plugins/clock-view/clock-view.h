@@ -21,44 +21,44 @@
  * 
  */
 
-#ifndef __XFDASHBOARD_CLOCK_VIEW__
-#define __XFDASHBOARD_CLOCK_VIEW__
+#ifndef __ESDASHBOARD_CLOCK_VIEW__
+#define __ESDASHBOARD_CLOCK_VIEW__
 
-#include <libxfdashboard/libxfdashboard.h>
+#include <libesdashboard/libesdashboard.h>
 
 G_BEGIN_DECLS
 
-#define XFDASHBOARD_TYPE_CLOCK_VIEW				(xfdashboard_clock_view_get_type())
-#define XFDASHBOARD_CLOCK_VIEW(obj)				(G_TYPE_CHECK_INSTANCE_CAST((obj), XFDASHBOARD_TYPE_CLOCK_VIEW, XfdashboardClockView))
-#define XFDASHBOARD_IS_CLOCK_VIEW(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), XFDASHBOARD_TYPE_CLOCK_VIEW))
-#define XFDASHBOARD_CLOCK_VIEW_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), XFDASHBOARD_TYPE_CLOCK_VIEW, XfdashboardClockViewClass))
-#define XFDASHBOARD_IS_CLOCK_VIEW_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), XFDASHBOARD_TYPE_CLOCK_VIEW))
-#define XFDASHBOARD_CLOCK_VIEW_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), XFDASHBOARD_TYPE_CLOCK_VIEW, XfdashboardClockViewClass))
+#define ESDASHBOARD_TYPE_CLOCK_VIEW				(esdashboard_clock_view_get_type())
+#define ESDASHBOARD_CLOCK_VIEW(obj)				(G_TYPE_CHECK_INSTANCE_CAST((obj), ESDASHBOARD_TYPE_CLOCK_VIEW, EsdashboardClockView))
+#define ESDASHBOARD_IS_CLOCK_VIEW(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), ESDASHBOARD_TYPE_CLOCK_VIEW))
+#define ESDASHBOARD_CLOCK_VIEW_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), ESDASHBOARD_TYPE_CLOCK_VIEW, EsdashboardClockViewClass))
+#define ESDASHBOARD_IS_CLOCK_VIEW_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), ESDASHBOARD_TYPE_CLOCK_VIEW))
+#define ESDASHBOARD_CLOCK_VIEW_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), ESDASHBOARD_TYPE_CLOCK_VIEW, EsdashboardClockViewClass))
 
-typedef struct _XfdashboardClockView			XfdashboardClockView; 
-typedef struct _XfdashboardClockViewPrivate		XfdashboardClockViewPrivate;
-typedef struct _XfdashboardClockViewClass		XfdashboardClockViewClass;
+typedef struct _EsdashboardClockView			EsdashboardClockView; 
+typedef struct _EsdashboardClockViewPrivate		EsdashboardClockViewPrivate;
+typedef struct _EsdashboardClockViewClass		EsdashboardClockViewClass;
 
-struct _XfdashboardClockView
+struct _EsdashboardClockView
 {
 	/* Parent instance */
-	XfdashboardView						parent_instance;
+	EsdashboardView						parent_instance;
 
 	/* Private structure */
-	XfdashboardClockViewPrivate			*priv;
+	EsdashboardClockViewPrivate			*priv;
 };
 
-struct _XfdashboardClockViewClass
+struct _EsdashboardClockViewClass
 {
 	/*< private >*/
 	/* Parent class */
-	XfdashboardViewClass				parent_class;
+	EsdashboardViewClass				parent_class;
 };
 
 /* Public API */
-GType xfdashboard_clock_view_get_type(void) G_GNUC_CONST;
+GType esdashboard_clock_view_get_type(void) G_GNUC_CONST;
 
-XFDASHBOARD_DECLARE_PLUGIN_TYPE(xfdashboard_clock_view);
+ESDASHBOARD_DECLARE_PLUGIN_TYPE(esdashboard_clock_view);
 
 G_END_DECLS
 

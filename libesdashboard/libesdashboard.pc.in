@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: @PACKAGE_TARNAME@
+Description: Library for esdashboard
+Requires: @ESDASHBOARD_REQUIRES@
+Version: @PACKAGE_VERSION@
+Libs: -L${libdir} -lesdashboard
+Cflags: -I${includedir}/esdashboard

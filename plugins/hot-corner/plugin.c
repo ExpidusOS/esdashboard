@@ -25,7 +25,7 @@
 #include <config.h>
 #endif
 
-#include <libxfce4util/libxfce4util.h>
+#include <libexpidus1util/libexpidus1util.h>
 #include <gtk/gtk.h>
 
 #include "hot-corner.h"
@@ -33,17 +33,17 @@
 
 
 /* Forward declarations */
-G_MODULE_EXPORT void plugin_init(XfdashboardPlugin *self);
+G_MODULE_EXPORT void plugin_init(EsdashboardPlugin *self);
 
 
-/* IMPLEMENTATION: XfdashboardPlugin */
+/* IMPLEMENTATION: EsdashboardPlugin */
 
-#define CONFIGURATION_MAPPING		"xfdashboard-plugin-hot_corner-configuration-settings"
+#define CONFIGURATION_MAPPING		"esdashboard-plugin-hot_corner-configuration-settings"
 
 typedef struct _PluginWidgetSettingsMap		PluginWidgetSettingsMap;
 struct _PluginWidgetSettingsMap
 {
-	XfdashboardHotCornerSettings	*settings;
+	EsdashboardHotCornerSettings	*settings;
 	gchar							*property;
 	guint							settingsPropertyChangedSignalID;
 	GCallback						settingsPropertyCallback;
@@ -52,7 +52,7 @@ struct _PluginWidgetSettingsMap
 
 typedef void (*PluginWidgetSettingsMapValueChangedCallback)(PluginWidgetSettingsMap *inMapping);
 
-static XfdashboardHotCorner			*hotCorner=NULL;
+static EsdashboardHotCorner			*hotCorner=NULL;
 
 /* Free mapping data */
 static void _plugin_widget_settings_map_free(PluginWidgetSettingsMap *inData)
@@ -75,7 +75,7 @@ static void _plugin_on_widget_settings_map_settings_value_changed(GObject *inObj
 {
 	PluginWidgetSettingsMap							*mapping;
 
-	g_return_if_fail(XFDASHBOARD_IS_HOT_CORNER_SETTINGS(inObject));
+	g_return_if_fail(ESDASHBOARD_IS_HOT_CORNER_SETTINGS(inObject));
 	g_return_if_fail(inUserData);
 
 	mapping=(PluginWidgetSettingsMap*)inUserData;
@@ -90,7 +90,7 @@ static void _plugin_on_widget_settings_map_settings_value_changed(GObject *inObj
 
 /* Create mapping data and bind to widget */
 static PluginWidgetSettingsMap* _plugin_widget_settings_map_bind(GtkWidget *inWidget,
-																	XfdashboardHotCornerSettings *inSettings,
+																	EsdashboardHotCornerSettings *inSettings,
 																	const gchar *inProperty,
 																	GCallback inCallback)
 {
@@ -99,7 +99,7 @@ static PluginWidgetSettingsMap* _plugin_widget_settings_map_bind(GtkWidget *inWi
 	guint							signalID;
 
 	g_return_val_if_fail(GTK_IS_WIDGET(inWidget), NULL);
-	g_return_val_if_fail(XFDASHBOARD_IS_HOT_CORNER_SETTINGS(inSettings), NULL);
+	g_return_val_if_fail(ESDASHBOARD_IS_HOT_CORNER_SETTINGS(inSettings), NULL);
 	g_return_val_if_fail(inProperty && *inProperty, NULL);
 
 	/* Create new mapping */
@@ -157,13 +157,13 @@ static void _plugin_on_corner_widget_value_changed(GtkComboBox *inComboBox,
 	gtk_tree_model_get(model, &iter, 1, &value, -1);
 
 	/* Store new value at settings */
-	xfdashboard_hot_corner_settings_set_activation_corner(mapping->settings, value);
+	esdashboard_hot_corner_settings_set_activation_corner(mapping->settings, value);
 }
 
 /* Value for activation corner was changed at settings */
 static void _plugin_on_corner_settings_value_changed(PluginWidgetSettingsMap *inMapping)
 {
-	XfdashboardHotCornerSettingsActivationCorner	value;
+	EsdashboardHotCornerSettingsActivationCorner	value;
 	guint											modelValue;
 	GtkTreeModel									*model;
 	GtkTreeIter										iter;
@@ -171,7 +171,7 @@ static void _plugin_on_corner_settings_value_changed(PluginWidgetSettingsMap *in
 	g_return_if_fail(inMapping);
 
 	/* Get new value from settings */
-	value=xfdashboard_hot_corner_settings_get_activation_corner(inMapping->settings);
+	value=esdashboard_hot_corner_settings_get_activation_corner(inMapping->settings);
 
 	/* Iterate through combo box value and set new value if match is found */
 	model=gtk_combo_box_get_model(GTK_COMBO_BOX(inMapping->widget));
@@ -206,7 +206,7 @@ static void _plugin_on_radius_widget_value_changed(GtkSpinButton *inButton,
 	value=gtk_spin_button_get_value_as_int(inButton);
 
 	/* Store new value at settings */
-	xfdashboard_hot_corner_settings_set_activation_radius(mapping->settings, value);
+	esdashboard_hot_corner_settings_set_activation_radius(mapping->settings, value);
 }
 
 /* Value for activation radius was changed at settings */
@@ -217,7 +217,7 @@ static void _plugin_on_radius_settings_value_changed(PluginWidgetSettingsMap *in
 	g_return_if_fail(inMapping);
 
 	/* Get new value from settings */
-	value=xfdashboard_hot_corner_settings_get_activation_radius(inMapping->settings);
+	value=esdashboard_hot_corner_settings_get_activation_radius(inMapping->settings);
 
 	/* Set new value at widget */
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(inMapping->widget), value);
@@ -239,7 +239,7 @@ static void _plugin_on_duration_widget_value_changed(GtkRange *inRange,
 	value=gtk_range_get_value(inRange);
 
 	/* Store new value at settings */
-	xfdashboard_hot_corner_settings_set_activation_duration(mapping->settings, value);
+	esdashboard_hot_corner_settings_set_activation_duration(mapping->settings, value);
 }
 
 /* Value for activation duration was changed at settings */
@@ -250,7 +250,7 @@ static void _plugin_on_duration_settings_value_changed(PluginWidgetSettingsMap *
 	g_return_if_fail(inMapping);
 
 	/* Get new value from settings */
-	value=xfdashboard_hot_corner_settings_get_activation_duration(inMapping->settings);
+	value=esdashboard_hot_corner_settings_get_activation_duration(inMapping->settings);
 
 	/* Set new value at widget */
 	gtk_range_set_value(GTK_RANGE(inMapping->widget), value);
@@ -295,7 +295,7 @@ static void _plugin_on_primary_monitor_only_widget_value_changed(GtkToggleButton
 	value=gtk_toggle_button_get_active(inButton);
 
 	/* Store new value at settings */
-	xfdashboard_hot_corner_settings_set_primary_monitor_only(mapping->settings, value);
+	esdashboard_hot_corner_settings_set_primary_monitor_only(mapping->settings, value);
 }
 
 /* Value for activation duration was changed at settings */
@@ -306,7 +306,7 @@ static void _plugin_on_primary_monitor_only_settings_value_changed(PluginWidgetS
 	g_return_if_fail(inMapping);
 
 	/* Get new value from settings */
-	value=xfdashboard_hot_corner_settings_get_primary_monitor_only(inMapping->settings);
+	value=esdashboard_hot_corner_settings_get_primary_monitor_only(inMapping->settings);
 
 	/* Set new value at widget */
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(inMapping->widget), value);
@@ -314,12 +314,12 @@ static void _plugin_on_primary_monitor_only_settings_value_changed(PluginWidgetS
 
 
 /* Plugin configuration function */
-static GObject* plugin_configure(XfdashboardPlugin *self, gpointer inUserData)
+static GObject* plugin_configure(EsdashboardPlugin *self, gpointer inUserData)
 {
 	GtkWidget						*layout;
 	GtkWidget						*widgetLabel;
 	GtkWidget						*widgetValue;
-	XfdashboardHotCornerSettings	*settings;
+	EsdashboardHotCornerSettings	*settings;
 	PluginWidgetSettingsMap			*mapping;
 	GtkListStore					*listModel;
 	GtkTreeIter						modelIter;
@@ -328,7 +328,7 @@ static GObject* plugin_configure(XfdashboardPlugin *self, gpointer inUserData)
 	GtkCellRenderer					*renderer;
 
 	/* Get settings of plugin */
-	settings=xfdashboard_hot_corner_settings_new();
+	settings=esdashboard_hot_corner_settings_new();
 
 	/* Create layout widget */
 	layout=gtk_grid_new();
@@ -352,7 +352,7 @@ static GObject* plugin_configure(XfdashboardPlugin *self, gpointer inUserData)
 	gtk_grid_attach_next_to(GTK_GRID(layout), widgetValue, widgetLabel, GTK_POS_RIGHT, 1, 1);
 
 	listModel=gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT);
-	enumClass=g_type_class_ref(XFDASHBOARD_TYPE_HOT_CORNER_ACTIVATION_CORNER);
+	enumClass=g_type_class_ref(ESDASHBOARD_TYPE_HOT_CORNER_ACTIVATION_CORNER);
 	for(i=0; i<enumClass->n_values; i++)
 	{
 		gtk_list_store_append(listModel, &modelIter);
@@ -386,7 +386,7 @@ static GObject* plugin_configure(XfdashboardPlugin *self, gpointer inUserData)
 						G_CALLBACK(_plugin_on_radius_widget_value_changed),
 						mapping);
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(widgetValue),
-								xfdashboard_hot_corner_settings_get_activation_radius(settings));
+								esdashboard_hot_corner_settings_get_activation_radius(settings));
 	gtk_grid_attach_next_to(GTK_GRID(layout), widgetValue, widgetLabel, GTK_POS_RIGHT, 1, 1);
 
 	/* Add widget to choose activation duration */
@@ -408,7 +408,7 @@ static GObject* plugin_configure(XfdashboardPlugin *self, gpointer inUserData)
 						G_CALLBACK(_plugin_on_duration_settings_format_value),
 						NULL);
 	gtk_range_set_value(GTK_RANGE(widgetValue),
-						xfdashboard_hot_corner_settings_get_activation_duration(settings));
+						esdashboard_hot_corner_settings_get_activation_duration(settings));
 	gtk_grid_attach_next_to(GTK_GRID(layout), widgetValue, widgetLabel, GTK_POS_RIGHT, 1, 1);
 
 	/* Add widget to limit checks to primary monitor only or to all monitors */
@@ -422,7 +422,7 @@ static GObject* plugin_configure(XfdashboardPlugin *self, gpointer inUserData)
 						G_CALLBACK(_plugin_on_primary_monitor_only_widget_value_changed),
 						mapping);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widgetValue),
-								xfdashboard_hot_corner_settings_get_primary_monitor_only(settings));
+								esdashboard_hot_corner_settings_get_primary_monitor_only(settings));
 	gtk_grid_attach(GTK_GRID(layout), widgetValue, 0, 3, 2, 1);
 
 	/* Release allocated resources */
@@ -436,17 +436,17 @@ static GObject* plugin_configure(XfdashboardPlugin *self, gpointer inUserData)
 }
 
 /* Plugin enable function */
-static void plugin_enable(XfdashboardPlugin *self, gpointer inUserData)
+static void plugin_enable(EsdashboardPlugin *self, gpointer inUserData)
 {
 	/* Create instance of hot corner */
 	if(!hotCorner)
 	{
-		hotCorner=xfdashboard_hot_corner_new();
+		hotCorner=esdashboard_hot_corner_new();
 	}
 }
 
 /* Plugin disable function */
-static void plugin_disable(XfdashboardPlugin *self, gpointer inUserData)
+static void plugin_disable(EsdashboardPlugin *self, gpointer inUserData)
 {
 	/* Destroy instance of hot corner */
 	if(hotCorner)
@@ -457,21 +457,21 @@ static void plugin_disable(XfdashboardPlugin *self, gpointer inUserData)
 }
 
 /* Plugin initialization function */
-G_MODULE_EXPORT void plugin_init(XfdashboardPlugin *self)
+G_MODULE_EXPORT void plugin_init(EsdashboardPlugin *self)
 {
 	/* Set up localization */
-	xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+	expidus_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
 	/* Set plugin info */
-	xfdashboard_plugin_set_info(self,
+	esdashboard_plugin_set_info(self,
 								"name", _("Hot corner"),
-								"description", _("Activates xfdashboard when pointer is moved to a configured corner of monitor"),
+								"description", _("Activates esdashboard when pointer is moved to a configured corner of monitor"),
 								"author", "Stephan Haller <nomad@froevel.de>",
 								NULL);
 
 	/* Register GObject types of this plugin */
-	XFDASHBOARD_REGISTER_PLUGIN_TYPE(self, xfdashboard_hot_corner);
-	XFDASHBOARD_REGISTER_PLUGIN_TYPE(self, xfdashboard_hot_corner_settings);
+	ESDASHBOARD_REGISTER_PLUGIN_TYPE(self, esdashboard_hot_corner);
+	ESDASHBOARD_REGISTER_PLUGIN_TYPE(self, esdashboard_hot_corner_settings);
 
 	/* Connect plugin action handlers */
 	g_signal_connect(self, "enable", G_CALLBACK(plugin_enable), NULL);

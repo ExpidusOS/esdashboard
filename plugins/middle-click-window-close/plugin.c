@@ -25,32 +25,32 @@
 #include <config.h>
 #endif
 
-#include <libxfce4util/libxfce4util.h>
+#include <libexpidus1util/libexpidus1util.h>
 #include <gtk/gtk.h>
 
 #include "middle-click-window-close.h"
 
 
 /* Forward declarations */
-G_MODULE_EXPORT void plugin_init(XfdashboardPlugin *self);
+G_MODULE_EXPORT void plugin_init(EsdashboardPlugin *self);
 
 
-/* IMPLEMENTATION: XfdashboardPlugin */
+/* IMPLEMENTATION: EsdashboardPlugin */
 
-static XfdashboardMiddleClickWindowClose			*middleClickWindowClose=NULL;
+static EsdashboardMiddleClickWindowClose			*middleClickWindowClose=NULL;
 
 /* Plugin enable function */
-static void plugin_enable(XfdashboardPlugin *self, gpointer inUserData)
+static void plugin_enable(EsdashboardPlugin *self, gpointer inUserData)
 {
 	/* Create instance of hot corner */
 	if(!middleClickWindowClose)
 	{
-		middleClickWindowClose=xfdashboard_middle_click_window_close_new();
+		middleClickWindowClose=esdashboard_middle_click_window_close_new();
 	}
 }
 
 /* Plugin disable function */
-static void plugin_disable(XfdashboardPlugin *self, gpointer inUserData)
+static void plugin_disable(EsdashboardPlugin *self, gpointer inUserData)
 {
 	/* Destroy instance of hot corner */
 	if(middleClickWindowClose)
@@ -61,20 +61,20 @@ static void plugin_disable(XfdashboardPlugin *self, gpointer inUserData)
 }
 
 /* Plugin initialization function */
-G_MODULE_EXPORT void plugin_init(XfdashboardPlugin *self)
+G_MODULE_EXPORT void plugin_init(EsdashboardPlugin *self)
 {
 	/* Set up localization */
-	xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+	expidus_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
 	/* Set plugin info */
-	xfdashboard_plugin_set_info(self,
+	esdashboard_plugin_set_info(self,
 								"name", _("Middle-click window close"),
 								"description", _("Closes windows in windows view by middle-click"),
 								"author", "Stephan Haller <nomad@froevel.de>",
 								NULL);
 
 	/* Register GObject types of this plugin */
-	XFDASHBOARD_REGISTER_PLUGIN_TYPE(self, xfdashboard_middle_click_window_close);
+	ESDASHBOARD_REGISTER_PLUGIN_TYPE(self, esdashboard_middle_click_window_close);
 
 	/* Connect plugin action handlers */
 	g_signal_connect(self, "enable", G_CALLBACK(plugin_enable), NULL);

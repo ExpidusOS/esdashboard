@@ -5,29 +5,29 @@ SUBDIRS = \
 	themes
 
 desktopdir = $(datadir)/applications
-desktop_in_files = org.xfce.xfdashboard.desktop.in
+desktop_in_files = com.expidus.esdashboard.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 autostartdir = $(sysconfdir)/xdg/autostart
-autostart_in_files = org.xfce.xfdashboard-autostart.desktop.in
+autostart_in_files = com.expidus.esdashboard-autostart.desktop.in
 autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 
 settingsdir = $(datadir)/applications
-settings_in_files = org.xfce.xfdashboard-settings.desktop.in
+settings_in_files = com.expidus.esdashboard-settings.desktop.in
 settings_DATA = $(settings_in_files:.desktop.in=.desktop)
 
 # Substitute bindir so it works when built in a non-system prefix
-org.xfce.xfdashboard.desktop.in:org.xfce.xfdashboard.desktop.in.in
+com.expidus.esdashboard.desktop.in:com.expidus.esdashboard.desktop.in.in
 	$(AM_V_GEN) sed -e "s|@bindir[@]|$(bindir)|" \
 	    -e "s|@VERSION[@]|$(VERSION)|" \
 	    $< > $@ || rm $@
 
-org.xfce.xfdashboard-autostart.desktop.in:org.xfce.xfdashboard-autostart.desktop.in.in
+com.expidus.esdashboard-autostart.desktop.in:com.expidus.esdashboard-autostart.desktop.in.in
 	$(AM_V_GEN) sed -e "s|@bindir[@]|$(bindir)|" \
 	    -e "s|@VERSION[@]|$(VERSION)|" \
 	    $< > $@ || rm $@
 
-org.xfce.xfdashboard-settings.desktop.in:org.xfce.xfdashboard-settings.desktop.in.in
+com.expidus.esdashboard-settings.desktop.in:com.expidus.esdashboard-settings.desktop.in.in
 	$(AM_V_GEN) sed -e "s|@bindir[@]|$(bindir)|" \
 	    -e "s|@VERSION[@]|$(VERSION)|" \
 	    $< > $@ || rm $@

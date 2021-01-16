@@ -1,10 +1,10 @@
-plugindir = $(libdir)/xfdashboard/plugins
+plugindir = $(libdir)/esdashboard/plugins
 PLUGIN_ID = hot-corner
 
 AM_CPPFLAGS = \
 	-I$(top_builddir) \
 	-I$(top_srcdir) \
-	-DG_LOG_DOMAIN=\"xfdashboard-plugin-hot_corner\" \
+	-DG_LOG_DOMAIN=\"esdashboard-plugin-hot_corner\" \
 	-DLIBEXECDIR=\"$(libexecdir)\" \
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\" \
 	-DPLUGIN_ID=\"$(PLUGIN_ID)\"
@@ -20,10 +20,10 @@ hot_corner_la_SOURCES = \
 	plugin.c
 
 hot_corner_la_CFLAGS = \
-	$(LIBXFCE4UTIL_CFLAGS) \
+	$(LIBEXPIDUS1UTIL_CFLAGS) \
 	$(GTK_CFLAGS) \
 	$(CLUTTER_CFLAGS) \
-	$(LIBXFCONF_CFLAGS) \
+	$(LIBESCONF_CFLAGS) \
 	$(GARCON_CFLAGS) \
 	$(PLATFORM_CFLAGS)
 
@@ -37,12 +37,12 @@ hot_corner_la_LDFLAGS = \
 	$(PLATFORM_LDFLAGS)
 
 hot_corner_la_LIBADD = \
-	$(LIBXFCE4UTIL_LIBS) \
+	$(LIBEXPIDUS1UTIL_LIBS) \
 	$(GTK_LIBS) \
 	$(CLUTTER_LIBS) \
-	$(LIBXFCONF_LIBS) \
+	$(LIBESCONF_LIBS) \
 	$(GARCON_CLIBS) \
-	$(top_builddir)/libxfdashboard/libxfdashboard.la
+	$(top_builddir)/libesdashboard/libesdashboard.la
 
 CLEANFILES = \
 	$(plugin_DATA)

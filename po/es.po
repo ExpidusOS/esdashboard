@@ -6,10 +6,10 @@
 # Translators:
 # Jaime Marquínez Ferrándiz, 2020
 # Adolfo Jayme-Barrientos, 2020
-# Nick Schermer <nick@xfce.org>, 2020
+# Nick Schermer <nick@expidus.org>, 2020
 # mc <correomc2000-ing@yahoo.es>, 2020
 # 629cf3e396111bb8c5fb6664e2dbc91d, 2020
-# Xfce Bot <transifex@xfce.org>, 2020
+# Expidus Bot <transifex@expidus.org>, 2020
 # emiliano casal chiarotti <emiliano.casal.chiarotti@gmail.com>, 2020
 # Casper casper, 2020
 # 
@@ -21,69 +21,69 @@ msgstr ""
 "POT-Creation-Date: 2020-11-17 12:52+0100\n"
 "PO-Revision-Date: 2020-10-07 10:59+0000\n"
 "Last-Translator: Casper casper, 2020\n"
-"Language-Team: Spanish (https://www.transifex.com/xfce/teams/16840/es/)\n"
+"Language-Team: Spanish (https://www.transifex.com/expidus/teams/16840/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/xfdashboard.desktop.in.in.h:1
-#: ../data/xfdashboard-autostart.desktop.in.in.h:1
-msgid "Xfdashboard"
-msgstr "Xfdashboard"
+#: ../data/esdashboard.desktop.in.in.h:1
+#: ../data/esdashboard-autostart.desktop.in.in.h:1
+msgid "Esdashboard"
+msgstr "Esdashboard"
 
-#: ../data/xfdashboard.desktop.in.in.h:2
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:1
-msgid "Maybe a Gnome shell like dashboard for Xfce"
-msgstr "Tal vez un intérprete de órdenes a modo de panel para Xfce"
+#: ../data/esdashboard.desktop.in.in.h:2
+#: ../data/appdata/esdashboard.appdata.xml.in.h:1
+msgid "Maybe a Gnome shell like dashboard for Expidus"
+msgstr "Tal vez un intérprete de órdenes a modo de panel para Expidus"
 
-#: ../data/xfdashboard-autostart.desktop.in.in.h:2
-msgid "Start xfdashboard as daemon in background"
-msgstr "Iniciar Xfdashboard como servicio en segundo plano"
+#: ../data/esdashboard-autostart.desktop.in.in.h:2
+msgid "Start esdashboard as daemon in background"
+msgstr "Iniciar Esdashboard como servicio en segundo plano"
 
-#: ../data/xfdashboard-settings.desktop.in.in.h:1
-msgid "Xfdashboard settings"
-msgstr "Ajustes de Xfdashboard"
+#: ../data/esdashboard-settings.desktop.in.in.h:1
+msgid "Esdashboard settings"
+msgstr "Ajustes de Esdashboard"
 
-#: ../data/xfdashboard-settings.desktop.in.in.h:2
-msgid "Configure xfdashboard"
-msgstr "Configurar Xfdashboard"
+#: ../data/esdashboard-settings.desktop.in.in.h:2
+msgid "Configure esdashboard"
+msgstr "Configurar Esdashboard"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:2
+#: ../data/appdata/esdashboard.appdata.xml.in.h:2
 msgid ""
-"Xfdashboard provides a GNOME shell dashboard like interface for use with "
-"Xfce desktop."
+"Esdashboard provides a GNOME shell dashboard like interface for use with "
+"Expidus desktop."
 msgstr ""
-"Xfdashboard provee un Intérprete de panel como el de GNOME para usarse en el"
-" entorno de escritorio Xfce."
+"Esdashboard provee un Intérprete de panel como el de GNOME para usarse en el"
+" entorno de escritorio Expidus."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:3
+#: ../data/appdata/esdashboard.appdata.xml.in.h:3
 msgid ""
 "It can be configured to run to any keyboard shortcut and when executed "
 "provides an overview of applications currently open enabling the user to "
-"switch between different applications. The search feature works like Xfce's "
+"switch between different applications. The search feature works like Expidus's "
 "app finder which makes it convenient to search for and start applications."
 msgstr ""
 "Puede ser configurado para funcionar con cualquier combinación de teclas y "
 "cuando se ejecuta proporciona una visión general de las aplicaciones que "
 "estén abiertas permitendo al usuario cambiar entre diferentes aplicaciones. "
-"La función de búsqueda funciona como el buscador de aplicaciones de Xfce que"
+"La función de búsqueda funciona como el buscador de aplicaciones de Expidus que"
 " hace que sea conveniente para buscar e iniciar aplicaciones."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:4
+#: ../data/appdata/esdashboard.appdata.xml.in.h:4
 msgid "Browsing applications"
 msgstr "Navegar por las aplicaciones"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:5
+#: ../data/appdata/esdashboard.appdata.xml.in.h:5
 msgid "Searching applications"
 msgstr "Buscar aplicaciones"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:6
+#: ../data/appdata/esdashboard.appdata.xml.in.h:6
 msgid "This release candidate adds also more animations as well as fixes."
 msgstr "Esta versión candidata añade también más animaciones y correcciones."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:7
+#: ../data/appdata/esdashboard.appdata.xml.in.h:7
 msgid ""
 "This unstable development adds more animations as well as some smaller "
 "fixes."
@@ -91,11 +91,11 @@ msgstr ""
 "Esta versión de desarrollo inestable agrega más animaciones y algunos "
 "arreglos menores."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:8
+#: ../data/appdata/esdashboard.appdata.xml.in.h:8
 msgid "This unstable development adds animations."
 msgstr "Esta versión de desarrollo inestable agrega animaciones."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:9
+#: ../data/appdata/esdashboard.appdata.xml.in.h:9
 msgid ""
 "This unstable development adds support for touchpads and application actions"
 " (Jumplists, Quicklists) as well as new and updated translations."
@@ -104,15 +104,15 @@ msgstr ""
 "aplicaciones (Saltos de listas, Listas rapidas), así como traducciones "
 "nuevas y actualizadas."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:10
+#: ../data/appdata/esdashboard.appdata.xml.in.h:10
 msgid ""
 "This unstable development adds lots of new and updated translations and "
-"support for newer xfconf versions."
+"support for newer esconf versions."
 msgstr ""
 "Esta versión de desarrollo inestable agrega muchas traduccioines nuevas y "
-"actualizadas y soporte para nuevas versiones de xfconf."
+"actualizadas y soporte para nuevas versiones de esconf."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:11
+#: ../data/appdata/esdashboard.appdata.xml.in.h:11
 msgid ""
 "This unstable development implements a new experimental backend for GDK as "
 "well as it supports user stylesheets now."
@@ -120,7 +120,7 @@ msgstr ""
 "Este desarrollo inestable implementa un nuevo backend experimental para GDK "
 "y ahora admite hojas de estilo de usuario."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:12
+#: ../data/appdata/esdashboard.appdata.xml.in.h:12
 msgid ""
 "This unstable development improves loading performance of images and icon, "
 "adds a fine-grained debugging system and introduces an interface for "
@@ -131,7 +131,7 @@ msgstr ""
 "interfaz para múltiples backends, pero solo X11 sigue siendo el único "
 "compatible."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:13
+#: ../data/appdata/esdashboard.appdata.xml.in.h:13
 msgid ""
 "This unstable development introduces child windows shown next to the main "
 "window."
@@ -139,7 +139,7 @@ msgstr ""
 "Este desarrollo inestable introduce ventanas secundarias que se muestran "
 "junto a la ventana principal."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:14
+#: ../data/appdata/esdashboard.appdata.xml.in.h:14
 msgid ""
 "This stable version fixes a bug setting the correct default applications at "
 "first use."
@@ -147,11 +147,11 @@ msgstr ""
 "Esta versión estable arregla un error configurando las aplicaciones por "
 "defecto correctas en el primer uso."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:15
+#: ../data/appdata/esdashboard.appdata.xml.in.h:15
 msgid "This unstable development introduces pop-up menus."
 msgstr "Esta versión de desarrollo inestable introduce menús emergentes."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:16
+#: ../data/appdata/esdashboard.appdata.xml.in.h:16
 msgid ""
 "This stable version introduces lots of new features like plugins and "
 "application tracker. It also contains a huge collection of other larger and "
@@ -162,8 +162,8 @@ msgstr ""
 "colección de otras mejoras mayores y menores."
 
 #: ../data/data/preferences.ui.h:1
-msgid "<span size=\"large\"><b>Xfdashboard settings</b></span>"
-msgstr "<span size=\"large\"><b>Configuraciones de Xfdashboard</b></span>"
+msgid "<span size=\"large\"><b>Esdashboard settings</b></span>"
+msgstr "<span size=\"large\"><b>Configuraciones de Esdashboard</b></span>"
 
 #: ../data/data/preferences.ui.h:2
 msgid "Configure plugin"
@@ -171,11 +171,11 @@ msgstr "Configurar complemento"
 
 #: ../data/data/preferences.ui.h:3
 msgid ""
-"<span size=\"large\"><b>Xfdashboard settings</b></span>\n"
-"Configure xfdashboard"
+"<span size=\"large\"><b>Esdashboard settings</b></span>\n"
+"Configure esdashboard"
 msgstr ""
-"<span size=\"large\"><b>Configuraciones de Xfdashboard</b></span>\n"
-"Configure Xfdashboard"
+"<span size=\"large\"><b>Configuraciones de Esdashboard</b></span>\n"
+"Configure Esdashboard"
 
 #: ../data/data/preferences.ui.h:5
 msgid "<b>General settings:</b>"
@@ -187,23 +187,23 @@ msgstr "Restablecer la vista de búsqueda cuando se reanude"
 
 #: ../data/data/preferences.ui.h:7
 msgid ""
-"If enabled the search view will be resetted when xfdashboard is resumed. That means the active view is switched back to last view active before last search was started and search box will be emptied.\n"
+"If enabled the search view will be resetted when esdashboard is resumed. That means the active view is switched back to last view active before last search was started and search box will be emptied.\n"
 "\n"
-"<b>NOTE:</b> This setting only takes effect if xfdashboard is running in daemon mode. "
+"<b>NOTE:</b> This setting only takes effect if esdashboard is running in daemon mode. "
 msgstr ""
-"Si está activada, la vista de búsqueda se reiniciará cuando se reinicie Xfdashboard. Esto significa que la vista activa se cambia a la última vista activa antes de que se inicie la última búsqueda y se vacíe el cuadro de búsqueda.\n"
+"Si está activada, la vista de búsqueda se reiniciará cuando se reinicie Esdashboard. Esto significa que la vista activa se cambia a la última vista activa antes de que se inicie la última búsqueda y se vacíe el cuadro de búsqueda.\n"
 "\n"
-"<b>NOTA:</b> Esta configuración solamente tiene efecto si Xfdashboard se ejecuta en modo demonio."
+"<b>NOTA:</b> Esta configuración solamente tiene efecto si Esdashboard se ejecuta en modo demonio."
 
 #: ../data/data/preferences.ui.h:10
 msgid ""
-"When xfdashboard resumes the selected view will be activated.\n"
+"When esdashboard resumes the selected view will be activated.\n"
 "\n"
-"<b>NOTE:</b> This setting only takes effect if xfdashboard is running in daemon mode."
+"<b>NOTE:</b> This setting only takes effect if esdashboard is running in daemon mode."
 msgstr ""
-"Cuando Xfdashboard se reanude, la vista seleccionada se activará.\n"
+"Cuando Esdashboard se reanude, la vista seleccionada se activará.\n"
 "\n"
-"<b>NOTA:</b> Esta configuración solamente tiene efecto si Xfdashboard se ejecuta en modo demonio."
+"<b>NOTA:</b> Esta configuración solamente tiene efecto si Esdashboard se ejecuta en modo demonio."
 
 #: ../data/data/preferences.ui.h:13
 msgid "Switch to view when resumed:"
@@ -239,11 +239,11 @@ msgstr ""
 
 #: ../data/data/preferences.ui.h:22
 msgid ""
-"This value defines how fast the window content should be created. While the value 'immediate' tells xfdashboard to create the window content at the time it is requested, all other values will set up a queue and value defines how fast the queue will be processed.\n"
+"This value defines how fast the window content should be created. While the value 'immediate' tells esdashboard to create the window content at the time it is requested, all other values will set up a queue and value defines how fast the queue will be processed.\n"
 "\n"
 "<b>NOTE:</b> Only change this value from 'immediate' to other value if your graphics card, driver or system is too slow to create the window contents immediately. You have to try each value to find the one fitting your system."
 msgstr ""
-"Este valor define la rapidez con que se debe crear el contenido de la ventana. Mientras que el valor «inmediato» indica a Xfdashboard que cree el contenido de la ventana en el momento en que se solicite, todos los demás valores establecerán una cola y el valor definirá la velocidad de procesamiento de la cola.\n"
+"Este valor define la rapidez con que se debe crear el contenido de la ventana. Mientras que el valor «inmediato» indica a Esdashboard que cree el contenido de la ventana en el momento en que se solicite, todos los demás valores establecerán una cola y el valor definirá la velocidad de procesamiento de la cola.\n"
 "\n"
 "<b>NOTA:</b> Solamente cambie este valor de «inmediato» a otro valor si su tarjeta gráfica, controlador o sistema es demasiado lento para crear el contenido de la ventana inmediatamente. Debe de probar cada valor para encontrar el que se adapte a su sistema."
 
@@ -369,136 +369,136 @@ msgstr "<b>Licencia:</b>"
 msgid "Plugins"
 msgstr "Complementos"
 
-#: ../data/themes/xfdashboard/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard"
-msgstr "Xfdashboard"
+#: ../data/themes/esdashboard/esdashboard.theme.in.in.h:1
+msgid "esdashboard"
+msgstr "Esdashboard"
 
-#: ../data/themes/xfdashboard/xfdashboard.theme.in.in.h:2
-msgid "Default theme for xfdashboard"
-msgstr "Tema predeterminado para Xfdashboard"
+#: ../data/themes/esdashboard/esdashboard.theme.in.in.h:2
+msgid "Default theme for esdashboard"
+msgstr "Tema predeterminado para Esdashboard"
 
-#: ../data/themes/xfdashboard-auber/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-auber"
-msgstr "Xfdashboard auber"
+#: ../data/themes/esdashboard-auber/esdashboard.theme.in.in.h:1
+msgid "esdashboard-auber"
+msgstr "Esdashboard auber"
 
-#: ../data/themes/xfdashboard-auber/xfdashboard.theme.in.in.h:2
-msgid "Aubergine theme for xfdashboard"
-msgstr "Tema de color berenjena para Xfdashboard"
+#: ../data/themes/esdashboard-auber/esdashboard.theme.in.in.h:2
+msgid "Aubergine theme for esdashboard"
+msgstr "Tema de color berenjena para Esdashboard"
 
-#: ../data/themes/xfdashboard-blue/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-blue"
-msgstr "Xfdashboard azul"
+#: ../data/themes/esdashboard-blue/esdashboard.theme.in.in.h:1
+msgid "esdashboard-blue"
+msgstr "Esdashboard azul"
 
-#: ../data/themes/xfdashboard-blue/xfdashboard.theme.in.in.h:2
-msgid "Blue theme for xfdashboard"
-msgstr "Tema de color azul para Xfdashboard"
+#: ../data/themes/esdashboard-blue/esdashboard.theme.in.in.h:2
+msgid "Blue theme for esdashboard"
+msgstr "Tema de color azul para Esdashboard"
 
-#: ../data/themes/xfdashboard-dark/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-dark"
-msgstr "Xfdashboard oscuro"
+#: ../data/themes/esdashboard-dark/esdashboard.theme.in.in.h:1
+msgid "esdashboard-dark"
+msgstr "Esdashboard oscuro"
 
-#: ../data/themes/xfdashboard-dark/xfdashboard.theme.in.in.h:2
-msgid "Dark theme for xfdashboard"
-msgstr "Tema de color oscuro para el Xfdashboard"
+#: ../data/themes/esdashboard-dark/esdashboard.theme.in.in.h:2
+msgid "Dark theme for esdashboard"
+msgstr "Tema de color oscuro para el Esdashboard"
 
-#: ../data/themes/xfdashboard-mint/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-mint"
-msgstr "Xfdashboard menta"
+#: ../data/themes/esdashboard-mint/esdashboard.theme.in.in.h:1
+msgid "esdashboard-mint"
+msgstr "Esdashboard menta"
 
-#: ../data/themes/xfdashboard-mint/xfdashboard.theme.in.in.h:2
-msgid "Fresh-green flavored theme for xfdashboard"
-msgstr "Tema con sabor a verde fresco para Xfdashboard"
+#: ../data/themes/esdashboard-mint/esdashboard.theme.in.in.h:2
+msgid "Fresh-green flavored theme for esdashboard"
+msgstr "Tema con sabor a verde fresco para Esdashboard"
 
-#: ../data/themes/xfdashboard-moranga/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-moranga"
-msgstr "Xfdashboard moronga"
+#: ../data/themes/esdashboard-moranga/esdashboard.theme.in.in.h:1
+msgid "esdashboard-moranga"
+msgstr "Esdashboard moronga"
 
-#: ../data/themes/xfdashboard-moranga/xfdashboard.theme.in.in.h:2
-msgid "Moranga theme for xfdashboard"
-msgstr "Tema de color calabaza para Xfdashboard"
+#: ../data/themes/esdashboard-moranga/esdashboard.theme.in.in.h:2
+msgid "Moranga theme for esdashboard"
+msgstr "Tema de color calabaza para Esdashboard"
 
-#: ../data/themes/xfdashboard-wine/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-wine"
-msgstr "Xfdashboard vino"
+#: ../data/themes/esdashboard-wine/esdashboard.theme.in.in.h:1
+msgid "esdashboard-wine"
+msgstr "Esdashboard vino"
 
-#: ../data/themes/xfdashboard-wine/xfdashboard.theme.in.in.h:2
-msgid "Red wine theme for xfdashboard"
-msgstr "Tema de color vino para el Xfdashboard"
+#: ../data/themes/esdashboard-wine/esdashboard.theme.in.in.h:2
+msgid "Red wine theme for esdashboard"
+msgstr "Tema de color vino para el Esdashboard"
 
-#: ../libxfdashboard/application-button.c:262
+#: ../libesdashboard/application-button.c:262
 #, c-format
 msgid "Could not execute action '%s' for application '%s': %s"
 msgstr "No se pudo ejecutar la acción '%s' para la aplicación '%s': %s"
 
-#: ../libxfdashboard/application-button.c:265 ../settings/plugins.c:826
+#: ../libesdashboard/application-button.c:265 ../settings/plugins.c:826
 #: ../settings/main.c:63
 msgid "Unknown error"
 msgstr "Error desconocido"
 
-#: ../libxfdashboard/application-button.c:282
+#: ../libesdashboard/application-button.c:282
 #, c-format
 msgid "Executed action '%s' for application '%s'"
 msgstr "Acción ejecutada '%s' para la aplicación '%s'"
 
-#: ../libxfdashboard/application-button.c:743
-#: ../libxfdashboard/application-button.c:761
-#: ../libxfdashboard/applications-search-provider.c:754
-#: ../libxfdashboard/applications-view.c:334
-#: ../libxfdashboard/quicklaunch.c:352 ../libxfdashboard/quicklaunch.c:400
-#: ../libxfdashboard/quicklaunch.c:458
+#: ../libesdashboard/application-button.c:743
+#: ../libesdashboard/application-button.c:761
+#: ../libesdashboard/applications-search-provider.c:754
+#: ../libesdashboard/applications-view.c:334
+#: ../libesdashboard/quicklaunch.c:352 ../libesdashboard/quicklaunch.c:400
+#: ../libesdashboard/quicklaunch.c:458
 #, c-format
 msgid "Launching application '%s' failed: %s"
 msgstr "La ejecución de la aplicación '%s' falló: %s"
 
-#: ../libxfdashboard/application-button.c:745
-#: ../libxfdashboard/quicklaunch.c:354
+#: ../libesdashboard/application-button.c:745
+#: ../libesdashboard/quicklaunch.c:354
 msgid "No information available for application"
 msgstr "No hay información disponible para la aplicación"
 
-#: ../libxfdashboard/application-button.c:763
-#: ../libxfdashboard/application.c:308 ../libxfdashboard/application.c:618
-#: ../libxfdashboard/applications-search-provider.c:756
-#: ../libxfdashboard/applications-view.c:336
-#: ../libxfdashboard/quicklaunch.c:460
+#: ../libesdashboard/application-button.c:763
+#: ../libesdashboard/application.c:308 ../libesdashboard/application.c:618
+#: ../libesdashboard/applications-search-provider.c:756
+#: ../libesdashboard/applications-view.c:336
+#: ../libesdashboard/quicklaunch.c:460
 msgid "unknown error"
 msgstr "error desconocido"
 
-#: ../libxfdashboard/application-button.c:774
-#: ../libxfdashboard/applications-search-provider.c:767
-#: ../libxfdashboard/applications-view.c:347
-#: ../libxfdashboard/quicklaunch.c:471
+#: ../libesdashboard/application-button.c:774
+#: ../libesdashboard/applications-search-provider.c:767
+#: ../libesdashboard/applications-view.c:347
+#: ../libesdashboard/quicklaunch.c:471
 #, c-format
 msgid "Application '%s' launched"
 msgstr "Aplicación «%s» ejecutada"
 
-#: ../libxfdashboard/application.c:306
+#: ../libesdashboard/application.c:306
 #, c-format
 msgid "Could not load theme '%s': %s"
 msgstr "No se pudo cargar el tema '%s': %s"
 
-#: ../libxfdashboard/application.c:527
+#: ../libesdashboard/application.c:527
 #, c-format
 msgid "Welcome to %s (%s)!"
 msgstr "¡Bienvenido a %s (%s)!"
 
-#: ../libxfdashboard/application.c:529
+#: ../libesdashboard/application.c:529
 #, c-format
 msgid "Welcome to %s!"
 msgstr "¡Bienvenido a %s!"
 
-#: ../libxfdashboard/application.c:576
+#: ../libesdashboard/application.c:576
 msgid "Fork to background"
 msgstr "Mantener en segundo plano"
 
-#: ../libxfdashboard/application.c:577
+#: ../libesdashboard/application.c:577
 msgid "Quit running instance"
 msgstr "Cerrar la instancia en ejecución"
 
-#: ../libxfdashboard/application.c:578
+#: ../libesdashboard/application.c:578
 msgid "Restart running instance"
 msgstr "Reiniciar la instancia en ejecución"
 
-#: ../libxfdashboard/application.c:579
+#: ../libesdashboard/application.c:579
 msgid ""
 "Toggles visibility if running instance was started in daemon mode otherwise "
 "it quits running non-daemon instance"
@@ -506,117 +506,117 @@ msgstr ""
 "Alterna la visibilidad si la instancia en ejecución se inició en modo "
 "demonio; de lo contrario, dejará de ejecutar la instancia que no es demonio."
 
-#: ../libxfdashboard/application.c:580
+#: ../libesdashboard/application.c:580
 msgid "The ID of view to switch to on startup or resume"
 msgstr "El ID de vista para cambiar al inicio o reanudar"
 
-#: ../libxfdashboard/application.c:581
+#: ../libesdashboard/application.c:581
 msgid "Show version"
 msgstr "Mostrar versión"
 
-#: ../libxfdashboard/application.c:600
-msgid "A Gnome Shell like dashboard for Xfce4 - version "
-msgstr "Un tablero al estilo Gnome-Shell para la versión Xfce4"
+#: ../libesdashboard/application.c:600
+msgid "A Gnome Shell like dashboard for Expidus1 - version "
+msgstr "Un tablero al estilo Gnome-Shell para la versión Expidus1"
 
 #. Show error
-#: ../libxfdashboard/application.c:617
+#: ../libesdashboard/application.c:617
 #, c-format
 msgid "%s\n"
 msgstr "%s\n"
 
-#: ../libxfdashboard/applications-search-provider.c:838
-#: ../libxfdashboard/applications-view.c:417
-#: ../libxfdashboard/quicklaunch.c:682
+#: ../libesdashboard/applications-search-provider.c:838
+#: ../libesdashboard/applications-view.c:417
+#: ../libesdashboard/quicklaunch.c:682
 msgid "Launch"
 msgstr "Iniciar"
 
 #. Set up view
 #. Add "applications" button
-#: ../libxfdashboard/applications-search-provider.c:1175
-#: ../libxfdashboard/applications-view.c:1587
-#: ../libxfdashboard/quicklaunch.c:3288
+#: ../libesdashboard/applications-search-provider.c:1175
+#: ../libesdashboard/applications-view.c:1587
+#: ../libesdashboard/quicklaunch.c:3288
 msgid "Applications"
 msgstr "Aplicaciones"
 
-#: ../libxfdashboard/applications-view.c:545
-#: ../libxfdashboard/applications-view.c:546
-#: ../libxfdashboard/applications-view.c:657
-#: ../libxfdashboard/applications-view.c:658
+#: ../libesdashboard/applications-view.c:545
+#: ../libesdashboard/applications-view.c:546
+#: ../libesdashboard/applications-view.c:657
+#: ../libesdashboard/applications-view.c:658
 msgid "Back"
 msgstr "Atrás"
 
-#: ../libxfdashboard/applications-view.c:545
-#: ../libxfdashboard/applications-view.c:657
+#: ../libesdashboard/applications-view.c:545
+#: ../libesdashboard/applications-view.c:657
 msgid "Go back to previous menu"
 msgstr "Volver al menú anterior"
 
-#: ../libxfdashboard/applications-view.c:685
-#: ../libxfdashboard/applications-view.c:686
+#: ../libesdashboard/applications-view.c:685
+#: ../libesdashboard/applications-view.c:686
 msgid "All applications"
 msgstr "Todas las aplicaciones"
 
-#: ../libxfdashboard/applications-view.c:685
+#: ../libesdashboard/applications-view.c:685
 msgid "List of all installed applications"
 msgstr "Listar todas las aplicaciones instaladas"
 
-#: ../libxfdashboard/quicklaunch.c:402
+#: ../libesdashboard/quicklaunch.c:402
 msgid "No windows to activate for application"
 msgstr "Ninguna ventana a activarse para la aplicación"
 
-#: ../libxfdashboard/quicklaunch.c:525 ../libxfdashboard/quicklaunch.c:1261
-#: ../libxfdashboard/quicklaunch.c:2130
+#: ../libesdashboard/quicklaunch.c:525 ../libesdashboard/quicklaunch.c:1261
+#: ../libesdashboard/quicklaunch.c:2130
 #, c-format
 msgid "Favourite '%s' removed"
 msgstr "Favorito '%s' borrado"
 
-#: ../libxfdashboard/quicklaunch.c:624 ../libxfdashboard/quicklaunch.c:943
-#: ../libxfdashboard/quicklaunch.c:2063
+#: ../libesdashboard/quicklaunch.c:624 ../libesdashboard/quicklaunch.c:943
+#: ../libesdashboard/quicklaunch.c:2063
 #, c-format
 msgid "Favourite '%s' added"
 msgstr "Favorito '%s' agregado"
 
-#: ../libxfdashboard/quicklaunch.c:705
+#: ../libesdashboard/quicklaunch.c:705
 msgid "Remove from favourites"
 msgstr "Remover de favoritos"
 
-#: ../libxfdashboard/quicklaunch.c:719
+#: ../libesdashboard/quicklaunch.c:719
 msgid "Add to favourites"
 msgstr "Agregar a favoritos"
 
 #. Next add trash button to box but initially hidden and register as drop
 #. target
-#: ../libxfdashboard/quicklaunch.c:3295
+#: ../libesdashboard/quicklaunch.c:3295
 msgid "Remove"
 msgstr "Eliminar"
 
-#: ../libxfdashboard/search-result-container.c:664
-#: ../libxfdashboard/search-result-container.c:1734
+#: ../libesdashboard/search-result-container.c:664
+#: ../libesdashboard/search-result-container.c:1734
 #, c-format
 msgid "Show %d more results..."
 msgstr "Mostrar %d más resultados..."
 
 #. Get text to set at "all"-label
-#: ../libxfdashboard/search-result-container.c:686
+#: ../libesdashboard/search-result-container.c:686
 #, c-format
 msgid "Show all %d results..."
 msgstr "Mostrar todos los %d resultados..."
 
-#: ../libxfdashboard/search-view.c:979
+#: ../libesdashboard/search-view.c:979
 #, c-format
 msgid "No results found for '%s'"
 msgstr "Ningún resultado encontrado para '%s'"
 
 #. Set up view (Note: Search view is disabled by default!)
-#: ../libxfdashboard/search-view.c:1715
+#: ../libesdashboard/search-view.c:1715
 msgid "Search"
 msgstr "Búsqueda"
 
-#: ../libxfdashboard/stage.c:1124
+#: ../libesdashboard/stage.c:1124
 msgid "Just type to search..."
 msgstr "Solo tipee para buscar..."
 
 #. Set up view
-#: ../libxfdashboard/windows-view.c:2317
+#: ../libesdashboard/windows-view.c:2317
 msgid "Windows"
 msgstr "Ventanas"
 
@@ -724,10 +724,10 @@ msgstr "Esquina activa"
 
 #: ../plugins/hot-corner/plugin.c:468
 msgid ""
-"Activates xfdashboard when pointer is moved to a configured corner of "
+"Activates esdashboard when pointer is moved to a configured corner of "
 "monitor"
 msgstr ""
-"Activa Xfdashboard cuando el puntero se mueve a una esquina configurada del "
+"Activa Esdashboard cuando el puntero se mueve a una esquina configurada del "
 "monitor"
 
 #: ../plugins/middle-click-window-close/plugin.c:71

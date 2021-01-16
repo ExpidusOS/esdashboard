@@ -25,15 +25,15 @@
 #include <config.h>
 #endif
 
-#include <libxfdashboard/libxfdashboard.h>
-#include <libxfce4util/libxfce4util.h>
+#include <libesdashboard/libesdashboard.h>
+#include <libexpidus1util/libexpidus1util.h>
 
 #include "gnome-shell-search-provider.h"
 
 
 /* IMPLEMENTATION: Private variables and methods */
-typedef struct _XfdashboardGnomeShellSearchProviderPluginPrivate	XfdashboardGnomeShellSearchProviderPluginPrivate;
-struct _XfdashboardGnomeShellSearchProviderPluginPrivate
+typedef struct _EsdashboardGnomeShellSearchProviderPluginPrivate	EsdashboardGnomeShellSearchProviderPluginPrivate;
+struct _EsdashboardGnomeShellSearchProviderPluginPrivate
 {
 	/* Private structure */
 	GList			*providers;
@@ -41,13 +41,13 @@ struct _XfdashboardGnomeShellSearchProviderPluginPrivate
 };
 
 
-/* IMPLEMENTATION: XfdashboardPlugin */
+/* IMPLEMENTATION: EsdashboardPlugin */
 
 /* Forward declarations */
-G_MODULE_EXPORT void plugin_init(XfdashboardPlugin *self);
+G_MODULE_EXPORT void plugin_init(EsdashboardPlugin *self);
 
 /* Get provider name (ID) from file */
-static gchar* _xfdashboard_gnome_shell_search_provider_plugin_get_provider_name_from_file(GFile *inFile,
+static gchar* _esdashboard_gnome_shell_search_provider_plugin_get_provider_name_from_file(GFile *inFile,
 																							GError **outError)
 {
 	const gchar					*filename;
@@ -82,14 +82,14 @@ static gchar* _xfdashboard_gnome_shell_search_provider_plugin_get_provider_name_
 }
 
 /* The directory containing Gnome-Shell search providers has changed */
-static void _xfdashboard_gnome_shell_search_provider_plugin_on_file_monitor_changed(GFileMonitor *self,
+static void _esdashboard_gnome_shell_search_provider_plugin_on_file_monitor_changed(GFileMonitor *self,
 																					GFile *inFile,
 																					GFile *inOtherFile,
 																					GFileMonitorEvent inEventType,
 																					gpointer inUserData)
 {
-	XfdashboardGnomeShellSearchProviderPluginPrivate	*priv;
-	XfdashboardSearchManager							*searchManager;
+	EsdashboardGnomeShellSearchProviderPluginPrivate	*priv;
+	EsdashboardSearchManager							*searchManager;
 	gchar												*filePath;
 	gchar												*providerName;
 	GError												*error;
@@ -98,11 +98,11 @@ static void _xfdashboard_gnome_shell_search_provider_plugin_on_file_monitor_chan
 	g_return_if_fail(G_IS_FILE_MONITOR(self));
 	g_return_if_fail(inUserData);
 
-	priv=(XfdashboardGnomeShellSearchProviderPluginPrivate*)inUserData;
+	priv=(EsdashboardGnomeShellSearchProviderPluginPrivate*)inUserData;
 	error=NULL;
 
 	/* Get search manager where search providers were registered at */
-	searchManager=xfdashboard_search_manager_get_default();
+	searchManager=esdashboard_search_manager_get_default();
 
 	/* Get file path */
 	filePath=g_file_get_path(inFile);
@@ -112,11 +112,11 @@ static void _xfdashboard_gnome_shell_search_provider_plugin_on_file_monitor_chan
 		g_file_query_file_type(inFile, G_FILE_QUERY_INFO_NONE, NULL)==G_FILE_TYPE_REGULAR &&
 		g_str_has_suffix(filePath, ".ini"))
 	{
-		providerName=_xfdashboard_gnome_shell_search_provider_plugin_get_provider_name_from_file(inFile, &error);
+		providerName=_esdashboard_gnome_shell_search_provider_plugin_get_provider_name_from_file(inFile, &error);
 		if(providerName)
 		{
 			/* Register search provider */
-			success=xfdashboard_search_manager_register(searchManager, providerName, XFDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER);
+			success=esdashboard_search_manager_register(searchManager, providerName, ESDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER);
 			if(success)
 			{
 				priv->providers=g_list_prepend(priv->providers, g_strdup(providerName));
@@ -143,12 +143,12 @@ static void _xfdashboard_gnome_shell_search_provider_plugin_on_file_monitor_chan
 	if(inEventType==G_FILE_MONITOR_EVENT_DELETED &&
 		g_str_has_suffix(filePath, ".ini"))
 	{
-		providerName=_xfdashboard_gnome_shell_search_provider_plugin_get_provider_name_from_file(inFile, NULL);
+		providerName=_esdashboard_gnome_shell_search_provider_plugin_get_provider_name_from_file(inFile, NULL);
 		if(providerName &&
-			xfdashboard_search_manager_has_registered_id(searchManager, providerName))
+			esdashboard_search_manager_has_registered_id(searchManager, providerName))
 		{
 			/* Unregister search provider */
-			success=xfdashboard_search_manager_unregister(searchManager, providerName);
+			success=esdashboard_search_manager_unregister(searchManager, providerName);
 			if(success)
 			{
 				GList									*iter;
@@ -188,10 +188,10 @@ static void _xfdashboard_gnome_shell_search_provider_plugin_on_file_monitor_chan
 }
 
 /* Plugin enable function */
-static void plugin_enable(XfdashboardPlugin *self, gpointer inUserData)
+static void plugin_enable(EsdashboardPlugin *self, gpointer inUserData)
 {
-	XfdashboardGnomeShellSearchProviderPluginPrivate	*priv;
-	XfdashboardSearchManager							*searchManager;
+	EsdashboardGnomeShellSearchProviderPluginPrivate	*priv;
+	EsdashboardSearchManager							*searchManager;
 	GFile												*gnomeShellSearchProvidersPath;
 	GFileEnumerator										*enumerator;
 	GFileInfo											*info;
@@ -200,7 +200,7 @@ static void plugin_enable(XfdashboardPlugin *self, gpointer inUserData)
 
 	g_return_if_fail(inUserData);
 
-	priv=(XfdashboardGnomeShellSearchProviderPluginPrivate*)inUserData;
+	priv=(EsdashboardGnomeShellSearchProviderPluginPrivate*)inUserData;
 	error=NULL;
 
 	/* Get plugin's ID */
@@ -213,7 +213,7 @@ static void plugin_enable(XfdashboardPlugin *self, gpointer inUserData)
 				GNOME_SHELL_PROVIDERS_PATH);
 
 	/* Get search manager where to register search providers at */
-	searchManager=xfdashboard_search_manager_get_default();
+	searchManager=esdashboard_search_manager_get_default();
 
 	/* Create enumerator for search providers path to iterate through path and
 	 * register search providers found.
@@ -264,11 +264,11 @@ static void plugin_enable(XfdashboardPlugin *self, gpointer inUserData)
 			infoFile=g_file_get_child(g_file_enumerator_get_container(enumerator), infoFilename);
 
 			/* Get provider name for file and register Gnome-Shell search provider */
-			providerName=_xfdashboard_gnome_shell_search_provider_plugin_get_provider_name_from_file(infoFile, &infoError);
+			providerName=_esdashboard_gnome_shell_search_provider_plugin_get_provider_name_from_file(infoFile, &infoError);
 			if(providerName)
 			{
 				/* Register search provider */
-				success=xfdashboard_search_manager_register(searchManager, providerName, XFDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER);
+				success=esdashboard_search_manager_register(searchManager, providerName, ESDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER);
 				if(success)
 				{
 					priv->providers=g_list_prepend(priv->providers, g_strdup(providerName));
@@ -323,7 +323,7 @@ static void plugin_enable(XfdashboardPlugin *self, gpointer inUserData)
 
 		g_signal_connect(priv->fileMonitor,
 							"changed",
-							G_CALLBACK(_xfdashboard_gnome_shell_search_provider_plugin_on_file_monitor_changed),
+							G_CALLBACK(_esdashboard_gnome_shell_search_provider_plugin_on_file_monitor_changed),
 							priv);
 	}
 		else
@@ -355,10 +355,10 @@ static void plugin_enable(XfdashboardPlugin *self, gpointer inUserData)
 }
 
 /* Plugin disable function */
-static void plugin_disable(XfdashboardPlugin *self, gpointer inUserData)
+static void plugin_disable(EsdashboardPlugin *self, gpointer inUserData)
 {
-	XfdashboardGnomeShellSearchProviderPluginPrivate	*priv;
-	XfdashboardSearchManager							*searchManager;
+	EsdashboardGnomeShellSearchProviderPluginPrivate	*priv;
+	EsdashboardSearchManager							*searchManager;
 	GList												*iter;
 	const gchar											*providerName;
 	gboolean											success;
@@ -366,7 +366,7 @@ static void plugin_disable(XfdashboardPlugin *self, gpointer inUserData)
 
 	g_return_if_fail(inUserData);
 
-	priv=(XfdashboardGnomeShellSearchProviderPluginPrivate*)inUserData;
+	priv=(EsdashboardGnomeShellSearchProviderPluginPrivate*)inUserData;
 
 	/* Get plugin's ID */
 	g_object_get(G_OBJECT(self), "id", &pluginID, NULL);
@@ -385,7 +385,7 @@ static void plugin_disable(XfdashboardPlugin *self, gpointer inUserData)
 	}
 
 	/* Get search manager where search providers were registered at */
-	searchManager=xfdashboard_search_manager_get_default();
+	searchManager=esdashboard_search_manager_get_default();
 
 	/* Unregister registered search providers */
 	for(iter=priv->providers; iter; iter=g_list_next(iter))
@@ -394,7 +394,7 @@ static void plugin_disable(XfdashboardPlugin *self, gpointer inUserData)
 
 		if(providerName)
 		{
-			success=xfdashboard_search_manager_unregister(searchManager, providerName);
+			success=esdashboard_search_manager_unregister(searchManager, providerName);
 			if(success)
 			{
 				g_debug("Successfully unregistered Gnome-Shell search provider with ID '%s'", providerName);
@@ -420,23 +420,23 @@ static void plugin_disable(XfdashboardPlugin *self, gpointer inUserData)
 }
 
 /* Plugin initialization function */
-G_MODULE_EXPORT void plugin_init(XfdashboardPlugin *self)
+G_MODULE_EXPORT void plugin_init(EsdashboardPlugin *self)
 {
-	static XfdashboardGnomeShellSearchProviderPluginPrivate		priv={ 0, };
+	static EsdashboardGnomeShellSearchProviderPluginPrivate		priv={ 0, };
 
 	/* Set up localization */
-	xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+	expidus_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
 	/* Set plugin info */
-	xfdashboard_plugin_set_info(self,
-								"flags", XFDASHBOARD_PLUGIN_FLAG_EARLY_INITIALIZATION,
+	esdashboard_plugin_set_info(self,
+								"flags", ESDASHBOARD_PLUGIN_FLAG_EARLY_INITIALIZATION,
 								"name", _("Gnome-Shell search provider"),
 								"description", _("Uses Gnome-Shell search providers as source for searches"),
 								"author", "Stephan Haller <nomad@froevel.de>",
 								NULL);
 
 	/* Register GObject types of this plugin */
-	XFDASHBOARD_REGISTER_PLUGIN_TYPE(self, xfdashboard_gnome_shell_search_provider);
+	ESDASHBOARD_REGISTER_PLUGIN_TYPE(self, esdashboard_gnome_shell_search_provider);
 
 	/* Connect plugin action handlers */
 	g_signal_connect(self, "enable", G_CALLBACK(plugin_enable), &priv);

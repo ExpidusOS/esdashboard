@@ -21,34 +21,34 @@
  * 
  */
 
-#ifndef __XFDASHBOARD_SETTINGS_PLUGINS__
-#define __XFDASHBOARD_SETTINGS_PLUGINS__
+#ifndef __ESDASHBOARD_SETTINGS_PLUGINS__
+#define __ESDASHBOARD_SETTINGS_PLUGINS__
 
 #include <gtk/gtkx.h>
 
 G_BEGIN_DECLS
 
-#define XFDASHBOARD_TYPE_SETTINGS_PLUGINS				(xfdashboard_settings_plugins_get_type())
-#define XFDASHBOARD_SETTINGS_PLUGINS(obj)				(G_TYPE_CHECK_INSTANCE_CAST((obj), XFDASHBOARD_TYPE_SETTINGS_PLUGINS, XfdashboardSettingsPlugins))
-#define XFDASHBOARD_IS_SETTINGS_PLUGINS(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), XFDASHBOARD_TYPE_SETTINGS_PLUGINS))
-#define XFDASHBOARD_SETTINGS_PLUGINS_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), XFDASHBOARD_TYPE_SETTINGS_PLUGINS, XfdashboardSettingsPluginsClass))
-#define XFDASHBOARD_IS_SETTINGS_PLUGINS_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), XFDASHBOARD_TYPE_SETTINGS_PLUGINS))
-#define XFDASHBOARD_SETTINGS_PLUGINS_GET_CLASS(obj)		(G_TYPE_INSTANCE_GET_CLASS((obj), XFDASHBOARD_TYPE_SETTINGS_PLUGINS, XfdashboardSettingsPluginsClass))
+#define ESDASHBOARD_TYPE_SETTINGS_PLUGINS				(esdashboard_settings_plugins_get_type())
+#define ESDASHBOARD_SETTINGS_PLUGINS(obj)				(G_TYPE_CHECK_INSTANCE_CAST((obj), ESDASHBOARD_TYPE_SETTINGS_PLUGINS, EsdashboardSettingsPlugins))
+#define ESDASHBOARD_IS_SETTINGS_PLUGINS(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), ESDASHBOARD_TYPE_SETTINGS_PLUGINS))
+#define ESDASHBOARD_SETTINGS_PLUGINS_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), ESDASHBOARD_TYPE_SETTINGS_PLUGINS, EsdashboardSettingsPluginsClass))
+#define ESDASHBOARD_IS_SETTINGS_PLUGINS_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), ESDASHBOARD_TYPE_SETTINGS_PLUGINS))
+#define ESDASHBOARD_SETTINGS_PLUGINS_GET_CLASS(obj)		(G_TYPE_INSTANCE_GET_CLASS((obj), ESDASHBOARD_TYPE_SETTINGS_PLUGINS, EsdashboardSettingsPluginsClass))
 
-typedef struct _XfdashboardSettingsPlugins				XfdashboardSettingsPlugins;
-typedef struct _XfdashboardSettingsPluginsClass			XfdashboardSettingsPluginsClass;
-typedef struct _XfdashboardSettingsPluginsPrivate		XfdashboardSettingsPluginsPrivate;
+typedef struct _EsdashboardSettingsPlugins				EsdashboardSettingsPlugins;
+typedef struct _EsdashboardSettingsPluginsClass			EsdashboardSettingsPluginsClass;
+typedef struct _EsdashboardSettingsPluginsPrivate		EsdashboardSettingsPluginsPrivate;
 
-struct _XfdashboardSettingsPlugins
+struct _EsdashboardSettingsPlugins
 {
 	/* Parent instance */
 	GObject								parent_instance;
 
 	/* Private structure */
-	XfdashboardSettingsPluginsPrivate	*priv;
+	EsdashboardSettingsPluginsPrivate	*priv;
 };
 
-struct _XfdashboardSettingsPluginsClass
+struct _EsdashboardSettingsPluginsClass
 {
 	/*< private >*/
 	/* Parent class */
@@ -59,10 +59,10 @@ struct _XfdashboardSettingsPluginsClass
 };
 
 /* Public API */
-GType xfdashboard_settings_plugins_get_type(void) G_GNUC_CONST;
+GType esdashboard_settings_plugins_get_type(void) G_GNUC_CONST;
 
-XfdashboardSettingsPlugins* xfdashboard_settings_plugins_new(GtkBuilder *inBuilder);
+EsdashboardSettingsPlugins* esdashboard_settings_plugins_new(GtkBuilder *inBuilder);
 
 G_END_DECLS
 
-#endif	/* __XFDASHBOARD_SETTINGS_PLUGINS__ */
+#endif	/* __ESDASHBOARD_SETTINGS_PLUGINS__ */

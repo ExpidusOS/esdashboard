@@ -21,48 +21,48 @@
  * 
  */
 
-#ifndef __XFDASHBOARD_HOT_CORNER__
-#define __XFDASHBOARD_HOT_CORNER__
+#ifndef __ESDASHBOARD_HOT_CORNER__
+#define __ESDASHBOARD_HOT_CORNER__
 
-#include <libxfdashboard/libxfdashboard.h>
+#include <libesdashboard/libesdashboard.h>
 
 G_BEGIN_DECLS
 
 /* Public definitions */
-typedef enum /*< prefix=XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER >*/
+typedef enum /*< prefix=ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER >*/
 {
-	XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_LEFT=0,
-	XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_RIGHT,
-	XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_LEFT,
-	XFDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_RIGHT,
-} XfdashboardHotCornerActivationCorner;
+	ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_LEFT=0,
+	ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_TOP_RIGHT,
+	ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_LEFT,
+	ESDASHBOARD_HOT_CORNER_ACTIVATION_CORNER_BOTTOM_RIGHT,
+} EsdashboardHotCornerActivationCorner;
 
-GType xfdashboard_hot_corner_activation_corner_get_type(void) G_GNUC_CONST;
-#define XFDASHBOARD_TYPE_HOT_CORNER_ACTIVATION_CORNER	(xfdashboard_hot_corner_activation_corner_get_type())
+GType esdashboard_hot_corner_activation_corner_get_type(void) G_GNUC_CONST;
+#define ESDASHBOARD_TYPE_HOT_CORNER_ACTIVATION_CORNER	(esdashboard_hot_corner_activation_corner_get_type())
 
 
 /* Object declaration */
-#define XFDASHBOARD_TYPE_HOT_CORNER				(xfdashboard_hot_corner_get_type())
-#define XFDASHBOARD_HOT_CORNER(obj)				(G_TYPE_CHECK_INSTANCE_CAST((obj), XFDASHBOARD_TYPE_HOT_CORNER, XfdashboardHotCorner))
-#define XFDASHBOARD_IS_HOT_CORNER(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), XFDASHBOARD_TYPE_HOT_CORNER))
-#define XFDASHBOARD_HOT_CORNER_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), XFDASHBOARD_TYPE_HOT_CORNER, XfdashboardHotCornerClass))
-#define XFDASHBOARD_IS_HOT_CORNER_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), XFDASHBOARD_TYPE_HOT_CORNER))
-#define XFDASHBOARD_HOT_CORNER_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), XFDASHBOARD_TYPE_HOT_CORNER, XfdashboardHotCornerClass))
+#define ESDASHBOARD_TYPE_HOT_CORNER				(esdashboard_hot_corner_get_type())
+#define ESDASHBOARD_HOT_CORNER(obj)				(G_TYPE_CHECK_INSTANCE_CAST((obj), ESDASHBOARD_TYPE_HOT_CORNER, EsdashboardHotCorner))
+#define ESDASHBOARD_IS_HOT_CORNER(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), ESDASHBOARD_TYPE_HOT_CORNER))
+#define ESDASHBOARD_HOT_CORNER_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), ESDASHBOARD_TYPE_HOT_CORNER, EsdashboardHotCornerClass))
+#define ESDASHBOARD_IS_HOT_CORNER_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), ESDASHBOARD_TYPE_HOT_CORNER))
+#define ESDASHBOARD_HOT_CORNER_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), ESDASHBOARD_TYPE_HOT_CORNER, EsdashboardHotCornerClass))
 
-typedef struct _XfdashboardHotCorner			XfdashboardHotCorner; 
-typedef struct _XfdashboardHotCornerPrivate		XfdashboardHotCornerPrivate;
-typedef struct _XfdashboardHotCornerClass		XfdashboardHotCornerClass;
+typedef struct _EsdashboardHotCorner			EsdashboardHotCorner; 
+typedef struct _EsdashboardHotCornerPrivate		EsdashboardHotCornerPrivate;
+typedef struct _EsdashboardHotCornerClass		EsdashboardHotCornerClass;
 
-struct _XfdashboardHotCorner
+struct _EsdashboardHotCorner
 {
 	/* Parent instance */
 	GObject						parent_instance;
 
 	/* Private structure */
-	XfdashboardHotCornerPrivate	*priv;
+	EsdashboardHotCornerPrivate	*priv;
 };
 
-struct _XfdashboardHotCornerClass
+struct _EsdashboardHotCornerClass
 {
 	/*< private >*/
 	/* Parent class */
@@ -70,11 +70,11 @@ struct _XfdashboardHotCornerClass
 };
 
 /* Public API */
-GType xfdashboard_hot_corner_get_type(void) G_GNUC_CONST;
+GType esdashboard_hot_corner_get_type(void) G_GNUC_CONST;
 
-XFDASHBOARD_DECLARE_PLUGIN_TYPE(xfdashboard_hot_corner);
+ESDASHBOARD_DECLARE_PLUGIN_TYPE(esdashboard_hot_corner);
 
-XfdashboardHotCorner* xfdashboard_hot_corner_new(void);
+EsdashboardHotCorner* esdashboard_hot_corner_new(void);
 
 G_END_DECLS
 

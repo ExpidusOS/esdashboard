@@ -28,16 +28,16 @@
 #include "themes.h"
 
 #include <glib/gi18n-lib.h>
-#include <xfconf/xfconf.h>
+#include <esconf/esconf.h>
 
 /* Define this class in GObject system */
-struct _XfdashboardSettingsThemesPrivate
+struct _EsdashboardSettingsThemesPrivate
 {
 	/* Properties related */
 	GtkBuilder		*builder;
 
 	/* Instance related */
-	XfconfChannel	*xfconfChannel;
+	EsconfChannel	*esconfChannel;
 
 	GtkWidget		*widgetThemes;
 	GtkWidget		*widgetThemeScreenshot;
@@ -51,8 +51,8 @@ struct _XfdashboardSettingsThemesPrivate
 	GtkWidget		*widgetThemeDescription;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE(XfdashboardSettingsThemes,
-							xfdashboard_settings_themes,
+G_DEFINE_TYPE_WITH_PRIVATE(EsdashboardSettingsThemes,
+							esdashboard_settings_themes,
 							G_TYPE_OBJECT)
 
 /* Properties */
@@ -65,39 +65,39 @@ enum
 	PROP_LAST
 };
 
-static GParamSpec* XfdashboardSettingsThemesProperties[PROP_LAST]={ 0, };
+static GParamSpec* EsdashboardSettingsThemesProperties[PROP_LAST]={ 0, };
 
 
 /* IMPLEMENTATION: Private variables and methods */
-#define XFDASHBOARD_XFCONF_CHANNEL					"xfdashboard"
+#define ESDASHBOARD_ESCONF_CHANNEL					"esdashboard"
 
-#define THEME_XFCONF_PROP							"/theme"
-#define DEFAULT_THEME								"xfdashboard"
+#define THEME_ESCONF_PROP							"/theme"
+#define DEFAULT_THEME								"esdashboard"
 
-#define XFDASHBOARD_THEME_SUBPATH					"xfdashboard-1.0"
-#define XFDASHBOARD_THEME_FILE						"xfdashboard.theme"
-#define XFDASHBOARD_THEME_GROUP						"Xfdashboard Theme"
+#define ESDASHBOARD_THEME_SUBPATH					"esdashboard-1.0"
+#define ESDASHBOARD_THEME_FILE						"esdashboard.theme"
+#define ESDASHBOARD_THEME_GROUP						"Esdashboard Theme"
 #define MAX_SCREENSHOT_WIDTH						400
 
 enum
 {
-	XFDASHBOARD_SETTINGS_THEMES_COLUMN_NAME,
-	XFDASHBOARD_SETTINGS_THEMES_COLUMN_FILE,
+	ESDASHBOARD_SETTINGS_THEMES_COLUMN_NAME,
+	ESDASHBOARD_SETTINGS_THEMES_COLUMN_FILE,
 
-	XFDASHBOARD_SETTINGS_THEMES_COLUMN_DISPLAY_NAME,
-	XFDASHBOARD_SETTINGS_THEMES_COLUMN_AUTHORS,
-	XFDASHBOARD_SETTINGS_THEMES_COLUMN_VERSION,
-	XFDASHBOARD_SETTINGS_THEMES_COLUMN_DESCRIPTION,
-	XFDASHBOARD_SETTINGS_THEMES_COLUMN_SCREENSHOTS,
+	ESDASHBOARD_SETTINGS_THEMES_COLUMN_DISPLAY_NAME,
+	ESDASHBOARD_SETTINGS_THEMES_COLUMN_AUTHORS,
+	ESDASHBOARD_SETTINGS_THEMES_COLUMN_VERSION,
+	ESDASHBOARD_SETTINGS_THEMES_COLUMN_DESCRIPTION,
+	ESDASHBOARD_SETTINGS_THEMES_COLUMN_SCREENSHOTS,
 
-	XFDASHBOARD_SETTINGS_THEMES_COLUMN_LAST
+	ESDASHBOARD_SETTINGS_THEMES_COLUMN_LAST
 };
 
-/* Setting '/theme' changed either at widget or at xfconf property */
-static void _xfdashboard_settings_themes_theme_changed_by_widget(XfdashboardSettingsThemes *self,
+/* Setting '/theme' changed either at widget or at esconf property */
+static void _esdashboard_settings_themes_theme_changed_by_widget(EsdashboardSettingsThemes *self,
 																	GtkTreeSelection *inSelection)
 {
-	XfdashboardSettingsThemesPrivate		*priv;
+	EsdashboardSettingsThemesPrivate		*priv;
 	GtkTreeModel							*model;
 	GtkTreeIter								iter;
 	gchar									*themeDisplayName;
@@ -108,7 +108,7 @@ static void _xfdashboard_settings_themes_theme_changed_by_widget(XfdashboardSett
 	gchar									*themeFilename;
 	gchar									*themeName;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_THEMES(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_THEMES(self));
 	g_return_if_fail(GTK_IS_TREE_SELECTION(inSelection));
 
 	priv=self->priv;
@@ -126,13 +126,13 @@ static void _xfdashboard_settings_themes_theme_changed_by_widget(XfdashboardSett
 		/* Get data from model */
 		gtk_tree_model_get(model,
 							&iter,
-							XFDASHBOARD_SETTINGS_THEMES_COLUMN_NAME, &themeName,
-							XFDASHBOARD_SETTINGS_THEMES_COLUMN_FILE, &themeFilename,
-							XFDASHBOARD_SETTINGS_THEMES_COLUMN_DISPLAY_NAME, &themeDisplayName,
-							XFDASHBOARD_SETTINGS_THEMES_COLUMN_DESCRIPTION, &themeComment,
-							XFDASHBOARD_SETTINGS_THEMES_COLUMN_AUTHORS, &themeAuthor,
-							XFDASHBOARD_SETTINGS_THEMES_COLUMN_VERSION, &themeVersion,
-							XFDASHBOARD_SETTINGS_THEMES_COLUMN_SCREENSHOTS, &themeScreenshot,
+							ESDASHBOARD_SETTINGS_THEMES_COLUMN_NAME, &themeName,
+							ESDASHBOARD_SETTINGS_THEMES_COLUMN_FILE, &themeFilename,
+							ESDASHBOARD_SETTINGS_THEMES_COLUMN_DISPLAY_NAME, &themeDisplayName,
+							ESDASHBOARD_SETTINGS_THEMES_COLUMN_DESCRIPTION, &themeComment,
+							ESDASHBOARD_SETTINGS_THEMES_COLUMN_AUTHORS, &themeAuthor,
+							ESDASHBOARD_SETTINGS_THEMES_COLUMN_VERSION, &themeVersion,
+							ESDASHBOARD_SETTINGS_THEMES_COLUMN_SCREENSHOTS, &themeScreenshot,
 							-1);
 	}
 
@@ -288,15 +288,15 @@ static void _xfdashboard_settings_themes_theme_changed_by_widget(XfdashboardSett
 			gtk_widget_hide(priv->widgetThemeScreenshot);
 		}
 
-	/* Set value at xfconf property if it must be changed */
+	/* Set value at esconf property if it must be changed */
 	if(themeName)
 	{
 		gchar						*currentTheme;
 
-		currentTheme=xfconf_channel_get_string(priv->xfconfChannel, THEME_XFCONF_PROP, DEFAULT_THEME);
+		currentTheme=esconf_channel_get_string(priv->esconfChannel, THEME_ESCONF_PROP, DEFAULT_THEME);
 		if(g_strcmp0(currentTheme, themeName))
 		{
-			xfconf_channel_set_string(priv->xfconfChannel, THEME_XFCONF_PROP, themeName);
+			esconf_channel_set_string(priv->esconfChannel, THEME_ESCONF_PROP, themeName);
 		}
 		g_free(currentTheme);
 	}
@@ -311,20 +311,20 @@ static void _xfdashboard_settings_themes_theme_changed_by_widget(XfdashboardSett
 	if(themeName) g_free(themeName);
 }
 
-static void _xfdashboard_settings_themes_theme_changed_by_xfconf(XfdashboardSettingsThemes *self,
+static void _esdashboard_settings_themes_theme_changed_by_esconf(EsdashboardSettingsThemes *self,
 																	const gchar *inProperty,
 																	const GValue *inValue,
-																	XfconfChannel *inChannel)
+																	EsconfChannel *inChannel)
 {
-	XfdashboardSettingsThemesPrivate		*priv;
+	EsdashboardSettingsThemesPrivate		*priv;
 	const gchar						*newValue;
 	GtkTreeModel					*model;
 	GtkTreeIter						iter;
 	gboolean						selectionFound;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_THEMES(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_THEMES(self));
 	g_return_if_fail(inValue);
-	g_return_if_fail(XFCONF_IS_CHANNEL(inChannel));
+	g_return_if_fail(ESCONF_IS_CHANNEL(inChannel));
 
 	priv=self->priv;
 	newValue=DEFAULT_THEME;
@@ -345,7 +345,7 @@ static void _xfdashboard_settings_themes_theme_changed_by_xfconf(XfdashboardSett
 
 			gtk_tree_model_get(model,
 								&iter,
-								XFDASHBOARD_SETTINGS_THEMES_COLUMN_NAME, &value,
+								ESDASHBOARD_SETTINGS_THEMES_COLUMN_NAME, &value,
 								-1);
 			if(G_UNLIKELY(g_str_equal(value, newValue)))
 			{
@@ -374,7 +374,7 @@ static void _xfdashboard_settings_themes_theme_changed_by_xfconf(XfdashboardSett
 }
 
 /* Sorting function for theme list's model */
-static gint _xfdashboard_settings_themes_sort_themes_list_model(GtkTreeModel *inModel,
+static gint _esdashboard_settings_themes_sort_themes_list_model(GtkTreeModel *inModel,
 																GtkTreeIter *inLeft,
 																GtkTreeIter *inRight,
 																gpointer inUserData)
@@ -403,7 +403,7 @@ static gint _xfdashboard_settings_themes_sort_themes_list_model(GtkTreeModel *in
 }
 
 /* Populate list of available themes */
-static void _xfdashboard_settings_themes_populate_themes_list(XfdashboardSettingsThemes *self,
+static void _esdashboard_settings_themes_populate_themes_list(EsdashboardSettingsThemes *self,
 																GtkWidget *inWidget)
 {
 	GHashTable						*themes;
@@ -413,29 +413,29 @@ static void _xfdashboard_settings_themes_populate_themes_list(XfdashboardSetting
 	GtkTreeIter						iter;
 	guint							i;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_THEMES(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_THEMES(self));
 	g_return_if_fail(GTK_IS_TREE_VIEW(inWidget));
 
 	/* Create hash-table to keep track of duplicates (e.g. user overrides standard themes) */
 	themes=g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
 
 	/* Get model of widget to fill */
-	model=gtk_list_store_new(XFDASHBOARD_SETTINGS_THEMES_COLUMN_LAST,
-								G_TYPE_STRING, /* XFDASHBOARD_SETTINGS_THEMES_COLUMN_NAME */
-								G_TYPE_STRING, /* XFDASHBOARD_SETTINGS_THEMES_COLUMN_FILE */
-								G_TYPE_STRING, /* XFDASHBOARD_SETTINGS_THEMES_COLUMN_DISPLAY_NAME */
-								G_TYPE_STRING, /* XFDASHBOARD_SETTINGS_THEMES_COLUMN_AUTHORS */
-								G_TYPE_STRING, /* XFDASHBOARD_SETTINGS_THEMES_COLUMN_VERSION */
-								G_TYPE_STRING, /* XFDASHBOARD_SETTINGS_THEMES_COLUMN_DESCRIPTION */
-								G_TYPE_STRING  /* XFDASHBOARD_SETTINGS_THEMES_COLUMN_SCREENSHOTS */
+	model=gtk_list_store_new(ESDASHBOARD_SETTINGS_THEMES_COLUMN_LAST,
+								G_TYPE_STRING, /* ESDASHBOARD_SETTINGS_THEMES_COLUMN_NAME */
+								G_TYPE_STRING, /* ESDASHBOARD_SETTINGS_THEMES_COLUMN_FILE */
+								G_TYPE_STRING, /* ESDASHBOARD_SETTINGS_THEMES_COLUMN_DISPLAY_NAME */
+								G_TYPE_STRING, /* ESDASHBOARD_SETTINGS_THEMES_COLUMN_AUTHORS */
+								G_TYPE_STRING, /* ESDASHBOARD_SETTINGS_THEMES_COLUMN_VERSION */
+								G_TYPE_STRING, /* ESDASHBOARD_SETTINGS_THEMES_COLUMN_DESCRIPTION */
+								G_TYPE_STRING  /* ESDASHBOARD_SETTINGS_THEMES_COLUMN_SCREENSHOTS */
 							);
 	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(model),
-									XFDASHBOARD_SETTINGS_THEMES_COLUMN_DISPLAY_NAME,
-									(GtkTreeIterCompareFunc)_xfdashboard_settings_themes_sort_themes_list_model,
+									ESDASHBOARD_SETTINGS_THEMES_COLUMN_DISPLAY_NAME,
+									(GtkTreeIterCompareFunc)_esdashboard_settings_themes_sort_themes_list_model,
 									NULL,
 									NULL);
 	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(model),
-											XFDASHBOARD_SETTINGS_THEMES_COLUMN_DISPLAY_NAME,
+											ESDASHBOARD_SETTINGS_THEMES_COLUMN_DISPLAY_NAME,
 											GTK_SORT_ASCENDING);
 
 	/* Get paths to iterate through to find themes */
@@ -506,7 +506,7 @@ static void _xfdashboard_settings_themes_populate_themes_list(XfdashboardSetting
 			/* Check if theme description file exists and add it if there is no theme
 			 * with same name.
 			 */
-			themeIndexFile=g_build_filename(themePath, themeName, XFDASHBOARD_THEME_SUBPATH, XFDASHBOARD_THEME_FILE, NULL);
+			themeIndexFile=g_build_filename(themePath, themeName, ESDASHBOARD_THEME_SUBPATH, ESDASHBOARD_THEME_FILE, NULL);
 			if(!g_file_test(themeIndexFile, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR))
 			{
 				g_debug("Invalid theme '%s': Missing theme index file at %s",
@@ -558,7 +558,7 @@ static void _xfdashboard_settings_themes_populate_themes_list(XfdashboardSetting
 			 * keys are defined: Name, Comment, Style and Layout
 			 */
 			if(!g_key_file_has_key(themeKeyFile,
-									XFDASHBOARD_THEME_GROUP,
+									ESDASHBOARD_THEME_GROUP,
 									"Name",
 									&error))
 			{
@@ -577,7 +577,7 @@ static void _xfdashboard_settings_themes_populate_themes_list(XfdashboardSetting
 			}
 
 			if(!g_key_file_has_key(themeKeyFile,
-									XFDASHBOARD_THEME_GROUP,
+									ESDASHBOARD_THEME_GROUP,
 									"Comment",
 									&error))
 			{
@@ -596,7 +596,7 @@ static void _xfdashboard_settings_themes_populate_themes_list(XfdashboardSetting
 			}
 
 			if(!g_key_file_has_key(themeKeyFile,
-									XFDASHBOARD_THEME_GROUP,
+									ESDASHBOARD_THEME_GROUP,
 									"Style",
 									&error))
 			{
@@ -615,7 +615,7 @@ static void _xfdashboard_settings_themes_populate_themes_list(XfdashboardSetting
 			}
 
 			if(!g_key_file_has_key(themeKeyFile,
-									XFDASHBOARD_THEME_GROUP,
+									ESDASHBOARD_THEME_GROUP,
 									"Layout",
 									&error))
 			{
@@ -637,19 +637,19 @@ static void _xfdashboard_settings_themes_populate_themes_list(XfdashboardSetting
 			 * optional field: Author, Version and Screenshot
 			 */
 			themeDisplayName=g_key_file_get_locale_string(themeKeyFile,
-															XFDASHBOARD_THEME_GROUP,
+															ESDASHBOARD_THEME_GROUP,
 															"Name",
 															NULL,
 															NULL);
 
 			themeComment=g_key_file_get_locale_string(themeKeyFile,
-															XFDASHBOARD_THEME_GROUP,
+															ESDASHBOARD_THEME_GROUP,
 															"Comment",
 															NULL,
 															NULL);
 
 			themeAuthors=g_key_file_get_string_list(themeKeyFile,
-													XFDASHBOARD_THEME_GROUP,
+													ESDASHBOARD_THEME_GROUP,
 													"Author",
 													NULL,
 													NULL);
@@ -662,12 +662,12 @@ static void _xfdashboard_settings_themes_populate_themes_list(XfdashboardSetting
 			}
 
 			themeVersion=g_key_file_get_string(themeKeyFile,
-												XFDASHBOARD_THEME_GROUP,
+												ESDASHBOARD_THEME_GROUP,
 												"Version",
 												NULL);
 
 			themeScreenshots=g_key_file_get_string_list(themeKeyFile,
-														XFDASHBOARD_THEME_GROUP,
+														ESDASHBOARD_THEME_GROUP,
 														"Screenshot",
 														NULL,
 														NULL);
@@ -682,13 +682,13 @@ static void _xfdashboard_settings_themes_populate_themes_list(XfdashboardSetting
 			/* Add to widget's list */
 			gtk_list_store_append(GTK_LIST_STORE(model), &iter);
 			gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-								XFDASHBOARD_SETTINGS_THEMES_COLUMN_NAME, themeName,
-								XFDASHBOARD_SETTINGS_THEMES_COLUMN_FILE, themeIndexFile,
-								XFDASHBOARD_SETTINGS_THEMES_COLUMN_DISPLAY_NAME, themeDisplayName,
-								XFDASHBOARD_SETTINGS_THEMES_COLUMN_AUTHORS, realThemeAuthor,
-								XFDASHBOARD_SETTINGS_THEMES_COLUMN_VERSION, themeVersion,
-								XFDASHBOARD_SETTINGS_THEMES_COLUMN_DESCRIPTION, themeComment,
-								XFDASHBOARD_SETTINGS_THEMES_COLUMN_SCREENSHOTS, realThemeScreenshot,
+								ESDASHBOARD_SETTINGS_THEMES_COLUMN_NAME, themeName,
+								ESDASHBOARD_SETTINGS_THEMES_COLUMN_FILE, themeIndexFile,
+								ESDASHBOARD_SETTINGS_THEMES_COLUMN_DISPLAY_NAME, themeDisplayName,
+								ESDASHBOARD_SETTINGS_THEMES_COLUMN_AUTHORS, realThemeAuthor,
+								ESDASHBOARD_SETTINGS_THEMES_COLUMN_VERSION, themeVersion,
+								ESDASHBOARD_SETTINGS_THEMES_COLUMN_DESCRIPTION, themeComment,
+								ESDASHBOARD_SETTINGS_THEMES_COLUMN_SCREENSHOTS, realThemeScreenshot,
 								-1);
 
 			/* Remember theme to avoid duplicates (and allow overrides by user */
@@ -731,12 +731,12 @@ static void _xfdashboard_settings_themes_populate_themes_list(XfdashboardSetting
 }
 
 /* Create and set up GtkBuilder */
-static void _xfdashboard_settings_themes_set_builder(XfdashboardSettingsThemes *self,
+static void _esdashboard_settings_themes_set_builder(EsdashboardSettingsThemes *self,
 														GtkBuilder *inBuilder)
 {
-	XfdashboardSettingsThemesPrivate	*priv;
+	EsdashboardSettingsThemesPrivate	*priv;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_THEMES(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_THEMES(self));
 	g_return_if_fail(GTK_IS_BUILDER(inBuilder));
 
 	priv=self->priv;
@@ -767,7 +767,7 @@ static void _xfdashboard_settings_themes_set_builder(XfdashboardSettingsThemes *
 		GtkCellRenderer					*renderer;
 
 		/* Get default value */
-		currentTheme=xfconf_channel_get_string(priv->xfconfChannel, THEME_XFCONF_PROP, DEFAULT_THEME);
+		currentTheme=esconf_channel_get_string(priv->esconfChannel, THEME_ESCONF_PROP, DEFAULT_THEME);
 		g_value_init(&defaultValue, G_TYPE_STRING);
 		g_value_set_string(&defaultValue, currentTheme);
 		g_free(currentTheme);
@@ -781,7 +781,7 @@ static void _xfdashboard_settings_themes_set_builder(XfdashboardSettingsThemes *
 													_("Theme"),
 													renderer,
 													"text",
-													XFDASHBOARD_SETTINGS_THEMES_COLUMN_NAME,
+													ESDASHBOARD_SETTINGS_THEMES_COLUMN_NAME,
 													NULL);
 
 		/* Ensure only one selection at time is possible */
@@ -789,23 +789,23 @@ static void _xfdashboard_settings_themes_set_builder(XfdashboardSettingsThemes *
 		gtk_tree_selection_set_mode(selection, GTK_SELECTION_SINGLE);
 
 		/* Populate list of available themes */
-		_xfdashboard_settings_themes_populate_themes_list(self, priv->widgetThemes);
+		_esdashboard_settings_themes_populate_themes_list(self, priv->widgetThemes);
 
 		/* Select default value */
-		_xfdashboard_settings_themes_theme_changed_by_xfconf(self,
-																THEME_XFCONF_PROP,
+		_esdashboard_settings_themes_theme_changed_by_esconf(self,
+																THEME_ESCONF_PROP,
 																&defaultValue,
-																priv->xfconfChannel);
-		_xfdashboard_settings_themes_theme_changed_by_widget(self, selection);
+																priv->esconfChannel);
+		_esdashboard_settings_themes_theme_changed_by_widget(self, selection);
 
 		/* Connect signals */
 		g_signal_connect_swapped(selection,
 									"changed",
-									G_CALLBACK(_xfdashboard_settings_themes_theme_changed_by_widget),
+									G_CALLBACK(_esdashboard_settings_themes_theme_changed_by_widget),
 									self);
-		g_signal_connect_swapped(priv->xfconfChannel,
+		g_signal_connect_swapped(priv->esconfChannel,
 									"property-changed::/theme",
-									G_CALLBACK(_xfdashboard_settings_themes_theme_changed_by_xfconf),
+									G_CALLBACK(_esdashboard_settings_themes_theme_changed_by_esconf),
 									self);
 
 		/* Release allocated resources */
@@ -816,10 +816,10 @@ static void _xfdashboard_settings_themes_set_builder(XfdashboardSettingsThemes *
 /* IMPLEMENTATION: GObject */
 
 /* Dispose this object */
-static void _xfdashboard_settings_themes_dispose(GObject *inObject)
+static void _esdashboard_settings_themes_dispose(GObject *inObject)
 {
-	XfdashboardSettingsThemes			*self=XFDASHBOARD_SETTINGS_THEMES(inObject);
-	XfdashboardSettingsThemesPrivate	*priv=self->priv;
+	EsdashboardSettingsThemes			*self=ESDASHBOARD_SETTINGS_THEMES(inObject);
+	EsdashboardSettingsThemesPrivate	*priv=self->priv;
 
 	/* Release allocated resouces */
 	priv->widgetThemes=NULL;
@@ -839,27 +839,27 @@ static void _xfdashboard_settings_themes_dispose(GObject *inObject)
 		priv->builder=NULL;
 	}
 
-	if(priv->xfconfChannel)
+	if(priv->esconfChannel)
 	{
-		priv->xfconfChannel=NULL;
+		priv->esconfChannel=NULL;
 	}
 
 	/* Call parent's class dispose method */
-	G_OBJECT_CLASS(xfdashboard_settings_themes_parent_class)->dispose(inObject);
+	G_OBJECT_CLASS(esdashboard_settings_themes_parent_class)->dispose(inObject);
 }
 
 /* Set/get properties */
-static void _xfdashboard_settings_themes_set_property(GObject *inObject,
+static void _esdashboard_settings_themes_set_property(GObject *inObject,
 														guint inPropID,
 														const GValue *inValue,
 														GParamSpec *inSpec)
 {
-	XfdashboardSettingsThemes				*self=XFDASHBOARD_SETTINGS_THEMES(inObject);
+	EsdashboardSettingsThemes				*self=ESDASHBOARD_SETTINGS_THEMES(inObject);
 
 	switch(inPropID)
 	{
 		case PROP_BUILDER:
-			_xfdashboard_settings_themes_set_builder(self, GTK_BUILDER(g_value_get_object(inValue)));
+			_esdashboard_settings_themes_set_builder(self, GTK_BUILDER(g_value_get_object(inValue)));
 			break;
 
 		default:
@@ -868,13 +868,13 @@ static void _xfdashboard_settings_themes_set_property(GObject *inObject,
 	}
 }
 
-static void _xfdashboard_settings_themes_get_property(GObject *inObject,
+static void _esdashboard_settings_themes_get_property(GObject *inObject,
 														guint inPropID,
 														GValue *outValue,
 														GParamSpec *inSpec)
 {
-	XfdashboardSettingsThemes				*self=XFDASHBOARD_SETTINGS_THEMES(inObject);
-	XfdashboardSettingsThemesPrivate		*priv=self->priv;
+	EsdashboardSettingsThemes				*self=ESDASHBOARD_SETTINGS_THEMES(inObject);
+	EsdashboardSettingsThemesPrivate		*priv=self->priv;
 
 	switch(inPropID)
 	{
@@ -892,39 +892,39 @@ static void _xfdashboard_settings_themes_get_property(GObject *inObject,
  * Override functions in parent classes and define properties
  * and signals
  */
-static void xfdashboard_settings_themes_class_init(XfdashboardSettingsThemesClass *klass)
+static void esdashboard_settings_themes_class_init(EsdashboardSettingsThemesClass *klass)
 {
 	GObjectClass		*gobjectClass=G_OBJECT_CLASS(klass);
 
 	/* Override functions */
-	gobjectClass->dispose=_xfdashboard_settings_themes_dispose;
-	gobjectClass->set_property=_xfdashboard_settings_themes_set_property;
-	gobjectClass->get_property=_xfdashboard_settings_themes_get_property;
+	gobjectClass->dispose=_esdashboard_settings_themes_dispose;
+	gobjectClass->set_property=_esdashboard_settings_themes_set_property;
+	gobjectClass->get_property=_esdashboard_settings_themes_get_property;
 
 	/* Define properties */
-	XfdashboardSettingsThemesProperties[PROP_BUILDER]=
+	EsdashboardSettingsThemesProperties[PROP_BUILDER]=
 		g_param_spec_object("builder",
 								"Builder",
 								"The initialized GtkBuilder object where to set up themes tab from",
 								GTK_TYPE_BUILDER,
 								G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT_ONLY);
 
-	g_object_class_install_properties(gobjectClass, PROP_LAST, XfdashboardSettingsThemesProperties);
+	g_object_class_install_properties(gobjectClass, PROP_LAST, EsdashboardSettingsThemesProperties);
 }
 
 /* Object initialization
  * Create private structure and set up default values
  */
-static void xfdashboard_settings_themes_init(XfdashboardSettingsThemes *self)
+static void esdashboard_settings_themes_init(EsdashboardSettingsThemes *self)
 {
-	XfdashboardSettingsThemesPrivate	*priv;
+	EsdashboardSettingsThemesPrivate	*priv;
 
-	priv=self->priv=xfdashboard_settings_themes_get_instance_private(self);
+	priv=self->priv=esdashboard_settings_themes_get_instance_private(self);
 
 	/* Set default values */
 	priv->builder=NULL;
 
-	priv->xfconfChannel=xfconf_channel_get(XFDASHBOARD_XFCONF_CHANNEL);
+	priv->esconfChannel=esconf_channel_get(ESDASHBOARD_ESCONF_CHANNEL);
 
 	priv->widgetThemes=NULL;
 	priv->widgetThemeScreenshot=NULL;
@@ -941,17 +941,17 @@ static void xfdashboard_settings_themes_init(XfdashboardSettingsThemes *self)
 /* IMPLEMENTATION: Public API */
 
 /* Create instance of this class */
-XfdashboardSettingsThemes* xfdashboard_settings_themes_new(GtkBuilder *inBuilder)
+EsdashboardSettingsThemes* esdashboard_settings_themes_new(GtkBuilder *inBuilder)
 {
 	GObject		*instance;
 
 	g_return_val_if_fail(GTK_IS_BUILDER(inBuilder), NULL);
 
 	/* Create instance */
-	instance=g_object_new(XFDASHBOARD_TYPE_SETTINGS_THEMES,
+	instance=g_object_new(ESDASHBOARD_TYPE_SETTINGS_THEMES,
 							"builder", inBuilder,
 							NULL);
 
 	/* Return newly created instance */
-	return(XFDASHBOARD_SETTINGS_THEMES(instance));
+	return(ESDASHBOARD_SETTINGS_THEMES(instance));
 }

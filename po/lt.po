@@ -4,8 +4,8 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Nick Schermer <nick@xfce.org>, 2020
-# Xfce Bot <transifex@xfce.org>, 2020
+# Nick Schermer <nick@expidus.org>, 2020
+# Expidus Bot <transifex@expidus.org>, 2020
 # Moo, 2020
 # 
 #, fuzzy
@@ -16,111 +16,111 @@ msgstr ""
 "POT-Creation-Date: 2020-10-30 00:47+0100\n"
 "PO-Revision-Date: 2020-10-07 10:59+0000\n"
 "Last-Translator: Moo, 2020\n"
-"Language-Team: Lithuanian (https://www.transifex.com/xfce/teams/16840/lt/)\n"
+"Language-Team: Lithuanian (https://www.transifex.com/expidus/teams/16840/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: lt\n"
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);\n"
 
-#: ../data/xfdashboard.desktop.in.in.h:1
-#: ../data/xfdashboard-autostart.desktop.in.in.h:1
-msgid "Xfdashboard"
-msgstr "Xfdashboard"
+#: ../data/esdashboard.desktop.in.in.h:1
+#: ../data/esdashboard-autostart.desktop.in.in.h:1
+msgid "Esdashboard"
+msgstr "Esdashboard"
 
-#: ../data/xfdashboard.desktop.in.in.h:2
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:1
-msgid "Maybe a Gnome shell like dashboard for Xfce"
-msgstr "Galbūt, į Gnome apvalkalą panašus skydelis, skirtas Xfce"
+#: ../data/esdashboard.desktop.in.in.h:2
+#: ../data/appdata/esdashboard.appdata.xml.in.h:1
+msgid "Maybe a Gnome shell like dashboard for Expidus"
+msgstr "Galbūt, į Gnome apvalkalą panašus skydelis, skirtas Expidus"
 
-#: ../data/xfdashboard-autostart.desktop.in.in.h:2
-msgid "Start xfdashboard as daemon in background"
-msgstr "Paleisti xfdashboard kaip tarnybą fone"
+#: ../data/esdashboard-autostart.desktop.in.in.h:2
+msgid "Start esdashboard as daemon in background"
+msgstr "Paleisti esdashboard kaip tarnybą fone"
 
-#: ../data/xfdashboard-settings.desktop.in.in.h:1
-msgid "Xfdashboard settings"
-msgstr "Xfdashboard nustatymai"
+#: ../data/esdashboard-settings.desktop.in.in.h:1
+msgid "Esdashboard settings"
+msgstr "Esdashboard nustatymai"
 
-#: ../data/xfdashboard-settings.desktop.in.in.h:2
-msgid "Configure xfdashboard"
-msgstr "Konfigūruoti xfdashboard"
+#: ../data/esdashboard-settings.desktop.in.in.h:2
+msgid "Configure esdashboard"
+msgstr "Konfigūruoti esdashboard"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:2
+#: ../data/appdata/esdashboard.appdata.xml.in.h:2
 msgid ""
-"Xfdashboard provides a GNOME shell dashboard like interface for use with "
-"Xfce desktop."
+"Esdashboard provides a GNOME shell dashboard like interface for use with "
+"Expidus desktop."
 msgstr ""
-"Xfdashboard pateikia į Gnome apvalkalo skydelį panašią sąsają, skirtą "
-"naudoti Xfce darbalaukyje."
+"Esdashboard pateikia į Gnome apvalkalo skydelį panašią sąsają, skirtą "
+"naudoti Expidus darbalaukyje."
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:3
+#: ../data/appdata/esdashboard.appdata.xml.in.h:3
 msgid ""
 "It can be configured to run to any keyboard shortcut and when executed "
 "provides an overview of applications currently open enabling the user to "
-"switch between different applications. The search feature works like Xfce's "
+"switch between different applications. The search feature works like Expidus's "
 "app finder which makes it convenient to search for and start applications."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:4
+#: ../data/appdata/esdashboard.appdata.xml.in.h:4
 msgid "Browsing applications"
 msgstr "Programų naršymas"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:5
+#: ../data/appdata/esdashboard.appdata.xml.in.h:5
 msgid "Searching applications"
 msgstr "Programų paieška"
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:6
+#: ../data/appdata/esdashboard.appdata.xml.in.h:6
 msgid ""
 "This unstable development adds more animations as well as some smaller "
 "fixes."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:7
+#: ../data/appdata/esdashboard.appdata.xml.in.h:7
 msgid "This unstable development adds animations."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:8
+#: ../data/appdata/esdashboard.appdata.xml.in.h:8
 msgid ""
 "This unstable development adds support for touchpads and application actions"
 " (Jumplists, Quicklists) as well as new and updated translations."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:9
+#: ../data/appdata/esdashboard.appdata.xml.in.h:9
 msgid ""
 "This unstable development adds lots of new and updated translations and "
-"support for newer xfconf versions."
+"support for newer esconf versions."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:10
+#: ../data/appdata/esdashboard.appdata.xml.in.h:10
 msgid ""
 "This unstable development implements a new experimental backend for GDK as "
 "well as it supports user stylesheets now."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:11
+#: ../data/appdata/esdashboard.appdata.xml.in.h:11
 msgid ""
 "This unstable development improves loading performance of images and icon, "
 "adds a fine-grained debugging system and introduces an interface for "
 "multiple backends but only X11 is still the one only one supported."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:12
+#: ../data/appdata/esdashboard.appdata.xml.in.h:12
 msgid ""
 "This unstable development introduces child windows shown next to the main "
 "window."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:13
+#: ../data/appdata/esdashboard.appdata.xml.in.h:13
 msgid ""
 "This stable version fixes a bug setting the correct default applications at "
 "first use."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:14
+#: ../data/appdata/esdashboard.appdata.xml.in.h:14
 msgid "This unstable development introduces pop-up menus."
 msgstr ""
 
-#: ../data/appdata/xfdashboard.appdata.xml.in.h:15
+#: ../data/appdata/esdashboard.appdata.xml.in.h:15
 msgid ""
 "This stable version introduces lots of new features like plugins and "
 "application tracker. It also contains a huge collection of other larger and "
@@ -128,8 +128,8 @@ msgid ""
 msgstr ""
 
 #: ../data/data/preferences.ui.h:1
-msgid "<span size=\"large\"><b>Xfdashboard settings</b></span>"
-msgstr "<span size=\"large\"><b>Xfdashboard nustatymai</b></span>"
+msgid "<span size=\"large\"><b>Esdashboard settings</b></span>"
+msgstr "<span size=\"large\"><b>Esdashboard nustatymai</b></span>"
 
 #: ../data/data/preferences.ui.h:2
 msgid "Configure plugin"
@@ -137,11 +137,11 @@ msgstr "Konfigūruoti įskiepį"
 
 #: ../data/data/preferences.ui.h:3
 msgid ""
-"<span size=\"large\"><b>Xfdashboard settings</b></span>\n"
-"Configure xfdashboard"
+"<span size=\"large\"><b>Esdashboard settings</b></span>\n"
+"Configure esdashboard"
 msgstr ""
-"<span size=\"large\"><b>Xfdashboard nustatymai</b></span>\n"
-"Konfigūruoti xfdashboard"
+"<span size=\"large\"><b>Esdashboard nustatymai</b></span>\n"
+"Konfigūruoti esdashboard"
 
 #: ../data/data/preferences.ui.h:5
 msgid "<b>General settings:</b>"
@@ -153,23 +153,23 @@ msgstr "Pratęsiant, atstatyti paieškos rodinį"
 
 #: ../data/data/preferences.ui.h:7
 msgid ""
-"If enabled the search view will be resetted when xfdashboard is resumed. That means the active view is switched back to last view active before last search was started and search box will be emptied.\n"
+"If enabled the search view will be resetted when esdashboard is resumed. That means the active view is switched back to last view active before last search was started and search box will be emptied.\n"
 "\n"
-"<b>NOTE:</b> This setting only takes effect if xfdashboard is running in daemon mode. "
+"<b>NOTE:</b> This setting only takes effect if esdashboard is running in daemon mode. "
 msgstr ""
-"Jei įjungta, pratęsiant xfdashboard, bus atstatytas paieškos rodinys. Tai reiškia, kad aktyvus rodinys bus perjungtas į tą, kuris buvo vėliausiai prieš pradedant paiešką, o paieškos langelis bus išvalytas.\n"
+"Jei įjungta, pratęsiant esdashboard, bus atstatytas paieškos rodinys. Tai reiškia, kad aktyvus rodinys bus perjungtas į tą, kuris buvo vėliausiai prieš pradedant paiešką, o paieškos langelis bus išvalytas.\n"
 "\n"
-"<b>PASTABA:</b> Šis nustatymas veikia tik tuomet, jei xfdashboard yra vykdoma tarnybos veiksenoje."
+"<b>PASTABA:</b> Šis nustatymas veikia tik tuomet, jei esdashboard yra vykdoma tarnybos veiksenoje."
 
 #: ../data/data/preferences.ui.h:10
 msgid ""
-"When xfdashboard resumes the selected view will be activated.\n"
+"When esdashboard resumes the selected view will be activated.\n"
 "\n"
-"<b>NOTE:</b> This setting only takes effect if xfdashboard is running in daemon mode."
+"<b>NOTE:</b> This setting only takes effect if esdashboard is running in daemon mode."
 msgstr ""
-"Pratęsiant xfdashboard, bus aktyvuojamas šis rodinys.\n"
+"Pratęsiant esdashboard, bus aktyvuojamas šis rodinys.\n"
 "\n"
-"<b>PASTABA:</b> Šis nustatymas veikia tik tuomet, jei xfdashboard yra vykdoma tarnybos veiksenoje."
+"<b>PASTABA:</b> Šis nustatymas veikia tik tuomet, jei esdashboard yra vykdoma tarnybos veiksenoje."
 
 #: ../data/data/preferences.ui.h:13
 msgid "Switch to view when resumed:"
@@ -205,11 +205,11 @@ msgstr ""
 
 #: ../data/data/preferences.ui.h:22
 msgid ""
-"This value defines how fast the window content should be created. While the value 'immediate' tells xfdashboard to create the window content at the time it is requested, all other values will set up a queue and value defines how fast the queue will be processed.\n"
+"This value defines how fast the window content should be created. While the value 'immediate' tells esdashboard to create the window content at the time it is requested, all other values will set up a queue and value defines how fast the queue will be processed.\n"
 "\n"
 "<b>NOTE:</b> Only change this value from 'immediate' to other value if your graphics card, driver or system is too slow to create the window contents immediately. You have to try each value to find the one fitting your system."
 msgstr ""
-"Ši reikšmė apibrėžia kaip greitai turėtų būti kuriamas langų turinys. Reikšmė \"nedelsiant\" pasako xfdashboard sukurti lango turinį užklausos metu, visos kitos reikšmės nustatys eilę, o reikšmė apibrėš kaip greitai eilė bus vykdoma.\n"
+"Ši reikšmė apibrėžia kaip greitai turėtų būti kuriamas langų turinys. Reikšmė \"nedelsiant\" pasako esdashboard sukurti lango turinį užklausos metu, visos kitos reikšmės nustatys eilę, o reikšmė apibrėš kaip greitai eilė bus vykdoma.\n"
 "\n"
 "<b>PASTABA:</b> Keiskite šią reikšmė iš \"nedelsiant\" į kitą reikšmę tik tuo atveju, jei jūsų vaizdo plokštė, tvarkyklė ar sistema yra pernelyg lėta, kad kurtų langų turinius nedelsiant. Jums reikia išbandyti kiekvieną reikšmę, kad rastumėte tą, kuri tiks jūsų sistemai."
 
@@ -328,252 +328,252 @@ msgstr "<b>Licencija:</b>"
 msgid "Plugins"
 msgstr "Įskiepiai"
 
-#: ../data/themes/xfdashboard/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard"
-msgstr "xfdashboard"
+#: ../data/themes/esdashboard/esdashboard.theme.in.in.h:1
+msgid "esdashboard"
+msgstr "esdashboard"
 
-#: ../data/themes/xfdashboard/xfdashboard.theme.in.in.h:2
-msgid "Default theme for xfdashboard"
-msgstr "Numatytoji xfdashboard tema"
+#: ../data/themes/esdashboard/esdashboard.theme.in.in.h:2
+msgid "Default theme for esdashboard"
+msgstr "Numatytoji esdashboard tema"
 
-#: ../data/themes/xfdashboard-auber/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-auber"
-msgstr "xfdashboard-baklažanas"
+#: ../data/themes/esdashboard-auber/esdashboard.theme.in.in.h:1
+msgid "esdashboard-auber"
+msgstr "esdashboard-baklažanas"
 
-#: ../data/themes/xfdashboard-auber/xfdashboard.theme.in.in.h:2
-msgid "Aubergine theme for xfdashboard"
-msgstr "Baklažaninė xfdashboard tema"
+#: ../data/themes/esdashboard-auber/esdashboard.theme.in.in.h:2
+msgid "Aubergine theme for esdashboard"
+msgstr "Baklažaninė esdashboard tema"
 
-#: ../data/themes/xfdashboard-blue/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-blue"
-msgstr "xfdashboard-mėlyna"
+#: ../data/themes/esdashboard-blue/esdashboard.theme.in.in.h:1
+msgid "esdashboard-blue"
+msgstr "esdashboard-mėlyna"
 
-#: ../data/themes/xfdashboard-blue/xfdashboard.theme.in.in.h:2
-msgid "Blue theme for xfdashboard"
-msgstr "Mėlyna xfdashboard tema"
+#: ../data/themes/esdashboard-blue/esdashboard.theme.in.in.h:2
+msgid "Blue theme for esdashboard"
+msgstr "Mėlyna esdashboard tema"
 
-#: ../data/themes/xfdashboard-dark/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-dark"
-msgstr "xfdashboard-tamsi"
+#: ../data/themes/esdashboard-dark/esdashboard.theme.in.in.h:1
+msgid "esdashboard-dark"
+msgstr "esdashboard-tamsi"
 
-#: ../data/themes/xfdashboard-dark/xfdashboard.theme.in.in.h:2
-msgid "Dark theme for xfdashboard"
-msgstr "Tamsi xfdashboard tema"
+#: ../data/themes/esdashboard-dark/esdashboard.theme.in.in.h:2
+msgid "Dark theme for esdashboard"
+msgstr "Tamsi esdashboard tema"
 
-#: ../data/themes/xfdashboard-mint/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-mint"
-msgstr "xfdashboard-mėta"
+#: ../data/themes/esdashboard-mint/esdashboard.theme.in.in.h:1
+msgid "esdashboard-mint"
+msgstr "esdashboard-mėta"
 
-#: ../data/themes/xfdashboard-mint/xfdashboard.theme.in.in.h:2
-msgid "Fresh-green flavored theme for xfdashboard"
-msgstr "Šviežiai žalia xfdashboard tema"
+#: ../data/themes/esdashboard-mint/esdashboard.theme.in.in.h:2
+msgid "Fresh-green flavored theme for esdashboard"
+msgstr "Šviežiai žalia esdashboard tema"
 
-#: ../data/themes/xfdashboard-moranga/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-moranga"
-msgstr "xfdashboard-moliūgas"
+#: ../data/themes/esdashboard-moranga/esdashboard.theme.in.in.h:1
+msgid "esdashboard-moranga"
+msgstr "esdashboard-moliūgas"
 
-#: ../data/themes/xfdashboard-moranga/xfdashboard.theme.in.in.h:2
-msgid "Moranga theme for xfdashboard"
-msgstr "Moliūginė xfdashboard tema"
+#: ../data/themes/esdashboard-moranga/esdashboard.theme.in.in.h:2
+msgid "Moranga theme for esdashboard"
+msgstr "Moliūginė esdashboard tema"
 
-#: ../data/themes/xfdashboard-wine/xfdashboard.theme.in.in.h:1
-msgid "xfdashboard-wine"
-msgstr "xfdashboard-vynas"
+#: ../data/themes/esdashboard-wine/esdashboard.theme.in.in.h:1
+msgid "esdashboard-wine"
+msgstr "esdashboard-vynas"
 
-#: ../data/themes/xfdashboard-wine/xfdashboard.theme.in.in.h:2
-msgid "Red wine theme for xfdashboard"
-msgstr "Raudono vyno xfdashboard tema"
+#: ../data/themes/esdashboard-wine/esdashboard.theme.in.in.h:2
+msgid "Red wine theme for esdashboard"
+msgstr "Raudono vyno esdashboard tema"
 
-#: ../libxfdashboard/application-button.c:262
+#: ../libesdashboard/application-button.c:262
 #, c-format
 msgid "Could not execute action '%s' for application '%s': %s"
 msgstr "Nepavyko įvykdyti veiksmo „%s“, skirto programai „%s“: %s"
 
-#: ../libxfdashboard/application-button.c:265 ../settings/plugins.c:814
+#: ../libesdashboard/application-button.c:265 ../settings/plugins.c:814
 #: ../settings/main.c:63
 msgid "Unknown error"
 msgstr "Nežinoma klaida"
 
-#: ../libxfdashboard/application-button.c:282
+#: ../libesdashboard/application-button.c:282
 #, c-format
 msgid "Executed action '%s' for application '%s'"
 msgstr ""
 
-#: ../libxfdashboard/application-button.c:743
-#: ../libxfdashboard/application-button.c:761
-#: ../libxfdashboard/applications-search-provider.c:754
-#: ../libxfdashboard/applications-view.c:334
-#: ../libxfdashboard/quicklaunch.c:352 ../libxfdashboard/quicklaunch.c:400
-#: ../libxfdashboard/quicklaunch.c:458
+#: ../libesdashboard/application-button.c:743
+#: ../libesdashboard/application-button.c:761
+#: ../libesdashboard/applications-search-provider.c:754
+#: ../libesdashboard/applications-view.c:334
+#: ../libesdashboard/quicklaunch.c:352 ../libesdashboard/quicklaunch.c:400
+#: ../libesdashboard/quicklaunch.c:458
 #, c-format
 msgid "Launching application '%s' failed: %s"
 msgstr "\"%s programos paleidimas nepavyko: %s"
 
-#: ../libxfdashboard/application-button.c:745
-#: ../libxfdashboard/quicklaunch.c:354
+#: ../libesdashboard/application-button.c:745
+#: ../libesdashboard/quicklaunch.c:354
 msgid "No information available for application"
 msgstr "Nėra apie programą prieinamos informacijos"
 
-#: ../libxfdashboard/application-button.c:763
-#: ../libxfdashboard/application.c:308 ../libxfdashboard/application.c:618
-#: ../libxfdashboard/applications-search-provider.c:756
-#: ../libxfdashboard/applications-view.c:336
-#: ../libxfdashboard/quicklaunch.c:460
+#: ../libesdashboard/application-button.c:763
+#: ../libesdashboard/application.c:308 ../libesdashboard/application.c:618
+#: ../libesdashboard/applications-search-provider.c:756
+#: ../libesdashboard/applications-view.c:336
+#: ../libesdashboard/quicklaunch.c:460
 msgid "unknown error"
 msgstr "nežinoma klaida"
 
-#: ../libxfdashboard/application-button.c:774
-#: ../libxfdashboard/applications-search-provider.c:767
-#: ../libxfdashboard/applications-view.c:347
-#: ../libxfdashboard/quicklaunch.c:471
+#: ../libesdashboard/application-button.c:774
+#: ../libesdashboard/applications-search-provider.c:767
+#: ../libesdashboard/applications-view.c:347
+#: ../libesdashboard/quicklaunch.c:471
 #, c-format
 msgid "Application '%s' launched"
 msgstr "Paleista programa \"%s\""
 
-#: ../libxfdashboard/application.c:306
+#: ../libesdashboard/application.c:306
 #, c-format
 msgid "Could not load theme '%s': %s"
 msgstr "Nepavyko įkelti temos \"%s\": %s"
 
-#: ../libxfdashboard/application.c:527
+#: ../libesdashboard/application.c:527
 #, c-format
 msgid "Welcome to %s (%s)!"
 msgstr "Sveiki atvykę į %s (%s)!"
 
-#: ../libxfdashboard/application.c:529
+#: ../libesdashboard/application.c:529
 #, c-format
 msgid "Welcome to %s!"
 msgstr "Sveiki atvykę į %s!"
 
-#: ../libxfdashboard/application.c:576
+#: ../libesdashboard/application.c:576
 msgid "Fork to background"
 msgstr "Atšakoti į foną"
 
-#: ../libxfdashboard/application.c:577
+#: ../libesdashboard/application.c:577
 msgid "Quit running instance"
 msgstr "Baigti vykdomo egzemplioriaus darbą"
 
-#: ../libxfdashboard/application.c:578
+#: ../libesdashboard/application.c:578
 msgid "Restart running instance"
 msgstr "Iš naujo paleisti vykdomą egzempliorių"
 
-#: ../libxfdashboard/application.c:579
+#: ../libesdashboard/application.c:579
 msgid ""
 "Toggles visibility if running instance was started in daemon mode otherwise "
 "it quits running non-daemon instance"
 msgstr ""
 
-#: ../libxfdashboard/application.c:580
+#: ../libesdashboard/application.c:580
 msgid "The ID of view to switch to on startup or resume"
 msgstr ""
 
-#: ../libxfdashboard/application.c:581
+#: ../libesdashboard/application.c:581
 msgid "Show version"
 msgstr "Rodyti versiją"
 
-#: ../libxfdashboard/application.c:600
-msgid "A Gnome Shell like dashboard for Xfce4 - version "
+#: ../libesdashboard/application.c:600
+msgid "A Gnome Shell like dashboard for Expidus1 - version "
 msgstr ""
 
 #. Show error
-#: ../libxfdashboard/application.c:617
+#: ../libesdashboard/application.c:617
 #, c-format
 msgid "%s\n"
 msgstr "%s\n"
 
-#: ../libxfdashboard/applications-search-provider.c:838
-#: ../libxfdashboard/applications-view.c:417
-#: ../libxfdashboard/quicklaunch.c:682
+#: ../libesdashboard/applications-search-provider.c:838
+#: ../libesdashboard/applications-view.c:417
+#: ../libesdashboard/quicklaunch.c:682
 msgid "Launch"
 msgstr "Paleisti"
 
 #. Set up view
 #. Add "applications" button
-#: ../libxfdashboard/applications-search-provider.c:1175
-#: ../libxfdashboard/applications-view.c:1587
-#: ../libxfdashboard/quicklaunch.c:3288
+#: ../libesdashboard/applications-search-provider.c:1175
+#: ../libesdashboard/applications-view.c:1587
+#: ../libesdashboard/quicklaunch.c:3288
 msgid "Applications"
 msgstr "Programos"
 
-#: ../libxfdashboard/applications-view.c:545
-#: ../libxfdashboard/applications-view.c:546
-#: ../libxfdashboard/applications-view.c:657
-#: ../libxfdashboard/applications-view.c:658
+#: ../libesdashboard/applications-view.c:545
+#: ../libesdashboard/applications-view.c:546
+#: ../libesdashboard/applications-view.c:657
+#: ../libesdashboard/applications-view.c:658
 msgid "Back"
 msgstr "Atgal"
 
-#: ../libxfdashboard/applications-view.c:545
-#: ../libxfdashboard/applications-view.c:657
+#: ../libesdashboard/applications-view.c:545
+#: ../libesdashboard/applications-view.c:657
 msgid "Go back to previous menu"
 msgstr "Grįžti į ankstesnį meniu"
 
-#: ../libxfdashboard/applications-view.c:685
-#: ../libxfdashboard/applications-view.c:686
+#: ../libesdashboard/applications-view.c:685
+#: ../libesdashboard/applications-view.c:686
 msgid "All applications"
 msgstr "Visos programos"
 
-#: ../libxfdashboard/applications-view.c:685
+#: ../libesdashboard/applications-view.c:685
 msgid "List of all installed applications"
 msgstr "Visų įdiegtų programų sąrašas"
 
-#: ../libxfdashboard/quicklaunch.c:402
+#: ../libesdashboard/quicklaunch.c:402
 msgid "No windows to activate for application"
 msgstr ""
 
-#: ../libxfdashboard/quicklaunch.c:525 ../libxfdashboard/quicklaunch.c:1261
-#: ../libxfdashboard/quicklaunch.c:2130
+#: ../libesdashboard/quicklaunch.c:525 ../libesdashboard/quicklaunch.c:1261
+#: ../libesdashboard/quicklaunch.c:2130
 #, c-format
 msgid "Favourite '%s' removed"
 msgstr "„%s“ pašalinta iš mėgstamų"
 
-#: ../libxfdashboard/quicklaunch.c:624 ../libxfdashboard/quicklaunch.c:943
-#: ../libxfdashboard/quicklaunch.c:2063
+#: ../libesdashboard/quicklaunch.c:624 ../libesdashboard/quicklaunch.c:943
+#: ../libesdashboard/quicklaunch.c:2063
 #, c-format
 msgid "Favourite '%s' added"
 msgstr "„%s“ pridėta į mėgstamas"
 
-#: ../libxfdashboard/quicklaunch.c:705
+#: ../libesdashboard/quicklaunch.c:705
 msgid "Remove from favourites"
 msgstr "Pridėti į mėgstamas"
 
-#: ../libxfdashboard/quicklaunch.c:719
+#: ../libesdashboard/quicklaunch.c:719
 msgid "Add to favourites"
 msgstr "Šalinti iš mėgstamų"
 
 #. Next add trash button to box but initially hidden and register as drop
 #. target
-#: ../libxfdashboard/quicklaunch.c:3295
+#: ../libesdashboard/quicklaunch.c:3295
 msgid "Remove"
 msgstr "Šalinti"
 
-#: ../libxfdashboard/search-result-container.c:664
-#: ../libxfdashboard/search-result-container.c:1734
+#: ../libesdashboard/search-result-container.c:664
+#: ../libesdashboard/search-result-container.c:1734
 #, c-format
 msgid "Show %d more results..."
 msgstr "Rodyti dar %d rezultatų..."
 
 #. Get text to set at "all"-label
-#: ../libxfdashboard/search-result-container.c:686
+#: ../libesdashboard/search-result-container.c:686
 #, c-format
 msgid "Show all %d results..."
 msgstr "Rodyti visus %d rezultatus..."
 
-#: ../libxfdashboard/search-view.c:979
+#: ../libesdashboard/search-view.c:979
 #, c-format
 msgid "No results found for '%s'"
 msgstr "„%s“ negrąžino jokių rezultatų"
 
 #. Set up view (Note: Search view is disabled by default!)
-#: ../libxfdashboard/search-view.c:1715
+#: ../libesdashboard/search-view.c:1715
 msgid "Search"
 msgstr "Paieška"
 
-#: ../libxfdashboard/stage.c:1124
+#: ../libesdashboard/stage.c:1124
 msgid "Just type to search..."
 msgstr "Tiesiog, rašykite, norėdami ieškoti..."
 
 #. Set up view
-#: ../libxfdashboard/windows-view.c:2317
+#: ../libesdashboard/windows-view.c:2317
 msgid "Windows"
 msgstr "Langai"
 
@@ -676,7 +676,7 @@ msgstr "Karštasis kampas"
 
 #: ../plugins/hot-corner/plugin.c:419
 msgid ""
-"Activates xfdashboard when pointer is moved to a configured corner of "
+"Activates esdashboard when pointer is moved to a configured corner of "
 "monitor"
 msgstr ""
 

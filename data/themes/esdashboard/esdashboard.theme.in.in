@@ -1,0 +1,10 @@
+[Esdashboard Theme]
+_Name=esdashboard
+_Comment=Default theme for esdashboard
+Style=esdashboard.css
+Layout=esdashboard.xml;esdashboard-secondary.xml
+Effects=effects.xml
+Animations=animations.xml
+Author=Stephan Haller
+Version=@PACKAGE_VERSION@
+Screenshot=screenshot-esdashboard.png

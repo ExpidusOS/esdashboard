@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.22.1 -->
-<interface domain="xfdashboard">
+<interface domain="esdashboard">
   <requires lib="gtk+" version="3.2"/>
   <object class="GtkAdjustment" id="delay-search-timeout-adjustment">
     <property name="upper">1000</property>
@@ -66,7 +66,7 @@
                   <object class="GtkImage" id="image3">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="icon_name">org.xfce.xfdashboard</property>
+                    <property name="icon_name">com.expidus.esdashboard</property>
                     <property name="icon_size">6</property>
                   </object>
                   <packing>
@@ -85,7 +85,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="xpad">8</property>
-                        <property name="label" translatable="yes">&lt;span size="large"&gt;&lt;b&gt;Xfdashboard settings&lt;/b&gt;&lt;/span&gt;</property>
+                        <property name="label" translatable="yes">&lt;span size="large"&gt;&lt;b&gt;Esdashboard settings&lt;/b&gt;&lt;/span&gt;</property>
                         <property name="use_markup">True</property>
                         <property name="xalign">0</property>
                       </object>
@@ -139,7 +139,7 @@
   </object>
   <object class="GtkWindow" id="preferences-dialog">
     <property name="can_focus">False</property>
-    <property name="icon_name">org.xfce.xfdashboard</property>
+    <property name="icon_name">com.expidus.esdashboard</property>
     <child>
       <placeholder/>
     </child>
@@ -161,7 +161,7 @@
               <object class="GtkImage" id="image1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="icon_name">org.xfce.xfdashboard</property>
+                <property name="icon_name">com.expidus.esdashboard</property>
                 <property name="icon_size">6</property>
               </object>
               <packing>
@@ -174,8 +174,8 @@
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">&lt;span size="large"&gt;&lt;b&gt;Xfdashboard settings&lt;/b&gt;&lt;/span&gt;
-Configure xfdashboard</property>
+                <property name="label" translatable="yes">&lt;span size="large"&gt;&lt;b&gt;Esdashboard settings&lt;/b&gt;&lt;/span&gt;
+Configure esdashboard</property>
                 <property name="use_markup">True</property>
               </object>
               <packing>
@@ -229,9 +229,9 @@ Configure xfdashboard</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="tooltip_markup" translatable="yes">If enabled the search view will be resetted when xfdashboard is resumed. That means the active view is switched back to last view active before last search was started and search box will be emptied.
+                    <property name="tooltip_markup" translatable="yes">If enabled the search view will be resetted when esdashboard is resumed. That means the active view is switched back to last view active before last search was started and search box will be emptied.
 
-&lt;b&gt;NOTE:&lt;/b&gt; This setting only takes effect if xfdashboard is running in daemon mode. </property>
+&lt;b&gt;NOTE:&lt;/b&gt; This setting only takes effect if esdashboard is running in daemon mode. </property>
                     <property name="margin_left">8</property>
                     <property name="xalign">0</property>
                     <property name="draw_indicator">True</property>
@@ -250,9 +250,9 @@ Configure xfdashboard</property>
                       <object class="GtkLabel" id="label6">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="tooltip_markup" translatable="yes">When xfdashboard resumes the selected view will be activated.
+                        <property name="tooltip_markup" translatable="yes">When esdashboard resumes the selected view will be activated.
 
-&lt;b&gt;NOTE:&lt;/b&gt; This setting only takes effect if xfdashboard is running in daemon mode.</property>
+&lt;b&gt;NOTE:&lt;/b&gt; This setting only takes effect if esdashboard is running in daemon mode.</property>
                         <property name="margin_left">8</property>
                         <property name="margin_right">4</property>
                         <property name="label" translatable="yes">Switch to view when resumed:</property>
@@ -267,9 +267,9 @@ Configure xfdashboard</property>
                       <object class="GtkComboBox" id="switch-to-view-on-resume">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="tooltip_markup" translatable="yes">When xfdashboard resumes the selected view will be activated.
+                        <property name="tooltip_markup" translatable="yes">When esdashboard resumes the selected view will be activated.
 
-&lt;b&gt;NOTE:&lt;/b&gt; This setting only takes effect if xfdashboard is running in daemon mode.</property>
+&lt;b&gt;NOTE:&lt;/b&gt; This setting only takes effect if esdashboard is running in daemon mode.</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -354,7 +354,7 @@ The duration is calculated by the length of the text to show in notification. Th
                       <object class="GtkLabel" id="label11">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="tooltip_markup" translatable="yes">This value defines how fast the window content should be created. While the value 'immediate' tells xfdashboard to create the window content at the time it is requested, all other values will set up a queue and value defines how fast the queue will be processed.
+                        <property name="tooltip_markup" translatable="yes">This value defines how fast the window content should be created. While the value 'immediate' tells esdashboard to create the window content at the time it is requested, all other values will set up a queue and value defines how fast the queue will be processed.
 
 &lt;b&gt;NOTE:&lt;/b&gt; Only change this value from 'immediate' to other value if your graphics card, driver or system is too slow to create the window contents immediately. You have to try each value to find the one fitting your system.</property>
                         <property name="label" translatable="yes">Priority of window content creation</property>
@@ -369,7 +369,7 @@ The duration is calculated by the length of the text to show in notification. Th
                       <object class="GtkComboBox" id="window-creation-priority">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="tooltip_markup" translatable="yes">This value defines how fast the window content should be created. While the value 'immediate' tells xfdashboard to create the window content at the time it is requested, all other values will set up a queue and value defines how fast the queue will be processed.
+                        <property name="tooltip_markup" translatable="yes">This value defines how fast the window content should be created. While the value 'immediate' tells esdashboard to create the window content at the time it is requested, all other values will set up a queue and value defines how fast the queue will be processed.
 
 &lt;b&gt;NOTE:&lt;/b&gt; Only change this value from 'immediate' to other value if your graphics card, driver or system is too slow to create the window contents immediately. You have to try each value to find the one fitting your system.</property>
                       </object>

@@ -25,7 +25,7 @@
 #include <config.h>
 #endif
 
-#include <libxfce4util/libxfce4util.h>
+#include <libexpidus1util/libexpidus1util.h>
 #include <gtk/gtk.h>
 
 #include "clock-view.h"
@@ -33,17 +33,17 @@
 
 
 /* Forward declarations */
-G_MODULE_EXPORT void plugin_init(XfdashboardPlugin *self);
+G_MODULE_EXPORT void plugin_init(EsdashboardPlugin *self);
 
 
-/* IMPLEMENTATION: XfdashboardPlugin */
+/* IMPLEMENTATION: EsdashboardPlugin */
 
-#define CONFIGURATION_MAPPING				"xfdashboard-plugin-clock_view-configuration-mapping"
+#define CONFIGURATION_MAPPING				"esdashboard-plugin-clock_view-configuration-mapping"
 
 typedef struct _PluginWidgetSettingsMap		PluginWidgetSettingsMap;
 struct _PluginWidgetSettingsMap
 {
-	XfdashboardClockViewSettings	*settings;
+	EsdashboardClockViewSettings	*settings;
 	gchar							*property;
 	guint							settingsPropertyChangedSignalID;
 };
@@ -65,15 +65,15 @@ static void _plugin_on_settings_color_change(GObject *inObject,
 												GParamSpec *inSpec,
 												gpointer inUserData)
 {
-	XfdashboardClockViewSettings	*settings;
+	EsdashboardClockViewSettings	*settings;
 	GtkColorButton					*button;
 	ClutterColor					*settingsColor;
 	GdkRGBA							widgetColor;
 
-	g_return_if_fail(XFDASHBOARD_IS_CLOCK_VIEW_SETTINGS(inObject));
+	g_return_if_fail(ESDASHBOARD_IS_CLOCK_VIEW_SETTINGS(inObject));
 	g_return_if_fail(GTK_IS_COLOR_BUTTON(inUserData));
 
-	settings=XFDASHBOARD_CLOCK_VIEW_SETTINGS(inObject);
+	settings=ESDASHBOARD_CLOCK_VIEW_SETTINGS(inObject);
 	button=GTK_COLOR_BUTTON(inUserData);
 
 	/* Get current color from settings */
@@ -126,7 +126,7 @@ static void _plugin_on_color_button_color_chosen(GtkColorButton *inButton,
  * in widget etc.
  */
 static void _plugin_configure_setup_color_button(GtkColorButton *inButton,
-													XfdashboardClockViewSettings *inSettings,
+													EsdashboardClockViewSettings *inSettings,
 													const gchar *inProperty)
 {
 	ClutterColor					*settingsColor;
@@ -136,7 +136,7 @@ static void _plugin_configure_setup_color_button(GtkColorButton *inButton,
 	PluginWidgetSettingsMap			*mapping;
 
 	g_return_if_fail(GTK_IS_COLOR_BUTTON(inButton));
-	g_return_if_fail(XFDASHBOARD_IS_CLOCK_VIEW_SETTINGS(inSettings));
+	g_return_if_fail(ESDASHBOARD_IS_CLOCK_VIEW_SETTINGS(inSettings));
 	g_return_if_fail(inProperty && *inProperty);
 
 	/* Create data for later use at color button */
@@ -190,15 +190,15 @@ static void _plugin_configure_setup_color_button(GtkColorButton *inButton,
 }
 
 /* Plugin configuration function */
-static GObject* plugin_configure(XfdashboardPlugin *self, gpointer inUserData)
+static GObject* plugin_configure(EsdashboardPlugin *self, gpointer inUserData)
 {
 	GtkWidget						*layout;
 	GtkWidget						*widgetLabel;
 	GtkWidget						*widgetValue;
-	XfdashboardClockViewSettings	*settings;
+	EsdashboardClockViewSettings	*settings;
 
 	/* Get settings of plugin */
-	settings=xfdashboard_clock_view_settings_new();
+	settings=esdashboard_clock_view_settings_new();
 
 	/* Create layout widget */
 	layout=gtk_grid_new();
@@ -275,48 +275,48 @@ static GObject* plugin_configure(XfdashboardPlugin *self, gpointer inUserData)
 }
 
 /* Plugin enable function */
-static void plugin_enable(XfdashboardPlugin *self, gpointer inUserData)
+static void plugin_enable(EsdashboardPlugin *self, gpointer inUserData)
 {
-	XfdashboardViewManager	*viewManager;
+	EsdashboardViewManager	*viewManager;
 
 	/* Register view */
-	viewManager=xfdashboard_view_manager_get_default();
+	viewManager=esdashboard_view_manager_get_default();
 
-	xfdashboard_view_manager_register(viewManager, PLUGIN_ID, XFDASHBOARD_TYPE_CLOCK_VIEW);
+	esdashboard_view_manager_register(viewManager, PLUGIN_ID, ESDASHBOARD_TYPE_CLOCK_VIEW);
 
 	g_object_unref(viewManager);
 }
 
 /* Plugin disable function */
-static void plugin_disable(XfdashboardPlugin *self, gpointer inUserData)
+static void plugin_disable(EsdashboardPlugin *self, gpointer inUserData)
 {
-	XfdashboardViewManager	*viewManager;
+	EsdashboardViewManager	*viewManager;
 
 	/* Unregister view */
-	viewManager=xfdashboard_view_manager_get_default();
+	viewManager=esdashboard_view_manager_get_default();
 
-	xfdashboard_view_manager_unregister(viewManager, PLUGIN_ID);
+	esdashboard_view_manager_unregister(viewManager, PLUGIN_ID);
 
 	g_object_unref(viewManager);
 }
 
 /* Plugin initialization function */
-G_MODULE_EXPORT void plugin_init(XfdashboardPlugin *self)
+G_MODULE_EXPORT void plugin_init(EsdashboardPlugin *self)
 {
 	/* Set up localization */
-	xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+	expidus_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
 	/* Set plugin info */
-	xfdashboard_plugin_set_info(self,
-								"flags", XFDASHBOARD_PLUGIN_FLAG_EARLY_INITIALIZATION,
+	esdashboard_plugin_set_info(self,
+								"flags", ESDASHBOARD_PLUGIN_FLAG_EARLY_INITIALIZATION,
 								"name", _("Clock"),
 								"description", _("Adds a new view showing a clock"),
 								"author", "Stephan Haller <nomad@froevel.de>",
 								NULL);
 
 	/* Register GObject types of this plugin */
-	XFDASHBOARD_REGISTER_PLUGIN_TYPE(self, xfdashboard_clock_view);
-	XFDASHBOARD_REGISTER_PLUGIN_TYPE(self, xfdashboard_clock_view_settings);
+	ESDASHBOARD_REGISTER_PLUGIN_TYPE(self, esdashboard_clock_view);
+	ESDASHBOARD_REGISTER_PLUGIN_TYPE(self, esdashboard_clock_view_settings);
 
 	/* Connect plugin action handlers */
 	g_signal_connect(self, "enable", G_CALLBACK(plugin_enable), NULL);

@@ -1,10 +1,10 @@
-plugindir = $(libdir)/xfdashboard/plugins
+plugindir = $(libdir)/esdashboard/plugins
 PLUGIN_ID = middle-click-window-close
 
 AM_CPPFLAGS = \
 	-I$(top_builddir) \
 	-I$(top_srcdir) \
-	-DG_LOG_DOMAIN=\"xfdashboard-plugin-middle_click_window_close\" \
+	-DG_LOG_DOMAIN=\"esdashboard-plugin-middle_click_window_close\" \
 	-DLIBEXECDIR=\"$(libexecdir)\" \
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\" \
 	-DPLUGIN_ID=\"$(PLUGIN_ID)\"
@@ -18,10 +18,10 @@ middle_click_window_close_la_SOURCES = \
 	plugin.c
 
 middle_click_window_close_la_CFLAGS = \
-	$(LIBXFCE4UTIL_CFLAGS) \
+	$(LIBEXPIDUS1UTIL_CFLAGS) \
 	$(GTK_CFLAGS) \
 	$(CLUTTER_CFLAGS) \
-	$(LIBXFCONF_CFLAGS) \
+	$(LIBESCONF_CFLAGS) \
 	$(GARCON_CFLAGS) \
 	$(PLATFORM_CFLAGS)
 
@@ -35,12 +35,12 @@ middle_click_window_close_la_LDFLAGS = \
 	$(PLATFORM_LDFLAGS)
 
 middle_click_window_close_la_LIBADD = \
-	$(LIBXFCE4UTIL_LIBS) \
+	$(LIBEXPIDUS1UTIL_LIBS) \
 	$(GTK_LIBS) \
 	$(CLUTTER_LIBS) \
-	$(LIBXFCONF_LIBS) \
+	$(LIBESCONF_LIBS) \
 	$(GARCON_CLIBS) \
-	$(top_builddir)/libxfdashboard/libxfdashboard.la
+	$(top_builddir)/libesdashboard/libesdashboard.la
 
 CLEANFILES = \
 	$(plugin_DATA)

@@ -28,8 +28,8 @@
 #include "settings.h"
 
 #include <glib/gi18n-lib.h>
-#include <libxfce4ui/libxfce4ui.h>
-#include <xfconf/xfconf.h>
+#include <libexpidus1ui/libexpidus1ui.h>
+#include <esconf/esconf.h>
 #include <math.h>
 
 #include "general.h"
@@ -38,73 +38,73 @@
 
 
 /* Define this class in GObject system */
-struct _XfdashboardSettingsPrivate
+struct _EsdashboardSettingsPrivate
 {
 	/* Instance related */
-	XfconfChannel					*xfconfChannel;
+	EsconfChannel					*esconfChannel;
 
 	GtkBuilder						*builder;
 	GObject							*dialog;
 
-	XfdashboardSettingsGeneral		*general;
-	XfdashboardSettingsThemes		*themes;
-	XfdashboardSettingsPlugins		*plugins;
+	EsdashboardSettingsGeneral		*general;
+	EsdashboardSettingsThemes		*themes;
+	EsdashboardSettingsPlugins		*plugins;
 
 	GtkWidget						*widgetHelpButton;
 	GtkWidget						*widgetCloseButton;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE(XfdashboardSettings,
-							xfdashboard_settings,
+G_DEFINE_TYPE_WITH_PRIVATE(EsdashboardSettings,
+							esdashboard_settings,
 							G_TYPE_OBJECT)
 
 /* IMPLEMENTATION: Private variables and methods */
-#define XFDASHBOARD_XFCONF_CHANNEL					"xfdashboard"
+#define ESDASHBOARD_ESCONF_CHANNEL					"esdashboard"
 
 #define PREFERENCES_UI_FILE							"preferences.ui"
 
 
 /* Help button was clicked */
-static void _xfdashboard_settings_on_help_clicked(XfdashboardSettings *self,
+static void _esdashboard_settings_on_help_clicked(EsdashboardSettings *self,
 													GtkWidget *inWidget)
 {
-	XfdashboardSettingsPrivate				*priv;
+	EsdashboardSettingsPrivate				*priv;
 	GtkWindow								*window;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS(self));
 
 	priv=self->priv;
 
-	/* Show online manual for xfdashboard but ask user if needed */
+	/* Show online manual for esdashboard but ask user if needed */
 	window=NULL;
 	if(GTK_IS_WINDOW(priv->dialog)) window=GTK_WINDOW(priv->dialog);
 
-	xfce_dialog_show_help_with_version(window,
-										"xfdashboard",
+	expidus_dialog_show_help_with_version(window,
+										"esdashboard",
 										"start",
 										NULL,
 										NULL);
 }
 
 /* Close button was clicked */
-static void _xfdashboard_settings_on_close_clicked(XfdashboardSettings *self,
+static void _esdashboard_settings_on_close_clicked(EsdashboardSettings *self,
 													GtkWidget *inWidget)
 {
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS(self));
 
 	/* Quit main loop */
 	gtk_main_quit();
 }
 
 /* Create and set up GtkBuilder */
-static gboolean _xfdashboard_settings_create_builder(XfdashboardSettings *self)
+static gboolean _esdashboard_settings_create_builder(EsdashboardSettings *self)
 {
-	XfdashboardSettingsPrivate				*priv;
+	EsdashboardSettingsPrivate				*priv;
 	gchar									*builderFile;
 	GtkBuilder								*builder;
 	GError									*error;
 
-	g_return_val_if_fail(XFDASHBOARD_IS_SETTINGS(self), FALSE);
+	g_return_val_if_fail(ESDASHBOARD_IS_SETTINGS(self), FALSE);
 
 	priv=self->priv;
 	builderFile=NULL;
@@ -121,7 +121,7 @@ static gboolean _xfdashboard_settings_create_builder(XfdashboardSettings *self)
 	{
 		const gchar		*envPath;
 
-		envPath=g_getenv("XFDASHBOARD_UI_PATH");
+		envPath=g_getenv("ESDASHBOARD_UI_PATH");
 		if(envPath)
 		{
 			builderFile=g_build_filename(envPath, PREFERENCES_UI_FILE, NULL);
@@ -137,7 +137,7 @@ static gboolean _xfdashboard_settings_create_builder(XfdashboardSettings *self)
 	/* Find UI file at install path */
 	if(!builderFile)
 	{
-		builderFile=g_build_filename(PACKAGE_DATADIR, "xfdashboard", PREFERENCES_UI_FILE, NULL);
+		builderFile=g_build_filename(PACKAGE_DATADIR, "esdashboard", PREFERENCES_UI_FILE, NULL);
 		g_debug("Trying UI file: %s", builderFile);
 		if(!g_file_test(builderFile, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR))
 		{
@@ -170,9 +170,9 @@ static gboolean _xfdashboard_settings_create_builder(XfdashboardSettings *self)
 
 	/* Loading UI resource was successful so take extra reference
 	 * from builder object to keep it alive. Also get widget, set up
-	 * xfconf bindings and connect signals.
+	 * esconf bindings and connect signals.
 	 * REMEMBER: Set (widget's) default value _before_ setting up
-	 * xfconf binding.
+	 * esconf binding.
 	 */
 	priv->builder=GTK_BUILDER(g_object_ref(builder));
 	g_debug("Loaded UI resources from '%s' successfully.", builderFile);
@@ -181,23 +181,23 @@ static gboolean _xfdashboard_settings_create_builder(XfdashboardSettings *self)
 	priv->widgetHelpButton=GTK_WIDGET(gtk_builder_get_object(priv->builder, "help-button"));
 	g_signal_connect_swapped(priv->widgetHelpButton,
 								"clicked",
-								G_CALLBACK(_xfdashboard_settings_on_help_clicked),
+								G_CALLBACK(_esdashboard_settings_on_help_clicked),
 								self);
 
 	priv->widgetCloseButton=GTK_WIDGET(gtk_builder_get_object(priv->builder, "close-button"));
 	g_signal_connect_swapped(priv->widgetCloseButton,
 								"clicked",
-								G_CALLBACK(_xfdashboard_settings_on_close_clicked),
+								G_CALLBACK(_esdashboard_settings_on_close_clicked),
 								self);
 
 	/* Tab: General */
-	priv->general=xfdashboard_settings_general_new(builder);
+	priv->general=esdashboard_settings_general_new(builder);
 
 	/* Tab: Themes */
-	priv->themes=xfdashboard_settings_themes_new(builder);
+	priv->themes=esdashboard_settings_themes_new(builder);
 
 	/* Tab: Plugins */
-	priv->plugins=xfdashboard_settings_plugins_new(builder);
+	priv->plugins=esdashboard_settings_plugins_new(builder);
 
 	/* Release allocated resources */
 	g_free(builderFile);
@@ -211,10 +211,10 @@ static gboolean _xfdashboard_settings_create_builder(XfdashboardSettings *self)
 /* IMPLEMENTATION: GObject */
 
 /* Dispose this object */
-static void _xfdashboard_settings_dispose(GObject *inObject)
+static void _esdashboard_settings_dispose(GObject *inObject)
 {
-	XfdashboardSettings			*self=XFDASHBOARD_SETTINGS(inObject);
-	XfdashboardSettingsPrivate	*priv=self->priv;
+	EsdashboardSettings			*self=ESDASHBOARD_SETTINGS(inObject);
+	EsdashboardSettingsPrivate	*priv=self->priv;
 
 	/* Release allocated resouces */
 	priv->dialog=NULL;
@@ -239,9 +239,9 @@ static void _xfdashboard_settings_dispose(GObject *inObject)
 		priv->plugins=NULL;
 	}
 
-	if(priv->xfconfChannel)
+	if(priv->esconfChannel)
 	{
-		priv->xfconfChannel=NULL;
+		priv->esconfChannel=NULL;
 	}
 
 	if(priv->builder)
@@ -251,32 +251,32 @@ static void _xfdashboard_settings_dispose(GObject *inObject)
 	}
 
 	/* Call parent's class dispose method */
-	G_OBJECT_CLASS(xfdashboard_settings_parent_class)->dispose(inObject);
+	G_OBJECT_CLASS(esdashboard_settings_parent_class)->dispose(inObject);
 }
 
 /* Class initialization
  * Override functions in parent classes and define properties
  * and signals
  */
-static void xfdashboard_settings_class_init(XfdashboardSettingsClass *klass)
+static void esdashboard_settings_class_init(EsdashboardSettingsClass *klass)
 {
 	GObjectClass		*gobjectClass=G_OBJECT_CLASS(klass);
 
 	/* Override functions */
-	gobjectClass->dispose=_xfdashboard_settings_dispose;
+	gobjectClass->dispose=_esdashboard_settings_dispose;
 }
 
 /* Object initialization
  * Create private structure and set up default values
  */
-static void xfdashboard_settings_init(XfdashboardSettings *self)
+static void esdashboard_settings_init(EsdashboardSettings *self)
 {
-	XfdashboardSettingsPrivate	*priv;
+	EsdashboardSettingsPrivate	*priv;
 
-	priv=self->priv=xfdashboard_settings_get_instance_private(self);
+	priv=self->priv=esdashboard_settings_get_instance_private(self);
 
 	/* Set default values */
-	priv->xfconfChannel=xfconf_channel_get(XFDASHBOARD_XFCONF_CHANNEL);
+	priv->esconfChannel=esconf_channel_get(ESDASHBOARD_ESCONF_CHANNEL);
 	priv->builder=NULL;
 	priv->dialog=NULL;
 	priv->general=NULL;
@@ -289,22 +289,22 @@ static void xfdashboard_settings_init(XfdashboardSettings *self)
 /* IMPLEMENTATION: Public API */
 
 /* Create instance of this class */
-XfdashboardSettings* xfdashboard_settings_new(void)
+EsdashboardSettings* esdashboard_settings_new(void)
 {
-	return(XFDASHBOARD_SETTINGS(g_object_new(XFDASHBOARD_TYPE_SETTINGS, NULL)));
+	return(ESDASHBOARD_SETTINGS(g_object_new(ESDASHBOARD_TYPE_SETTINGS, NULL)));
 }
 
 /* Create standalone dialog for this settings instance */
-GtkWidget* xfdashboard_settings_create_dialog(XfdashboardSettings *self)
+GtkWidget* esdashboard_settings_create_dialog(EsdashboardSettings *self)
 {
-	XfdashboardSettingsPrivate	*priv;
+	EsdashboardSettingsPrivate	*priv;
 
-	g_return_val_if_fail(XFDASHBOARD_IS_SETTINGS(self), NULL);
+	g_return_val_if_fail(ESDASHBOARD_IS_SETTINGS(self), NULL);
 
 	priv=self->priv;
 
 	/* Get builder if not available */
-	if(!_xfdashboard_settings_create_builder(self))
+	if(!_esdashboard_settings_create_builder(self))
 	{
 		/* An critical error message should be displayed so just return NULL */
 		return(NULL);
@@ -325,22 +325,22 @@ GtkWidget* xfdashboard_settings_create_dialog(XfdashboardSettings *self)
 }
 
 /* Create "pluggable" dialog for this settings instance */
-GtkWidget* xfdashboard_settings_create_plug(XfdashboardSettings *self, Window inSocketID)
+GtkWidget* esdashboard_settings_create_plug(EsdashboardSettings *self, Window inSocketID)
 {
-	XfdashboardSettingsPrivate	*priv;
+	EsdashboardSettingsPrivate	*priv;
 	GtkWidget					*plug;
 	GObject						*dialogChild;
 #if GTK_CHECK_VERSION(3, 14 ,0)
 	GtkWidget					*dialogParent;
 #endif
 
-	g_return_val_if_fail(XFDASHBOARD_IS_SETTINGS(self), NULL);
+	g_return_val_if_fail(ESDASHBOARD_IS_SETTINGS(self), NULL);
 	g_return_val_if_fail(inSocketID, NULL);
 
 	priv=self->priv;
 
 	/* Get builder if not available */
-	if(!_xfdashboard_settings_create_builder(self))
+	if(!_esdashboard_settings_create_builder(self))
 	{
 		/* An critical error message should be displayed so just return NULL */
 		return(NULL);

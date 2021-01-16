@@ -1,8 +1,8 @@
 SUBDIRS = \
-	xfdashboard \
-	xfdashboard-auber \
-	xfdashboard-blue \
-	xfdashboard-dark \
-	xfdashboard-mint \
-	xfdashboard-moranga \
-	xfdashboard-wine
+	esdashboard \
+	esdashboard-auber \
+	esdashboard-blue \
+	esdashboard-dark \
+	esdashboard-mint \
+	esdashboard-moranga \
+	esdashboard-wine

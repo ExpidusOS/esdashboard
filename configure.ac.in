@@ -1,5 +1,5 @@
 dnl
-dnl xfdashboard - Maybe a Gnome shell like dashboard for Xfce
+dnl esdashboard - Maybe a Gnome shell like dashboard for Expidus
 dnl
 dnl Copyright (c) 2012-2016 Stephan Haller <nomad@froevel.de>
 dnl
@@ -7,12 +7,12 @@ dnl
 dnl ***************************
 dnl *** Version information ***
 dnl ***************************
-m4_define([xfdashboard_version_major], [0])
-m4_define([xfdashboard_version_minor], [9])
-m4_define([xfdashboard_version_micro], [0])
-m4_define([xfdashboard_version_build], [@REVISION@])
-m4_define([xfdashboard_version_tag],   [git])
-m4_define([xfdashboard_version], [xfdashboard_version_major().xfdashboard_version_minor().xfdashboard_version_micro()ifelse(xfdashboard_version_tag(), [git], [xfdashboard_version_tag().xfdashboard_version_build()], [xfdashboard_version_tag()])])
+m4_define([esdashboard_version_major], [1])
+m4_define([esdashboard_version_minor], [0])
+m4_define([esdashboard_version_micro], [0])
+m4_define([esdashboard_version_build], [@REVISION@])
+m4_define([esdashboard_version_tag],   [git])
+m4_define([esdashboard_version], [esdashboard_version_major().esdashboard_version_minor().esdashboard_version_micro()ifelse(esdashboard_version_tag(), [git], [esdashboard_version_tag().esdashboard_version_build()], [esdashboard_version_tag()])])
 
 dnl **************************************
 dnl *** Minimum package version needed ***
@@ -22,27 +22,27 @@ m4_define([clutter_minimum_version], [1.12.0])
 m4_define([glib_minimum_version], [2.38])
 m4_define([gio_minimum_version], [2.38])
 m4_define([garcon_minimum_version], [0.2.0])
-m4_define([xfconf_minimum_version], [4.13.0])
-m4_define([xfconf_legacy_minimum_version], [4.10.0])
+m4_define([esconf_minimum_version], [1.0.0])
+m4_define([esconf_legacy_minimum_version], [1.0.0])
 m4_define([dbus_glib_minimum_version], [0.98])
 m4_define([xcomposite_minimum_version], [0.2])
 m4_define([intltool_minimum_version], [0.35])
 m4_define([gtk_minimum_version], [3.2])
-m4_define([libxfce4util_minimum_version],[4.10.0])
-m4_define([libxfce4ui_minimum_version],[4.10.0])
+m4_define([libexpidus1util_minimum_version],[1.0.0])
+m4_define([libexpidus1ui_minimum_version],[1.0.0])
 
 dnl *******************************************
 dnl *** Debugging support for GIT snapshots ***
 dnl *******************************************
-m4_define([xfdashboard_debug_default], [ifelse(xfdashboard_version_tag(), [git], [yes], [minimum])])
+m4_define([esdashboard_debug_default], [ifelse(esdashboard_version_tag(), [git], [yes], [minimum])])
 
 dnl ***************************
 dnl *** Initialize autoconf ***
 dnl ***************************
 AC_COPYRIGHT([Copyright (c) 2012-2020 Stephan Haller <nomad@froevel.de>])
-AC_INIT([xfdashboard], [xfdashboard_version], [http://docs.xfce.org/apps/xfdashboard/start], [xfdashboard])
+AC_INIT([esdashboard], [esdashboard_version], [http://docs.expidus.org/apps/esdashboard/start], [esdashboard])
 AC_PREREQ([2.50])
-AC_REVISION([xfdashboard_version_build])
+AC_REVISION([esdashboard_version_build])
 
 dnl ***************************
 dnl *** Initialize automake ***
@@ -81,28 +81,28 @@ LT_LIB_M
 dnl **********************************
 dnl *** Substitute package version ***
 dnl **********************************
-XFDASHBOARD_VERSION=xfdashboard_version()
-XFDASHBOARD_VERSION_MAJOR=xfdashboard_version_major()
-XFDASHBOARD_VERSION_MINOR=xfdashboard_version_minor()
-XFDASHBOARD_VERSION_MICRO=xfdashboard_version_micro()
-AC_SUBST([XFDASHBOARD_VERSION])
-AC_SUBST([XFDASHBOARD_VERSION_MAJOR])
-AC_SUBST([XFDASHBOARD_VERSION_MINOR])
-AC_SUBST([XFDASHBOARD_VERSION_MICRO])
+ESDASHBOARD_VERSION=esdashboard_version()
+ESDASHBOARD_VERSION_MAJOR=esdashboard_version_major()
+ESDASHBOARD_VERSION_MINOR=esdashboard_version_minor()
+ESDASHBOARD_VERSION_MICRO=esdashboard_version_micro()
+AC_SUBST([ESDASHBOARD_VERSION])
+AC_SUBST([ESDASHBOARD_VERSION_MAJOR])
+AC_SUBST([ESDASHBOARD_VERSION_MINOR])
+AC_SUBST([ESDASHBOARD_VERSION_MICRO])
 
 dnl **********************************
 dnl *** Substitute library version ***
 dnl **********************************
-m4_define([libxfdashboard_binary_age], [m4_eval(10000 * xfdashboard_version_major + 100 * xfdashboard_version_minor + xfdashboard_version_micro)])
-m4_define([libxfdashboard_interface_age], [xfdashboard_version_micro])
+m4_define([libesdashboard_binary_age], [m4_eval(10000 * esdashboard_version_major + 100 * esdashboard_version_minor + esdashboard_version_micro)])
+m4_define([libesdashboard_interface_age], [esdashboard_version_micro])
 
-m4_define([libxfdashboard_lt_current], [m4_eval(libxfdashboard_binary_age - libxfdashboard_interface_age)])
-m4_define([libxfdashboard_lt_revision], [libxfdashboard_interface_age])
-m4_define([libxfdashboard_lt_age], [m4_eval(libxfdashboard_binary_age - libxfdashboard_interface_age)])
-m4_define([libxfdashboard_verinfo], [libxfdashboard_lt_current():libxfdashboard_lt_revision():libxfdashboard_lt_age()])
+m4_define([libesdashboard_lt_current], [m4_eval(libesdashboard_binary_age - libesdashboard_interface_age)])
+m4_define([libesdashboard_lt_revision], [libesdashboard_interface_age])
+m4_define([libesdashboard_lt_age], [m4_eval(libesdashboard_binary_age - libesdashboard_interface_age)])
+m4_define([libesdashboard_verinfo], [libesdashboard_lt_current():libesdashboard_lt_revision():libesdashboard_lt_age()])
 
-LIBXFDASHBOARD_VERINFO=libxfdashboard_verinfo()
-AC_SUBST([LIBXFDASHBOARD_VERINFO])
+LIBESDASHBOARD_VERINFO=libesdashboard_verinfo()
+AC_SUBST([LIBESDASHBOARD_VERINFO])
 
 dnl **********************************
 dnl *** Check for standard headers ***
@@ -141,7 +141,7 @@ AC_ARG_ENABLE([xcomposite],
 )
 
 AC_MSG_CHECKING([whether to build with X11 extension XComposite])
-AM_CONDITIONAL([XFDASHBOARD_BUILD_WITH_XCOMPOSITE], [test x"$enabled_x11_extension_composite" = x"yes"])
+AM_CONDITIONAL([ESDASHBOARD_BUILD_WITH_XCOMPOSITE], [test x"$enabled_x11_extension_composite" = x"yes"])
 AC_MSG_RESULT([$enabled_x11_extension_composite])
 
 if test "x$enabled_x11_extension_composite" = xyes; then
@@ -164,7 +164,7 @@ AC_ARG_ENABLE([xdamage],
 )
 
 AC_MSG_CHECKING([whether to build with X11 extension XDamage])
-AM_CONDITIONAL([XFDASHBOARD_BUILD_WITH_XDAMAGE], [test x"$enabled_x11_extension_damage" = x"yes"])
+AM_CONDITIONAL([ESDASHBOARD_BUILD_WITH_XDAMAGE], [test x"$enabled_x11_extension_damage" = x"yes"])
 AC_MSG_RESULT([$enabled_x11_extension_damage])
 
 if test "x$enabled_x11_extension_damage" = xyes; then
@@ -187,7 +187,7 @@ AC_ARG_ENABLE([xinerama],
 )
 
 AC_MSG_CHECKING([whether to build with X11 extension Xinerama])
-AM_CONDITIONAL([XFDASHBOARD_BUILD_WITH_XINERAMA], [test x"$enabled_x11_extension_xinerama" = x"yes"])
+AM_CONDITIONAL([ESDASHBOARD_BUILD_WITH_XINERAMA], [test x"$enabled_x11_extension_xinerama" = x"yes"])
 AC_MSG_RESULT([$enabled_x11_extension_xinerama])
 
 if test "x$enabled_x11_extension_xinerama" = xyes; then
@@ -201,12 +201,12 @@ AC_SUBST(HAVE_XINERAMA)
 dnl ***********************************
 dnl *** Check for required packages ***
 dnl ***********************************
-XFDASHBOARD_REQUIRES=""
+ESDASHBOARD_REQUIRES=""
 
-XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-3.0], [wnck_minimum_version], [XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES libwnck-3.0"])
-XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_minimum_version], [XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES gtk+-3.0"])
+XDT_CHECK_PACKAGE([LIBWNCK], [libwnck-3.0], [wnck_minimum_version], [ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES libwnck-3.0"])
+XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_minimum_version], [ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES gtk+-3.0"])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version], [
-	XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES glib-2.0"
+	ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES glib-2.0"
 
 	XDT_PROG_PKG_CONFIG()
 
@@ -215,21 +215,21 @@ XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version], [
 
 	GLIB_GENMARSHAL=`$PKG_CONFIG --variable=glib_genmarshal glib-2.0`
 	AC_SUBST(GLIB_GENMARSHAL)])
-XDT_CHECK_PACKAGE([GIO], [gio-2.0], [gio_minimum_version], [XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES gio-2.0"])
-XDT_CHECK_PACKAGE([GIO_UNIX], [gio-unix-2.0], [gio_minimum_version], [XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES gio-unix-2.0"])
-XDT_CHECK_PACKAGE([GARCON], [garcon-1], [garcon_minimum_version], [XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES garcon-1"])
-XDT_CHECK_PACKAGE([LIBXFCONF], [libxfconf-0], [xfconf_minimum_version], [XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES libxfconf-0"], [
-	XDT_CHECK_PACKAGE([LIBXFCONF], [libxfconf-0], [xfconf_legacy_minimum_version], [
-		XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES libxfconf-0"
+XDT_CHECK_PACKAGE([GIO], [gio-2.0], [gio_minimum_version], [ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES gio-2.0"])
+XDT_CHECK_PACKAGE([GIO_UNIX], [gio-unix-2.0], [gio_minimum_version], [ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES gio-unix-2.0"])
+XDT_CHECK_PACKAGE([GARCON], [garcon-1], [garcon_minimum_version], [ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES garcon-1"])
+XDT_CHECK_PACKAGE([LIBESCONF], [libesconf-0], [esconf_minimum_version], [ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES libesconf-0"], [
+	XDT_CHECK_PACKAGE([LIBESCONF], [libesconf-0], [esconf_legacy_minimum_version], [
+		ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES libesconf-0"
 
 		XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [dbus_glib_minimum_version], [
 			ac_dbus_glib=yes
-			XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES dbus-glib-1"],
+			ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES dbus-glib-1"],
 			[ac_dbus_glib=no])
-		AC_DEFINE([XFCONF_LEGACY], [], [Use xfconf < 4.13 to obtain array type])])
+		AC_DEFINE([ESCONF_LEGACY], [], [Use esconf < 4.13 to obtain array type])])
 	])
-XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0],[libxfce4util_minimum_version], [XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES libxfce4util-1.0"])
-XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2],[libxfce4ui_minimum_version], [XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES libxfce4ui-2"])
+XDT_CHECK_PACKAGE([LIBEXPIDUS1UTIL], [libexpidus1util-1.0],[libexpidus1util_minimum_version], [ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES libexpidus1util-1.0"])
+XDT_CHECK_PACKAGE([LIBEXPIDUS1UI], [libexpidus1ui-2],[libexpidus1ui_minimum_version], [ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES libexpidus1ui-2"])
 AM_CONDITIONAL([DBUS_GLIB], [test x"$ac_dbus_glib" = x"yes"])
 
 dnl **********************************************
@@ -238,16 +238,16 @@ dnl **********************************************
 BACKENDS="x11"
 
 XDT_CHECK_PACKAGE([CLUTTER], [clutter-1.0], [clutter_minimum_version], [
-	XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES clutter-1.0"
-	XDT_CHECK_PACKAGE([CLUTTER_COGL], [clutter-cogl-1.0], [clutter_minimum_version], [XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES clutter-cogl-1.0"])
+	ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES clutter-1.0"
+	XDT_CHECK_PACKAGE([CLUTTER_COGL], [clutter-cogl-1.0], [clutter_minimum_version], [ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES clutter-cogl-1.0"])
 	XDT_CHECK_PACKAGE([CLUTTER_GDK], [clutter-gdk-1.0], [clutter_minimum_version], [ac_clutter_gdk=yes], [ac_clutter_gdk=no])]
 )
 
 HAVE_BACKEND_GDK=""
-AM_CONDITIONAL([XFDASHBOARD_BUILD_WITH_BACKEND_GDK], [test x"$ac_clutter_gdk" = x"yes"])
+AM_CONDITIONAL([ESDASHBOARD_BUILD_WITH_BACKEND_GDK], [test x"$ac_clutter_gdk" = x"yes"])
 if test "x$ac_clutter_gdk" = xyes; then
 	BACKENDS="$BACKENDS gdk"
-	XFDASHBOARD_REQUIRES="$XFDASHBOARD_REQUIRES clutter-gdk-1.0"
+	ESDASHBOARD_REQUIRES="$ESDASHBOARD_REQUIRES clutter-gdk-1.0"
 	AC_DEFINE([HAVE_BACKEND_GDK], [1], [Define if GDK backend is available])
 fi
 AC_SUBST(HAVE_BACKEND_GDK)
@@ -255,24 +255,24 @@ AC_SUBST(HAVE_BACKEND_GDK)
 dnl ***********************************
 dnl *** Check for debugging support ***
 dnl ***********************************
-XDT_FEATURE_DEBUG([xfdashboard_debug_default])
+XDT_FEATURE_DEBUG([esdashboard_debug_default])
 
 AS_CASE([$enable_debug],
 	[full],
-	[XFDASHBOARD_DEBUG_CFLAGS="-DXFDASHBOARD_ENABLE_DEBUG"],
+	[ESDASHBOARD_DEBUG_CFLAGS="-DESDASHBOARD_ENABLE_DEBUG"],
 
 	[yes],
-	[XFDASHBOARD_DEBUG_CFLAGS="-DXFDASHBOARD_ENABLE_DEBUG"],
+	[ESDASHBOARD_DEBUG_CFLAGS="-DESDASHBOARD_ENABLE_DEBUG"],
 
 	[minimum],
-	[XFDASHBOARD_DEBUG_CFLAGS="-DG_DISABLE_CAST_CHECKS"],
+	[ESDASHBOARD_DEBUG_CFLAGS="-DG_DISABLE_CAST_CHECKS"],
 
 	[no],
-	[XFDASHBOARD_DEBUG_CFLAGS="-DG_DISABLE_ASSERT -DG_DISABLE_CHECKS -DG_DISABLE_CAST_CHECKS"],
+	[ESDASHBOARD_DEBUG_CFLAGS="-DG_DISABLE_ASSERT -DG_DISABLE_CHECKS -DG_DISABLE_CAST_CHECKS"],
 
 	[AC_MSG_ERROR([Unknown argument for --enable-debug])]
 )
-AC_SUBST(XFDASHBOARD_DEBUG_CFLAGS)
+AC_SUBST(ESDASHBOARD_DEBUG_CFLAGS)
 
 dnl **************************************
 dnl *** Check for linker optimizations ***
@@ -300,7 +300,7 @@ AC_SUBST([PLATFORM_LDFLAGS])
 dnl **************************************
 dnl *** Substitue package requirements ***
 dnl **************************************
-AC_SUBST(XFDASHBOARD_REQUIRES)
+AC_SUBST(ESDASHBOARD_REQUIRES)
 
 AC_OUTPUT([
 Makefile
@@ -315,15 +315,15 @@ data/icons/48x48/Makefile
 data/icons/128x128/Makefile
 data/icons/scalable/Makefile
 data/themes/Makefile
-data/themes/xfdashboard/Makefile
-data/themes/xfdashboard-auber/Makefile
-data/themes/xfdashboard-blue/Makefile
-data/themes/xfdashboard-dark/Makefile
-data/themes/xfdashboard-mint/Makefile
-data/themes/xfdashboard-moranga/Makefile
-data/themes/xfdashboard-wine/Makefile
-libxfdashboard/libxfdashboard.pc
-libxfdashboard/Makefile
+data/themes/esdashboard/Makefile
+data/themes/esdashboard-auber/Makefile
+data/themes/esdashboard-blue/Makefile
+data/themes/esdashboard-dark/Makefile
+data/themes/esdashboard-mint/Makefile
+data/themes/esdashboard-moranga/Makefile
+data/themes/esdashboard-wine/Makefile
+libesdashboard/libesdashboard.pc
+libesdashboard/Makefile
 plugins/Makefile
 plugins/clock-view/Makefile
 plugins/example-search-provider/Makefile
@@ -332,7 +332,7 @@ plugins/hot-corner/Makefile
 plugins/middle-click-window-close/Makefile
 po/Makefile.in
 settings/Makefile
-xfdashboard/Makefile
+esdashboard/Makefile
 ])
 
 dnl ***************************
@@ -341,13 +341,13 @@ dnl ***************************
 echo
 echo "Build configuration:"
 echo "  Package:          $PACKAGE"
-echo "  Version:          $XFDASHBOARD_VERSION"
-echo "  Library version:  $LIBXFDASHBOARD_VERINFO"
+echo "  Version:          $ESDASHBOARD_VERSION"
+echo "  Library version:  $LIBESDASHBOARD_VERINFO"
 echo
 echo "Compiler options:"
 echo "  Compiler flags:   $CFLAGS $MAINTAINER_CFLAGS"
 echo "  Debug level:      $enable_debug"
-echo "  Debug flags:      $XFDASHBOARD_DEBUG_CFLAGS"
+echo "  Debug flags:      $ESDASHBOARD_DEBUG_CFLAGS"
 echo
 echo "Library versions used:"
 echo "  libwnck:          $LIBWNCK_VERSION"
@@ -358,13 +358,13 @@ echo "  glib:             $GLIB_VERSION"
 echo "  gio:              $GIO_VERSION"
 echo "  gio-unix:         $GIO_UNIX_VERSION"
 echo "  garcon:           $GARCON_VERSION"
-echo "  libxfce4ui:       $LIBXFCE4UI_VERSION"
-echo "  libxfce4util:     $LIBXFCE4UTIL_VERSION"
+echo "  libexpidus1ui:       $LIBEXPIDUS1UI_VERSION"
+echo "  libexpidus1util:     $LIBEXPIDUS1UTIL_VERSION"
 if test "x$ac_dbus_glib" = "xyes" ; then
-echo "  libxconf:         $LIBXFCONF_VERSION (legacy)"
+echo "  libxconf:         $LIBESCONF_VERSION (legacy)"
 echo "  dbus-glib:        $DBUS_GLIB_VERSION"
 else
-echo "  libxconf:         $LIBXFCONF_VERSION"
+echo "  libxconf:         $LIBESCONF_VERSION"
 fi
 echo
 echo "Tools used:"

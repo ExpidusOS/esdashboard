@@ -21,34 +21,34 @@
  * 
  */
 
-#ifndef __XFDASHBOARD_MIDDLE_CLICK_WINDOW_CLOSE__
-#define __XFDASHBOARD_MIDDLE_CLICK_WINDOW_CLOSE__
+#ifndef __ESDASHBOARD_MIDDLE_CLICK_WINDOW_CLOSE__
+#define __ESDASHBOARD_MIDDLE_CLICK_WINDOW_CLOSE__
 
-#include <libxfdashboard/libxfdashboard.h>
+#include <libesdashboard/libesdashboard.h>
 
 G_BEGIN_DECLS
 
-#define XFDASHBOARD_TYPE_MIDDLE_CLICK_WINDOW_CLOSE				(xfdashboard_middle_click_window_close_get_type())
-#define XFDASHBOARD_MIDDLE_CLICK_WINDOW_CLOSE(obj)				(G_TYPE_CHECK_INSTANCE_CAST((obj), XFDASHBOARD_TYPE_MIDDLE_CLICK_WINDOW_CLOSE, XfdashboardMiddleClickWindowClose))
-#define XFDASHBOARD_IS_MIDDLE_CLICK_WINDOW_CLOSE(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), XFDASHBOARD_TYPE_MIDDLE_CLICK_WINDOW_CLOSE))
-#define XFDASHBOARD_MIDDLE_CLICK_WINDOW_CLOSE_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), XFDASHBOARD_TYPE_MIDDLE_CLICK_WINDOW_CLOSE, XfdashboardMiddleClickWindowCloseClass))
-#define XFDASHBOARD_IS_MIDDLE_CLICK_WINDOW_CLOSE_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), XFDASHBOARD_TYPE_MIDDLE_CLICK_WINDOW_CLOSE))
-#define XFDASHBOARD_MIDDLE_CLICK_WINDOW_CLOSE_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), XFDASHBOARD_TYPE_MIDDLE_CLICK_WINDOW_CLOSE, XfdashboardMiddleClickWindowCloseClass))
+#define ESDASHBOARD_TYPE_MIDDLE_CLICK_WINDOW_CLOSE				(esdashboard_middle_click_window_close_get_type())
+#define ESDASHBOARD_MIDDLE_CLICK_WINDOW_CLOSE(obj)				(G_TYPE_CHECK_INSTANCE_CAST((obj), ESDASHBOARD_TYPE_MIDDLE_CLICK_WINDOW_CLOSE, EsdashboardMiddleClickWindowClose))
+#define ESDASHBOARD_IS_MIDDLE_CLICK_WINDOW_CLOSE(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), ESDASHBOARD_TYPE_MIDDLE_CLICK_WINDOW_CLOSE))
+#define ESDASHBOARD_MIDDLE_CLICK_WINDOW_CLOSE_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), ESDASHBOARD_TYPE_MIDDLE_CLICK_WINDOW_CLOSE, EsdashboardMiddleClickWindowCloseClass))
+#define ESDASHBOARD_IS_MIDDLE_CLICK_WINDOW_CLOSE_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), ESDASHBOARD_TYPE_MIDDLE_CLICK_WINDOW_CLOSE))
+#define ESDASHBOARD_MIDDLE_CLICK_WINDOW_CLOSE_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), ESDASHBOARD_TYPE_MIDDLE_CLICK_WINDOW_CLOSE, EsdashboardMiddleClickWindowCloseClass))
 
-typedef struct _XfdashboardMiddleClickWindowClose				XfdashboardMiddleClickWindowClose; 
-typedef struct _XfdashboardMiddleClickWindowClosePrivate		XfdashboardMiddleClickWindowClosePrivate;
-typedef struct _XfdashboardMiddleClickWindowCloseClass			XfdashboardMiddleClickWindowCloseClass;
+typedef struct _EsdashboardMiddleClickWindowClose				EsdashboardMiddleClickWindowClose; 
+typedef struct _EsdashboardMiddleClickWindowClosePrivate		EsdashboardMiddleClickWindowClosePrivate;
+typedef struct _EsdashboardMiddleClickWindowCloseClass			EsdashboardMiddleClickWindowCloseClass;
 
-struct _XfdashboardMiddleClickWindowClose
+struct _EsdashboardMiddleClickWindowClose
 {
 	/* Parent instance */
 	GObject										parent_instance;
 
 	/* Private structure */
-	XfdashboardMiddleClickWindowClosePrivate	*priv;
+	EsdashboardMiddleClickWindowClosePrivate	*priv;
 };
 
-struct _XfdashboardMiddleClickWindowCloseClass
+struct _EsdashboardMiddleClickWindowCloseClass
 {
 	/*< private >*/
 	/* Parent class */
@@ -56,11 +56,11 @@ struct _XfdashboardMiddleClickWindowCloseClass
 };
 
 /* Public API */
-GType xfdashboard_middle_click_window_close_get_type(void) G_GNUC_CONST;
+GType esdashboard_middle_click_window_close_get_type(void) G_GNUC_CONST;
 
-XFDASHBOARD_DECLARE_PLUGIN_TYPE(xfdashboard_middle_click_window_close);
+ESDASHBOARD_DECLARE_PLUGIN_TYPE(esdashboard_middle_click_window_close);
 
-XfdashboardMiddleClickWindowClose* xfdashboard_middle_click_window_close_new(void);
+EsdashboardMiddleClickWindowClose* esdashboard_middle_click_window_close_new(void);
 
 G_END_DECLS
 

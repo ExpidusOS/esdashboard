@@ -1,0 +1,163 @@
+@import(esdashboard.css)
+/* Small icons for minimized windows */
+
+EsdashboardWindowContent
+{
+	include-window-frame: true;
+	unmapped-window-icon-x-fill: false;
+	unmapped-window-icon-y-fill: false;
+	unmapped-window-icon-x-align: 0.5;
+	unmapped-window-icon-y-align: 0.5;
+	unmapped-window-icon-x-scale: 2.0;
+	unmapped-window-icon-y-scale: 2.0;
+	unmapped-window-icon-anchor-point: center;
+}
+
+/* icons */
+
+EsdashboardQuicklaunch #applications-button
+{
+	icon-name: "view-list-symbolic";
+}
+
+EsdashboardQuicklaunch #applications-button:toggled
+{
+	icon-name: "view-paged-symbolic";
+}
+
+EsdashboardWindowsView
+{
+	view-icon: "view-paged-symbolic";
+}
+
+EsdashboardApplicationsView
+{
+	view-icon: "view-list-symbolic";
+}
+
+EsdashboardSearchView
+{
+	view-icon: "folder-saved-search-symbolic";
+}
+
+/* colors */
+
+#notification, #tooltip
+{
+	background-fill-color: #1a1a1a;
+	outline-color: #1a1a1a;
+}
+
+#quicklaunch, #quicklaunch:drop-target
+{
+	background-fill-color: #202020;
+	outline-color: #202020;
+}
+
+#quicklaunch EsdashboardButton:hover
+{
+	background-fill-color: #5E2750;
+}
+
+EsdashboardQuicklaunch #applications-button
+{
+	background-fill-color: #202020;
+}
+
+EsdashboardQuicklaunch #trash-button:drop-target
+{
+	background-fill-color: #5E2750;
+}
+
+.drag-actor-EsdashboardLiveWindow:drag-handle
+{
+	background-fill-color: #5E2750a0;
+	outline-color: #5E2750ff;
+}
+
+EsdashboardWorkspaceSelector
+{
+	background-fill-color: #202020;
+	outline-color: #202020;
+}
+
+EsdashboardLiveWorkspace
+{
+	outline-color: #1a1a1aff;
+}
+
+EsdashboardLiveWorkspace:active
+{
+	outline-color: #5E2750;
+}
+
+EsdashboardScrollbar
+{
+	slider-color: #66666660;
+}
+
+EsdashboardScrollbar:hover
+{
+	slider-color: #5E2750a0;
+}
+
+EsdashboardScrollbar:pressed
+{
+	slider-color: #5E2750ff;
+}
+
+EsdashboardSearchView EsdashboardSearchResultContainer EsdashboardButton.result-item:hover,
+EsdashboardApplicationsView EsdashboardButton:hover
+{
+	background-fill-color: #202020a0;
+}
+
+EsdashboardSearchView EsdashboardSearchResultContainer EsdashboardButton:selected,
+EsdashboardApplicationsView EsdashboardButton:selected
+{
+	background-fill-color: #202020;
+	outline-color: #202020;
+}
+
+#view-selector EsdashboardToggleButton:toggled
+{
+	background-fill-color: #5E2750;
+}
+
+#searchbox.focus
+{
+	outline-color: #202020;
+	background-fill-color: #202020;
+}
+
+EsdashboardLiveWindow
+{
+	background-type: outline;
+	outline-width: 2.0;
+	outline-color: #404040;
+}
+
+EsdashboardWindowsView EsdashboardLiveWindow:selected,
+EsdashboardWindowsView EsdashboardLiveWindow:hover
+{
+	outline-color: #5E2750ff;
+}
+
+EsdashboardLiveWindow:selected EsdashboardButton.title
+{
+	background-fill-color: #5E2750f0;
+	outline-color: #5E2750ff;
+}
+
+EsdashboardLiveWindow:hover EsdashboardButton.title
+{
+	background-fill-color: #5E2750f0;
+	outline-color: #5E2750ff;
+}
+
+/* effects */
+
+#quicklaunch EsdashboardButton
+{
+	effects: ;
+}

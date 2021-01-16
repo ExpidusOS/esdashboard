@@ -22,45 +22,45 @@
  * 
  */
 
-#ifndef __XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER__
-#define __XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER__
+#ifndef __ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER__
+#define __ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER__
 
-#include <libxfdashboard/libxfdashboard.h>
+#include <libesdashboard/libesdashboard.h>
 
 G_BEGIN_DECLS
 
-#define XFDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER			(xfdashboard_gnome_shell_search_provider_get_type())
-#define XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(obj)			(G_TYPE_CHECK_INSTANCE_CAST((obj), XFDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER, XfdashboardGnomeShellSearchProvider))
-#define XFDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), XFDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER))
-#define XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST((klass), XFDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER, XfdashboardGnomeShellSearchProviderClass))
-#define XFDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), XFDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER))
-#define XFDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), XFDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER, XfdashboardGnomeShellSearchProviderClass))
+#define ESDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER			(esdashboard_gnome_shell_search_provider_get_type())
+#define ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER(obj)			(G_TYPE_CHECK_INSTANCE_CAST((obj), ESDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER, EsdashboardGnomeShellSearchProvider))
+#define ESDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), ESDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER))
+#define ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST((klass), ESDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER, EsdashboardGnomeShellSearchProviderClass))
+#define ESDASHBOARD_IS_GNOME_SHELL_SEARCH_PROVIDER_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), ESDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER))
+#define ESDASHBOARD_GNOME_SHELL_SEARCH_PROVIDER_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), ESDASHBOARD_TYPE_GNOME_SHELL_SEARCH_PROVIDER, EsdashboardGnomeShellSearchProviderClass))
 
-typedef struct _XfdashboardGnomeShellSearchProvider				XfdashboardGnomeShellSearchProvider; 
-typedef struct _XfdashboardGnomeShellSearchProviderPrivate		XfdashboardGnomeShellSearchProviderPrivate;
-typedef struct _XfdashboardGnomeShellSearchProviderClass		XfdashboardGnomeShellSearchProviderClass;
+typedef struct _EsdashboardGnomeShellSearchProvider				EsdashboardGnomeShellSearchProvider; 
+typedef struct _EsdashboardGnomeShellSearchProviderPrivate		EsdashboardGnomeShellSearchProviderPrivate;
+typedef struct _EsdashboardGnomeShellSearchProviderClass		EsdashboardGnomeShellSearchProviderClass;
 
-struct _XfdashboardGnomeShellSearchProvider
+struct _EsdashboardGnomeShellSearchProvider
 {
 	/* Parent instance */
-	XfdashboardSearchProvider					parent_instance;
+	EsdashboardSearchProvider					parent_instance;
 
 	/* Private structure */
-	XfdashboardGnomeShellSearchProviderPrivate	*priv;
+	EsdashboardGnomeShellSearchProviderPrivate	*priv;
 };
 
-struct _XfdashboardGnomeShellSearchProviderClass
+struct _EsdashboardGnomeShellSearchProviderClass
 {
 	/*< private >*/
 	/* Parent class */
-	XfdashboardSearchProviderClass				parent_class;
+	EsdashboardSearchProviderClass				parent_class;
 };
 
 /* Public API */
-GType xfdashboard_gnome_shell_search_provider_get_type(void) G_GNUC_CONST;
-void xfdashboard_gnome_shell_search_provider_type_register(GTypeModule *inModule);
+GType esdashboard_gnome_shell_search_provider_get_type(void) G_GNUC_CONST;
+void esdashboard_gnome_shell_search_provider_type_register(GTypeModule *inModule);
 
-XFDASHBOARD_DECLARE_PLUGIN_TYPE(xfdashboard_gnome_shell_search_provider);
+ESDASHBOARD_DECLARE_PLUGIN_TYPE(esdashboard_gnome_shell_search_provider);
 
 G_END_DECLS
 

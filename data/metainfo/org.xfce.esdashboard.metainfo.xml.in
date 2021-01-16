@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+	<id>com.expidus.esdashboard.desktop</id>
+	<metadata_license>CC-BY-3.0</metadata_license>
+	<project_license>GPL-2.0+</project_license>
+	<name>esdashboard</name>
+	<_summary>Maybe a Gnome shell like dashboard for Expidus</_summary>
+
+	<description>
+		<_p>Esdashboard provides a GNOME shell dashboard like interface
+		for use with Expidus desktop.
+		</_p>
+		<_p>It can be configured to run to any keyboard shortcut and
+		when executed provides an overview of applications currently
+		open enabling the user to switch between different applications.
+		The search feature works like Expidus's app finder which makes
+		it convenient to search for and start applications.
+		</_p>
+	</description>
+
+	<screenshots>
+		<screenshot type="default">
+			<image>https://docs.expidus.org/_media/apps/esdashboard/starting-up.png</image>
+		</screenshot>
+		<screenshot>
+			<_caption>Browsing applications</_caption>
+			<image>https://docs.expidus.org/_media/apps/esdashboard/applications-view.png</image>
+		</screenshot>
+		<screenshot>
+			<_caption>Searching applications</_caption>
+			<image>https://docs.expidus.org/_media/apps/esdashboard/search-view.png</image>
+		</screenshot>
+	</screenshots>
+
+	<url type="homepage">http://docs.expidus.org/apps/esdashboard/start/</url>
+	<url type="bugtracker">https://gitlab.expidus.org/apps/esdashboard/-/issues</url>
+	<url type="bugtracker">https://github.com/gmc-holle/esdashboard/issues</url>
+	<url type="help">https://docs.expidus.org/apps/esdashboard/manual</url>
+
+	<project_group>EXPIDUS</project_group>
+
+	<updatecontact>nomad@froevel.de</updatecontact>
+
+	<provides>
+		<binary>esdashboard</binary>
+	</provides>
+
+	<launchable type="desktop-id">com.expidus.esdashboard.desktop</launchable>
+
+	<kudos>
+		<kudo>HiDpiIcon</kudo>
+		<kudo>ModernToolkit</kudo>
+	</kudos>
+
+	<keywords>
+		<keyword>window management</keyword>
+		<keyword>application management</keyword>
+		<keyword>organize</keyword>
+		<keyword>search tool</keyword>
+		<keyword>search</keyword>
+	</keywords>
+
+	<releases>
+		<release version="0.8.0" timestamp="1608711235">
+			<description>
+				<_p>This stable version introduces lots of new features like
+				animations, pop-up menus, multiple backend and support for
+				jumplists etc. It also includes lots of new and updated
+				translations.
+				</_p>
+			</description>
+		</release>
+		<release version="0.6.1" timestamp="1482422594">
+			<description>
+				<_p>This stable version fixes a bug setting the correct default
+				applications at first use.
+				</_p>
+			</description>
+		</release>
+		<release version="0.6.0" timestamp="1463772864">
+			<description>
+				<_p>This stable version introduces lots of new features like
+				plugins and application tracker. It also contains a huge
+				collection of other larger and smaller improvements.
+				</_p>
+			</description>
+		</release>
+	</releases>
+</component>

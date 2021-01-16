@@ -1,0 +1,1000 @@
+/*
+ * stylable: An interface which can be inherited by actor and objects
+ *           to get styled by a theme
+ * 
+ * Copyright 2012-2020 Stephan Haller <nomad@froevel.de>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ * 
+ * 
+ */
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#include <libesdashboard/stylable.h>
+
+#include <glib/gi18n-lib.h>
+
+#include <libesdashboard/application.h>
+#include <libesdashboard/compat.h>
+
+
+/* Define this interface in GObject system */
+G_DEFINE_INTERFACE(EsdashboardStylable,
+					esdashboard_stylable,
+					G_TYPE_OBJECT)
+
+/* Signals */
+enum
+{
+	/* Signals */
+	SIGNAL_STYLE_REVALIDATED,
+
+	SIGNAL_CLASS_ADDED,
+	SIGNAL_CLASS_REMOVED,
+
+	SIGNAL_PSEUDO_CLASS_ADDED,
+	SIGNAL_PSEUDO_CLASS_REMOVED,
+
+	SIGNAL_LAST
+};
+
+static guint EsdashboardStylableSignals[SIGNAL_LAST]={ 0, };
+
+
+/* IMPLEMENTATION: Private variables and methods */
+#define ESDASHBOARD_STYLABLE_WARN_NOT_IMPLEMENTED(self, vfunc) \
+	g_warning("Object of type %s does not implement required virtual function EsdashboardStylable::%s",\
+				G_OBJECT_TYPE_NAME(self), \
+				vfunc);
+
+/* Create list of added and removed class by difference of current classes string
+ * and new classes string.
+ */
+static void _esdashboard_stylable_split_into_added_removed_lists(const gchar *inCurrentClasses,
+																	const gchar *inNewClasses,
+																	gchar *inDelimiter,
+																	GSList **outAddedClasses,
+																	GSList **outRemovedClasses)
+{
+	gchar			**currentClasses;
+	gchar			**newClasses;
+	gchar			**iter;
+	gchar			**iterDest;
+
+	g_return_if_fail(inDelimiter!=NULL && *inDelimiter);
+	g_return_if_fail(outAddedClasses!=NULL && *outAddedClasses==NULL);
+	g_return_if_fail(outRemovedClasses!=NULL && *outRemovedClasses==NULL);
+
+	/* Split current classes string into tokens */
+	currentClasses=NULL;
+	if(inCurrentClasses) currentClasses=g_strsplit(inCurrentClasses, inDelimiter, -1);
+
+	/* Split new classes string into tokens */
+	newClasses=NULL;
+	if(inNewClasses) newClasses=g_strsplit(inNewClasses, inDelimiter, -1);
+
+	/* Create list of added classes */
+	for(iter=newClasses; iter && *iter; iter++)
+	{
+		/* Skip empty strings */
+		if(!**iter) continue;
+
+		/* Iterate through current classes and stop further iteration if a match
+		 * was found. If no match is found, add added class to list.
+		 */
+		for(iterDest=currentClasses; iterDest && *iterDest; iterDest++)
+		{
+			/* Skip empty strings */
+			if(!**iterDest) continue;
+
+			/* If new class matches current class, stop iteration */
+			if(g_strcmp0(*iterDest, *iter)==0) break;
+		}
+
+		/* If pointer of iterator for current classes is NULL, then no match
+		 * was found and we have to add the iterated new class to list of added
+		 * classes.
+		 */
+		if(!iterDest || !*iterDest)
+		{
+			*outAddedClasses=g_slist_prepend(*outAddedClasses, g_strdup(*iter));
+		}
+	}
+
+	/* Create list of removed classes */
+	for(iter=currentClasses; iter && *iter; iter++)
+	{
+		/* Skip empty strings */
+		if(!**iter) continue;
+
+		/* Iterate through new classes and stop further iteration if a match
+		 * was found. If no match is found, add removed class to list.
+		 */
+		for(iterDest=newClasses; iterDest && *iterDest; iterDest++)
+		{
+			/* Skip empty strings */
+			if(!**iterDest) continue;
+
+			/* If current class matches new class, stop iteration */
+			if(g_strcmp0(*iterDest, *iter)==0) break;
+		}
+
+		/* If pointer of iterator for new classes is NULL, then no match
+		 * was found and we have to add the iterated current class to list of
+		 * removed classes.
+		 */
+		if(!iterDest || !*iterDest)
+		{
+			*outRemovedClasses=g_slist_prepend(*outRemovedClasses, g_strdup(*iter));
+		}
+	}
+
+	/* Release allocated resources */
+	if(currentClasses) g_strfreev(currentClasses);
+	if(newClasses) g_strfreev(newClasses);
+}
+
+/* Check if haystack contains needle.
+ * The haystack is a string representing a list which entries is seperated
+ * by a seperator character. This function looks up the haystack if it
+ * contains an entry matching the needle and returns TRUE in this case.
+ * Otherwise FALSE is returned. A needle length of -1 signals that needle
+ * is a NULL-terminated string and length should be determine automatically.
+ */
+static gboolean _esdashboard_stylable_list_contains(const gchar *inNeedle,
+													gint inNeedleLength,
+													const gchar *inHaystack,
+													gchar inSeperator)
+{
+	const gchar					*start;
+
+	g_return_val_if_fail(inNeedle && *inNeedle!=0, FALSE);
+	g_return_val_if_fail(inNeedleLength>0 || inNeedleLength==-1, FALSE);
+	g_return_val_if_fail(inHaystack && *inHaystack!=0, FALSE);
+	g_return_val_if_fail(inSeperator, FALSE);
+
+	/* If given length of needle is negative it is a NULL-terminated string */
+	if(inNeedleLength<0) inNeedleLength=strlen(inNeedle);
+
+	/* Lookup needle in haystack */
+	for(start=inHaystack; start; start=strchr(start, inSeperator))
+	{
+		gint					length;
+		gchar					*nextEntry;
+
+		/* Move to character after separator */
+		if(start[0]==inSeperator) start++;
+
+		/* Find end of this haystack entry */
+		nextEntry=strchr(start, inSeperator);
+		if(!nextEntry) length=strlen(start);
+			else length=nextEntry-start;
+
+		/* If enrty in haystack is not of same length as needle,
+		 * then it is not a match
+		 */
+		if(length!=inNeedleLength) continue;
+
+		if(!strncmp(inNeedle, start, inNeedleLength)) return(TRUE);
+	}
+
+	/* Needle was not found */
+	return(FALSE);
+}
+
+/* Default implementation of virtual function "get_name" */
+static const gchar* _esdashboard_stylable_real_get_name(EsdashboardStylable *self)
+{
+	const gchar			*name;
+
+	g_return_val_if_fail(ESDASHBOARD_IS_STYLABLE(self), NULL);
+
+	name=NULL;
+
+	/* If object implementing this interface is derived from ClutterActor
+	 * get actor's name.
+	 */
+	if(CLUTTER_IS_ACTOR(self)) name=clutter_actor_get_name(CLUTTER_ACTOR(self));
+
+	/* Return determined name for stylable object */
+	return(name);
+}
+
+/* Default implementation of virtual function "get_parent" */
+static EsdashboardStylable* _esdashboard_stylable_real_get_parent(EsdashboardStylable *self)
+{
+	EsdashboardStylable		*parent;
+
+	g_return_val_if_fail(ESDASHBOARD_IS_STYLABLE(self), NULL);
+
+	parent=NULL;
+
+	/* If object implementing this interface is derived from ClutterActor
+	 * get actor's parent actor.
+	 */
+	if(CLUTTER_IS_ACTOR(self))
+	{
+		ClutterActor		*parentActor;
+
+		/* Get parent and if parent stylable set parent as result */
+		parentActor=clutter_actor_get_parent(CLUTTER_ACTOR(self));
+		if(parentActor &&
+			ESDASHBOARD_IS_STYLABLE(parentActor))
+		{
+			parent=ESDASHBOARD_STYLABLE(parentActor);
+		}
+	}
+
+	/* Return stylable parent */
+	return(parent);
+}
+
+/* Default implementation of virtual function "invalidate" */
+static void _esdashboard_stylable_real_invalidate(EsdashboardStylable *self)
+{
+	EsdashboardTheme			*theme;
+	EsdashboardThemeCSS			*themeCSS;
+	GHashTable					*stylableProperties;
+	GHashTable					*themeStyleSet;
+	GHashTableIter				hashIter;
+	gchar						*propertyName;
+	GParamSpec					*propertyValueParamSpec;
+	EsdashboardThemeCSSValue	*styleValue;
+
+	g_return_if_fail(ESDASHBOARD_IS_STYLABLE(self));
+
+	/* Get hashtable with all stylable properties and their parameter
+	 * specification for default values.
+	 */
+	stylableProperties=esdashboard_stylable_get_stylable_properties(self);
+	if(!stylableProperties) return;
+
+	/* Get theme CSS */
+	theme=esdashboard_application_get_theme(NULL);
+	themeCSS=esdashboard_theme_get_css(theme);
+
+	/* Get styled properties from theme CSS */
+	themeStyleSet=esdashboard_theme_css_get_properties(themeCSS, self);
+
+	/* The 'property-changed' notification will be freezed and thawed
+	 * (fired at once) after all stylable properties of this instance are set.
+	 */
+	g_object_freeze_notify(G_OBJECT(self));
+
+	/* Iterate through stylable properties and check if we got a style of
+	 * that name from theme CSS. If we find such a style set the corresponding
+	 * property in object otherwise set default value to override any
+	 * previous value set by theme CSS to reset it.
+	 */
+	g_hash_table_iter_init(&hashIter, stylableProperties);
+	while(g_hash_table_iter_next(&hashIter, (gpointer*)&propertyName, (gpointer*)&propertyValueParamSpec))
+	{
+		/* Check if we got a style with this name from theme CSS and
+		 * set style's value if found ...
+		 */
+		if(g_hash_table_lookup_extended(themeStyleSet, propertyName, NULL, (gpointer*)&styleValue))
+		{
+			GValue				cssValue=G_VALUE_INIT;
+			GValue				propertyValue=G_VALUE_INIT;
+
+			/* Convert style value to type of object property and set value
+			 * if conversion was successful. Otherwise do nothing.
+			 */
+			g_value_init(&cssValue, G_TYPE_STRING);
+			g_value_set_string(&cssValue, styleValue->string);
+
+			g_value_init(&propertyValue, G_PARAM_SPEC_VALUE_TYPE(propertyValueParamSpec));
+
+			if(g_param_value_convert(propertyValueParamSpec, &cssValue, &propertyValue, FALSE))
+			{
+				g_object_set_property(G_OBJECT(self), propertyName, &propertyValue);
+			}
+				else
+				{
+					g_warning("Could not transform CSS string value for property '%s' to type %s of class %s",
+								propertyName,
+								g_type_name(G_PARAM_SPEC_VALUE_TYPE(propertyValueParamSpec)),
+								G_OBJECT_TYPE_NAME(self));
+				}
+
+			/* Release allocated resources */
+			g_value_unset(&propertyValue);
+			g_value_unset(&cssValue);
+		}
+			/* ... otherwise set property's default value we got from
+			 * stylable interface of object.
+			 */
+			else
+			{
+				GValue			propertyValue=G_VALUE_INIT;
+
+				/* Initialize property value to its type and default value */
+				g_value_init(&propertyValue, G_PARAM_SPEC_VALUE_TYPE(propertyValueParamSpec));
+				g_param_value_set_default(propertyValueParamSpec, &propertyValue);
+
+				/* Set value at object property */
+				g_object_set_property(G_OBJECT(self), propertyName, &propertyValue);
+
+				/* Release allocated resources */
+				g_value_unset(&propertyValue);
+			}
+	}
+
+	/* All stylable properties are set now. So thaw 'property-changed'
+	 * notification now and fire all notifications at once.
+	 */
+	g_object_thaw_notify(G_OBJECT(self));
+
+	/* Release allocated resources */
+	g_hash_table_destroy(themeStyleSet);
+	g_hash_table_destroy(stylableProperties);
+
+	/* Emit 'style-revalidated' signal to notify other objects about it's done */
+	g_signal_emit(self, EsdashboardStylableSignals[SIGNAL_STYLE_REVALIDATED], 0);
+}
+
+
+/* IMPLEMENTATION: GObject */
+
+/* Interface initialization
+ * Set up default functions
+ */
+void esdashboard_stylable_default_init(EsdashboardStylableInterface *iface)
+{
+	static gboolean		initialized=FALSE;
+	GParamSpec			*property;
+
+	/* All the following virtual functions must be overridden */
+	iface->get_stylable_properties=NULL;
+	iface->get_classes=NULL;
+	iface->set_classes=NULL;
+	iface->get_pseudo_classes=NULL;
+	iface->set_pseudo_classes=NULL;
+
+	/* The following virtual functions should be overriden if default
+	 * implementation does not fit.
+	 */
+	iface->get_name=_esdashboard_stylable_real_get_name;
+	iface->get_parent=_esdashboard_stylable_real_get_parent;
+	iface->invalidate=_esdashboard_stylable_real_invalidate;
+
+	/* Define properties, signals and actions */
+	if(!initialized)
+	{
+		/* Define properties */
+		property=g_param_spec_string("style-classes",
+										"Style classes",
+										"String representing list of classes separated by '.'",
+										NULL,
+										G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		g_object_interface_install_property(iface, property);
+
+		property=g_param_spec_string("style-pseudo-classes",
+										"Style pseudo-classes",
+										"String representing list of pseudo-classes, e.g. current state, separated by ':'",
+										NULL,
+										G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+		g_object_interface_install_property(iface, property);
+
+		/* Define signals */
+		/**
+		 * EsdashboardStylable::style-revalidated:
+		 * @self: A #EsdashboardStylable
+		 *
+		 * The ::style-revalidated signal is emitted when the style information
+		 * for @self were invalidated and the new style information were calculated
+		 * and applied.
+		 *
+		 * Connecting to this signal is mostly useful for stylable non-actor object,
+		 * i.e. objects which are no sub-class of #EsdashboardActor (neither directly
+		 * not indirectly) but inherit the #EsdashboardStylable interface, to invalidate
+		 * their style information and to get them recalculated and applied.
+		 */
+		EsdashboardStylableSignals[SIGNAL_STYLE_REVALIDATED]=
+			g_signal_new("style-revalidated",
+							G_TYPE_FROM_INTERFACE(iface),
+							G_SIGNAL_RUN_LAST,
+							0,
+							NULL,
+							NULL,
+							g_cclosure_marshal_VOID__VOID,
+							G_TYPE_NONE,
+							0);
+
+		/**
+		 * EsdashboardStylable::class-added:
+		 * @self: A #EsdashboardStylable
+		 * @inClass: The class added to @self
+		 *
+		 * The ::class-added signal is emitted when the class @inClass, e.g. ".foo",
+		 * was added to @self.
+		 *
+		 * This signal is only emitted when the class @inClass added to @self was
+		 * not set before. If the class @inClass was already set, this signal will
+		 * not be emitted again.
+		 */
+		EsdashboardStylableSignals[SIGNAL_CLASS_ADDED]=
+			g_signal_new("class-added",
+							G_TYPE_FROM_INTERFACE(iface),
+							G_SIGNAL_RUN_LAST,
+							G_STRUCT_OFFSET(EsdashboardStylableInterface, class_added),
+							NULL,
+							NULL,
+							g_cclosure_marshal_VOID__STRING,
+							G_TYPE_NONE,
+							1,
+							G_TYPE_STRING);
+
+		/**
+		 * EsdashboardStylable::class-remove:
+		 * @self: A #EsdashboardStylable
+		 * @inClass: The class remove from @self
+		 *
+		 * The ::class-removed signal is emitted when the class @inClass, e.g. ".foo",
+		 * was removed from @self.
+		 *
+		 * This signal is only emitted when the class @inClass was set at @self.
+		 */
+		EsdashboardStylableSignals[SIGNAL_CLASS_REMOVED]=
+			g_signal_new("class-removed",
+							G_TYPE_FROM_INTERFACE(iface),
+							G_SIGNAL_RUN_LAST,
+							G_STRUCT_OFFSET(EsdashboardStylableInterface, class_removed),
+							NULL,
+							NULL,
+							g_cclosure_marshal_VOID__STRING,
+							G_TYPE_NONE,
+							1,
+							G_TYPE_STRING);
+
+		/**
+		 * EsdashboardStylable::pseudo-class-added:
+		 * @self: A #EsdashboardStylable
+		 * @inClass: The pseudo-class added to @self
+		 *
+		 * The ::pseudo-class-added signal is emitted when the pseudo-class @inClass,
+		 * e.g. ".foo", was added to @self.
+		 *
+		 * This signal is only emitted when the psuedo-class @inClass added to @self
+		 * was not set before. If the pseudo-class @inClass was already set, this signal
+		 * will not be emitted again.
+		 */
+		EsdashboardStylableSignals[SIGNAL_PSEUDO_CLASS_ADDED]=
+			g_signal_new("pseudo-class-added",
+							G_TYPE_FROM_INTERFACE(iface),
+							G_SIGNAL_RUN_LAST,
+							G_STRUCT_OFFSET(EsdashboardStylableInterface, pseudo_class_added),
+							NULL,
+							NULL,
+							g_cclosure_marshal_VOID__STRING,
+							G_TYPE_NONE,
+							1,
+							G_TYPE_STRING);
+
+		/**
+		 * EsdashboardStylable::pseudo-class-remove:
+		 * @self: A #EsdashboardStylable
+		 * @inClass: The pseudo-class remove from @self
+		 *
+		 * The ::pseudo-class-removed signal is emitted when the pseudo-class
+		 * @inClass, e.g. ".foo", was removed from @self.
+		 *
+		 * This signal is only emitted when the class @inClass was set at @self.
+		 */
+		EsdashboardStylableSignals[SIGNAL_PSEUDO_CLASS_REMOVED]=
+			g_signal_new("pseudo-class-removed",
+							G_TYPE_FROM_INTERFACE(iface),
+							G_SIGNAL_RUN_LAST,
+							G_STRUCT_OFFSET(EsdashboardStylableInterface, pseudo_class_removed),
+							NULL,
+							NULL,
+							g_cclosure_marshal_VOID__STRING,
+							G_TYPE_NONE,
+							1,
+							G_TYPE_STRING);
+
+		/* Set flag that base initialization was done for this interface */
+		initialized=TRUE;
+	}
+}
+
+
+/* IMPLEMENTATION: Public API */
+
+/* Call virtual function "get_stylable_properties" */
+GHashTable* esdashboard_stylable_get_stylable_properties(EsdashboardStylable *self)
+{
+	EsdashboardStylableInterface		*iface;
+	GHashTable							*stylableProperties;
+
+	g_return_val_if_fail(ESDASHBOARD_IS_STYLABLE(self), NULL);
+
+	iface=ESDASHBOARD_STYLABLE_GET_IFACE(self);
+
+	/* Call virtual function */
+	if(iface->get_stylable_properties)
+	{
+		/* Create hashtable to insert stylable properties at */
+		stylableProperties=g_hash_table_new_full(g_str_hash,
+													g_str_equal,
+													g_free,
+													(GDestroyNotify)g_param_spec_unref);
+
+		/* Get stylable properties */
+		iface->get_stylable_properties(self, stylableProperties);
+
+		/* If hashtable is empty, destroy it and return NULL */
+		if(g_hash_table_size(stylableProperties)==0)
+		{
+			g_hash_table_destroy(stylableProperties);
+			stylableProperties=NULL;
+		}
+
+		/* Return hashtable with stylable properties */
+		return(stylableProperties);
+	}
+
+	/* If we get here the virtual function was not overridden */
+	ESDASHBOARD_STYLABLE_WARN_NOT_IMPLEMENTED(self, "get_stylable_properties");
+	return(NULL);
+}
+
+/* Find and add parameter specification of a stylable property to hashtable */
+gboolean esdashboard_stylable_add_stylable_property(EsdashboardStylable *self,
+													GHashTable *ioStylableProperties,
+													const gchar *inProperty)
+{
+	GParamSpec							*spec;
+
+	g_return_val_if_fail(ESDASHBOARD_IS_STYLABLE(self), FALSE);
+
+	/* Find property in instance */
+	spec=g_object_class_find_property(G_OBJECT_GET_CLASS(self), inProperty);
+	if(!spec)
+	{
+		g_warning("Could not find property '%s' for class %s",
+					inProperty,
+					G_OBJECT_TYPE_NAME(self));
+		return(FALSE);
+	}
+
+	/* Add parameter specification of found property to hashtable */
+	g_hash_table_insert(ioStylableProperties, g_strdup(inProperty), g_param_spec_ref(spec));
+
+	return(TRUE);
+}
+
+/* Call virtual function "get_name" */
+const gchar* esdashboard_stylable_get_name(EsdashboardStylable *self)
+{
+	EsdashboardStylableInterface		*iface;
+
+	g_return_val_if_fail(ESDASHBOARD_IS_STYLABLE(self), NULL);
+
+	iface=ESDASHBOARD_STYLABLE_GET_IFACE(self);
+
+	/* Call virtual function */
+	if(iface->get_name)
+	{
+		return(iface->get_name(self));
+	}
+
+	/* If we get here the virtual function was not overridden */
+	ESDASHBOARD_STYLABLE_WARN_NOT_IMPLEMENTED(self, "get_name");
+	return(NULL);
+}
+
+/* Call virtual function "get_parent" */
+EsdashboardStylable* esdashboard_stylable_get_parent(EsdashboardStylable *self)
+{
+	EsdashboardStylableInterface		*iface;
+
+	g_return_val_if_fail(ESDASHBOARD_IS_STYLABLE(self), NULL);
+
+	iface=ESDASHBOARD_STYLABLE_GET_IFACE(self);
+
+	/* Call virtual function */
+	if(iface->get_parent)
+	{
+		return(ESDASHBOARD_STYLABLE(iface->get_parent(self)));
+	}
+
+	/* If we get here the virtual function was not overridden */
+	ESDASHBOARD_STYLABLE_WARN_NOT_IMPLEMENTED(self, "get_parent");
+	return(NULL);
+}
+
+/* Call virtual function "get_classes" */
+const gchar* esdashboard_stylable_get_classes(EsdashboardStylable *self)
+{
+	EsdashboardStylableInterface		*iface;
+
+	g_return_val_if_fail(ESDASHBOARD_IS_STYLABLE(self), NULL);
+
+	iface=ESDASHBOARD_STYLABLE_GET_IFACE(self);
+
+	/* Call virtual function */
+	if(iface->get_classes)
+	{
+		return(iface->get_classes(self));
+	}
+
+	/* If we get here the virtual function was not overridden */
+	ESDASHBOARD_STYLABLE_WARN_NOT_IMPLEMENTED(self, "get_classes");
+	return(NULL);
+}
+
+/* Call virtual function "set_classes" */
+void esdashboard_stylable_set_classes(EsdashboardStylable *self, const gchar *inClasses)
+{
+	EsdashboardStylableInterface		*iface;
+	const gchar							*currentClasses;
+	GSList								*addedClasses;
+	GSList								*removedClasses;
+	GSList								*iter;
+
+	g_return_if_fail(ESDASHBOARD_IS_STYLABLE(self));
+
+	iface=ESDASHBOARD_STYLABLE_GET_IFACE(self);
+
+	/* Split new classes to set into lists of added classes and removed ones. */
+	currentClasses=esdashboard_stylable_get_classes(self);
+	addedClasses=NULL;
+	removedClasses=NULL;
+	_esdashboard_stylable_split_into_added_removed_lists(currentClasses,
+															inClasses,
+															".",
+															&addedClasses,
+															&removedClasses);
+
+	/* Iterate through list of newly added classes and emit "class-added" signal
+	 * for each new class.
+	 */
+	if(addedClasses)
+	{
+		for(iter=addedClasses; iter; iter=g_slist_next(iter))
+		{
+			g_signal_emit(self, EsdashboardStylableSignals[SIGNAL_CLASS_ADDED], 0, iter->data);
+		}
+		g_slist_free_full(addedClasses, g_free);
+	}
+
+	/* Iterate through list of removed classes and emit "class-removed" signal
+	 * for each class removed.
+	 */
+	if(removedClasses)
+	{
+		for(iter=removedClasses; iter; iter=g_slist_next(iter))
+		{
+			g_signal_emit(self, EsdashboardStylableSignals[SIGNAL_CLASS_REMOVED], 0, iter->data);
+		}
+		g_slist_free_full(removedClasses, g_free);
+	}
+
+	/* Call virtual function */
+	if(iface->set_classes)
+	{
+		iface->set_classes(self, inClasses);
+		return;
+	}
+
+	/* If we get here the virtual function was not overridden */
+	ESDASHBOARD_STYLABLE_WARN_NOT_IMPLEMENTED(self, "set_classes");
+}
+
+/* Determine if a specific class is being set at object */
+gboolean esdashboard_stylable_has_class(EsdashboardStylable *self, const gchar *inClass)
+{
+	const gchar		*classes;
+	gboolean		result;
+
+	g_return_val_if_fail(ESDASHBOARD_IS_STYLABLE(self), FALSE);
+	g_return_val_if_fail(inClass && inClass[0], FALSE);
+
+	result=FALSE;
+
+	/* Get classes set at object and check if it has the expected one */
+	classes=esdashboard_stylable_get_classes(self);
+	if(classes &&
+		_esdashboard_stylable_list_contains(inClass, -1, classes, '.'))
+	{
+		result=TRUE;
+	}
+
+	/* Return result */
+	return(result);
+}
+
+/* Adds a class to existing classes of an object */
+void esdashboard_stylable_add_class(EsdashboardStylable *self, const gchar *inClass)
+{
+	const gchar		*classes;
+
+	g_return_if_fail(ESDASHBOARD_IS_STYLABLE(self));
+	g_return_if_fail(inClass && inClass[0]);
+
+	/* If class is already in list of classes do nothing otherwise set new value */
+	classes=esdashboard_stylable_get_classes(self);
+	if(!classes ||
+		!_esdashboard_stylable_list_contains(inClass, -1, classes, '.'))
+	{
+		gchar					*newClasses;
+
+		/* Create new temporary string by concatenating current classes
+		 * and new class with dot separator. Set this new string representing
+		 * list of classes.
+		 */
+		if(classes) newClasses=g_strconcat(classes, ".", inClass, NULL);
+			else newClasses=g_strdup(inClass);
+
+		esdashboard_stylable_set_classes(self, newClasses);
+
+		g_free(newClasses);
+	}
+}
+
+/* Removed a class to existing classes of an object */
+void esdashboard_stylable_remove_class(EsdashboardStylable *self, const gchar *inClass)
+{
+	const gchar		*classes;
+
+	g_return_if_fail(ESDASHBOARD_IS_STYLABLE(self));
+	g_return_if_fail(inClass && inClass[0]);
+
+	/* If class is not in list of classes do nothing otherwise set new value */
+	classes=esdashboard_stylable_get_classes(self);
+	if(classes &&
+		_esdashboard_stylable_list_contains(inClass, -1, classes, '.'))
+	{
+		gchar					**oldClasses, **entry;
+		gchar					*newClasses, *newClassesTemp;
+
+		/* Create new temporary string with all current classes separated by dot
+		 * not matching class to remove. Set this new string representing list
+		 * of classes.
+		 */
+		entry=oldClasses=g_strsplit(classes, ".", -1);
+		newClasses=NULL;
+		while(*entry)
+		{
+			if(!strcmp(*entry, inClass))
+			{
+				entry++;
+				continue;
+			}
+
+			if(newClasses)
+			{
+				newClassesTemp=g_strconcat(newClasses, ".", *entry, NULL);
+				g_free(newClasses);
+				newClasses=newClassesTemp;
+			}
+				else newClasses=g_strdup(*entry);
+
+			entry++;
+		}
+
+		esdashboard_stylable_set_classes(self, newClasses);
+
+		g_strfreev(oldClasses);
+		g_free(newClasses);
+	}
+}
+
+/* Call virtual function "get_pseudo_classes" */
+const gchar* esdashboard_stylable_get_pseudo_classes(EsdashboardStylable *self)
+{
+	EsdashboardStylableInterface		*iface;
+
+	g_return_val_if_fail(ESDASHBOARD_IS_STYLABLE(self), NULL);
+
+	iface=ESDASHBOARD_STYLABLE_GET_IFACE(self);
+
+	/* Call virtual function */
+	if(iface->get_pseudo_classes)
+	{
+		return(iface->get_pseudo_classes(self));
+	}
+
+	/* If we get here the virtual function was not overridden */
+	ESDASHBOARD_STYLABLE_WARN_NOT_IMPLEMENTED(self, "get_pseudo_classes");
+	return(NULL);
+}
+
+/* Call virtual function "set_pseudo_classes" */
+void esdashboard_stylable_set_pseudo_classes(EsdashboardStylable *self, const gchar *inClasses)
+{
+	EsdashboardStylableInterface		*iface;
+	const gchar							*currentClasses;
+	GSList								*addedClasses;
+	GSList								*removedClasses;
+	GSList								*iter;
+
+	g_return_if_fail(ESDASHBOARD_IS_STYLABLE(self));
+
+	iface=ESDASHBOARD_STYLABLE_GET_IFACE(self);
+
+	/* Split new classes to set into lists of added classes and removed ones. */
+	currentClasses=esdashboard_stylable_get_pseudo_classes(self);
+	addedClasses=NULL;
+	removedClasses=NULL;
+	_esdashboard_stylable_split_into_added_removed_lists(currentClasses,
+															inClasses,
+															":",
+															&addedClasses,
+															&removedClasses);
+
+	/* Iterate through list of newly added classes and emit "pseudo-class-added"
+	 * signal for each new pseudo-class.
+	 */
+	if(addedClasses)
+	{
+		for(iter=addedClasses; iter; iter=g_slist_next(iter))
+		{
+			g_signal_emit(self, EsdashboardStylableSignals[SIGNAL_PSEUDO_CLASS_ADDED], 0, iter->data);
+		}
+		g_slist_free_full(addedClasses, g_free);
+	}
+
+	/* Iterate through list of removed classes and emit "pseudo-class-removed"
+	 * signal for each pseudo-class removed.
+	 */
+	if(removedClasses)
+	{
+		for(iter=removedClasses; iter; iter=g_slist_next(iter))
+		{
+			g_signal_emit(self, EsdashboardStylableSignals[SIGNAL_PSEUDO_CLASS_REMOVED], 0, iter->data);
+		}
+		g_slist_free_full(removedClasses, g_free);
+	}
+
+	/* Call virtual function */
+	if(iface->set_pseudo_classes)
+	{
+		iface->set_pseudo_classes(self, inClasses);
+		return;
+	}
+
+	/* If we get here the virtual function was not overridden */
+	ESDASHBOARD_STYLABLE_WARN_NOT_IMPLEMENTED(self, "set_pseudo_classes");
+}
+
+/* Determine if a specific pseudo-class is being set at object */
+gboolean esdashboard_stylable_has_pseudo_class(EsdashboardStylable *self, const gchar *inClass)
+{
+	const gchar		*classes;
+	gboolean		result;
+
+	g_return_val_if_fail(ESDASHBOARD_IS_STYLABLE(self), FALSE);
+	g_return_val_if_fail(inClass && inClass[0], FALSE);
+
+	result=FALSE;
+
+	/* Get classes set at object and check if it has the expected one */
+	classes=esdashboard_stylable_get_pseudo_classes(self);
+	if(classes &&
+		_esdashboard_stylable_list_contains(inClass, -1, classes, ':'))
+	{
+		result=TRUE;
+	}
+
+	/* Return result */
+	return(result);
+}
+
+
+/* Adds a pseudo-class to existing pseudo-classes of an object */
+void esdashboard_stylable_add_pseudo_class(EsdashboardStylable *self, const gchar *inClass)
+{
+	const gchar		*classes;
+
+	g_return_if_fail(ESDASHBOARD_IS_STYLABLE(self));
+	g_return_if_fail(inClass && inClass[0]);
+
+	/* If pesudo-class is already in list of pseudo-classes do nothing
+	 * otherwise set new value.
+	 */
+	classes=esdashboard_stylable_get_pseudo_classes(self);
+	if(!classes ||
+		!_esdashboard_stylable_list_contains(inClass, -1, classes, ':'))
+	{
+		gchar					*newClasses;
+
+		/* Create new temporary string by concatenating current pseudo-classes
+		 * and new psuedo-class with colon separator. Set this new string
+		 * representing list of pseudo-classes.
+		 */
+		if(classes) newClasses=g_strconcat(classes, ":", inClass, NULL);
+			else newClasses=g_strdup(inClass);
+
+		esdashboard_stylable_set_pseudo_classes(self, newClasses);
+
+		g_free(newClasses);
+	}
+}
+
+/* Removed a pseudo-class to existing classes of an object */
+void esdashboard_stylable_remove_pseudo_class(EsdashboardStylable *self, const gchar *inClass)
+{
+	const gchar		*classes;
+
+	g_return_if_fail(ESDASHBOARD_IS_STYLABLE(self));
+	g_return_if_fail(inClass && inClass[0]);
+
+	/* If pseudo-class is not in list of pseudo-classes do nothing
+	 * otherwise set new value.
+	 */
+	classes=esdashboard_stylable_get_pseudo_classes(self);
+	if(classes &&
+		_esdashboard_stylable_list_contains(inClass, -1, classes, ':'))
+	{
+		gchar					**oldClasses, **entry;
+		gchar					*newClasses, *newClassesTemp;
+
+		/* Create new temporary string with all current pseudo-classes
+		 * separated by colon not matching pseudo-class to remove.
+		 * Set this new string representing list of pseudo-classes.
+		 */
+		entry=oldClasses=g_strsplit(classes, ":", -1);
+		newClasses=NULL;
+		while(*entry)
+		{
+			if(!strcmp(*entry, inClass))
+			{
+				entry++;
+				continue;
+			}
+
+			if(newClasses)
+			{
+				newClassesTemp=g_strconcat(newClasses, ":", *entry, NULL);
+				g_free(newClasses);
+				newClasses=newClassesTemp;
+			}
+				else newClasses=g_strdup(*entry);
+
+			entry++;
+		}
+
+		esdashboard_stylable_set_pseudo_classes(self, newClasses);
+
+		g_strfreev(oldClasses);
+		g_free(newClasses);
+	}
+}
+
+/* Call virtual function "invalidate" */
+void esdashboard_stylable_invalidate(EsdashboardStylable *self)
+{
+	EsdashboardStylableInterface		*iface;
+
+	g_return_if_fail(ESDASHBOARD_IS_STYLABLE(self));
+
+	iface=ESDASHBOARD_STYLABLE_GET_IFACE(self);
+
+	/* Call virtual function */
+	if(iface->invalidate)
+	{
+		iface->invalidate(self);
+		return;
+	}
+
+	/* If we get here the virtual function was not overridden */
+	ESDASHBOARD_STYLABLE_WARN_NOT_IMPLEMENTED(self, "invalidate");
+}

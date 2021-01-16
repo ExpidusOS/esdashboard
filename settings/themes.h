@@ -21,34 +21,34 @@
  * 
  */
 
-#ifndef __XFDASHBOARD_SETTINGS_THEMES__
-#define __XFDASHBOARD_SETTINGS_THEMES__
+#ifndef __ESDASHBOARD_SETTINGS_THEMES__
+#define __ESDASHBOARD_SETTINGS_THEMES__
 
 #include <gtk/gtkx.h>
 
 G_BEGIN_DECLS
 
-#define XFDASHBOARD_TYPE_SETTINGS_THEMES				(xfdashboard_settings_themes_get_type())
-#define XFDASHBOARD_SETTINGS_THEMES(obj)				(G_TYPE_CHECK_INSTANCE_CAST((obj), XFDASHBOARD_TYPE_SETTINGS_THEMES, XfdashboardSettingsThemes))
-#define XFDASHBOARD_IS_SETTINGS_THEMES(obj)				(G_TYPE_CHECK_INSTANCE_TYPE((obj), XFDASHBOARD_TYPE_SETTINGS_THEMES))
-#define XFDASHBOARD_SETTINGS_THEMES_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), XFDASHBOARD_TYPE_SETTINGS_THEMES, XfdashboardSettingsThemesClass))
-#define XFDASHBOARD_IS_SETTINGS_THEMES_CLASS(klass)		(G_TYPE_CHECK_CLASS_TYPE((klass), XFDASHBOARD_TYPE_SETTINGS_THEMES))
-#define XFDASHBOARD_SETTINGS_THEMES_GET_CLASS(obj)		(G_TYPE_INSTANCE_GET_CLASS((obj), XFDASHBOARD_TYPE_SETTINGS_THEMES, XfdashboardSettingsThemesClass))
+#define ESDASHBOARD_TYPE_SETTINGS_THEMES				(esdashboard_settings_themes_get_type())
+#define ESDASHBOARD_SETTINGS_THEMES(obj)				(G_TYPE_CHECK_INSTANCE_CAST((obj), ESDASHBOARD_TYPE_SETTINGS_THEMES, EsdashboardSettingsThemes))
+#define ESDASHBOARD_IS_SETTINGS_THEMES(obj)				(G_TYPE_CHECK_INSTANCE_TYPE((obj), ESDASHBOARD_TYPE_SETTINGS_THEMES))
+#define ESDASHBOARD_SETTINGS_THEMES_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), ESDASHBOARD_TYPE_SETTINGS_THEMES, EsdashboardSettingsThemesClass))
+#define ESDASHBOARD_IS_SETTINGS_THEMES_CLASS(klass)		(G_TYPE_CHECK_CLASS_TYPE((klass), ESDASHBOARD_TYPE_SETTINGS_THEMES))
+#define ESDASHBOARD_SETTINGS_THEMES_GET_CLASS(obj)		(G_TYPE_INSTANCE_GET_CLASS((obj), ESDASHBOARD_TYPE_SETTINGS_THEMES, EsdashboardSettingsThemesClass))
 
-typedef struct _XfdashboardSettingsThemes				XfdashboardSettingsThemes;
-typedef struct _XfdashboardSettingsThemesClass			XfdashboardSettingsThemesClass;
-typedef struct _XfdashboardSettingsThemesPrivate		XfdashboardSettingsThemesPrivate;
+typedef struct _EsdashboardSettingsThemes				EsdashboardSettingsThemes;
+typedef struct _EsdashboardSettingsThemesClass			EsdashboardSettingsThemesClass;
+typedef struct _EsdashboardSettingsThemesPrivate		EsdashboardSettingsThemesPrivate;
 
-struct _XfdashboardSettingsThemes
+struct _EsdashboardSettingsThemes
 {
 	/* Parent instance */
 	GObject							parent_instance;
 
 	/* Private structure */
-	XfdashboardSettingsThemesPrivate	*priv;
+	EsdashboardSettingsThemesPrivate	*priv;
 };
 
-struct _XfdashboardSettingsThemesClass
+struct _EsdashboardSettingsThemesClass
 {
 	/*< private >*/
 	/* Parent class */
@@ -59,10 +59,10 @@ struct _XfdashboardSettingsThemesClass
 };
 
 /* Public API */
-GType xfdashboard_settings_themes_get_type(void) G_GNUC_CONST;
+GType esdashboard_settings_themes_get_type(void) G_GNUC_CONST;
 
-XfdashboardSettingsThemes* xfdashboard_settings_themes_new(GtkBuilder *inBuilder);
+EsdashboardSettingsThemes* esdashboard_settings_themes_new(GtkBuilder *inBuilder);
 
 G_END_DECLS
 
-#endif	/* __XFDASHBOARD_SETTINGS_THEMES__ */
+#endif	/* __ESDASHBOARD_SETTINGS_THEMES__ */

@@ -27,14 +27,14 @@
 
 #include "clock-view-settings.h"
 
-#include <libxfdashboard/libxfdashboard.h>
+#include <libesdashboard/libesdashboard.h>
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 #include <math.h>
 
 
 /* Define this class in GObject system */
-struct _XfdashboardClockViewSettingsPrivate
+struct _EsdashboardClockViewSettingsPrivate
 {
 	/* Properties related */
 	ClutterColor			*hourColor;
@@ -43,21 +43,21 @@ struct _XfdashboardClockViewSettingsPrivate
 	ClutterColor			*backgroundColor;
 
 	/* Instance related */
-	XfconfChannel			*xfconfChannel;
-	guint					xfconfHourColorBindingID;
-	guint					xfconfMinuteColorBindingID;
-	guint					xfconfSecondColorBindingID;
-	guint					xfconfBackgroundColorBindingID;
+	EsconfChannel			*esconfChannel;
+	guint					esconfHourColorBindingID;
+	guint					esconfMinuteColorBindingID;
+	guint					esconfSecondColorBindingID;
+	guint					esconfBackgroundColorBindingID;
 };
 
-G_DEFINE_DYNAMIC_TYPE_EXTENDED(XfdashboardClockViewSettings,
-								xfdashboard_clock_view_settings,
+G_DEFINE_DYNAMIC_TYPE_EXTENDED(EsdashboardClockViewSettings,
+								esdashboard_clock_view_settings,
 								G_TYPE_OBJECT,
 								0,
-								G_ADD_PRIVATE_DYNAMIC(XfdashboardClockViewSettings))
+								G_ADD_PRIVATE_DYNAMIC(EsdashboardClockViewSettings))
 
 /* Define this class in this plugin */
-XFDASHBOARD_DEFINE_PLUGIN_TYPE(xfdashboard_clock_view_settings);
+ESDASHBOARD_DEFINE_PLUGIN_TYPE(esdashboard_clock_view_settings);
 
 /* Properties */
 enum
@@ -72,55 +72,55 @@ enum
 	PROP_LAST
 };
 
-static GParamSpec* XfdashboardClockViewSettingsProperties[PROP_LAST]={ 0, };
+static GParamSpec* EsdashboardClockViewSettingsProperties[PROP_LAST]={ 0, };
 
 
 /* IMPLEMENTATION: Private variables and methods */
 
-#define XFDASHBOARD_XFCONF_CHANNEL		"xfdashboard"
+#define ESDASHBOARD_ESCONF_CHANNEL		"esdashboard"
 
-#define COLOR_HOUR_XFCONF_PROP			"/plugins/"PLUGIN_ID"/hour-color"
-#define COLOR_MINUTE_XFCONF_PROP		"/plugins/"PLUGIN_ID"/minute-color"
-#define COLOR_SECOND_XFCONF_PROP		"/plugins/"PLUGIN_ID"/second-color"
-#define COLOR_BACKGROUND_XFCONF_PROP	"/plugins/"PLUGIN_ID"/background-color"
+#define COLOR_HOUR_ESCONF_PROP			"/plugins/"PLUGIN_ID"/hour-color"
+#define COLOR_MINUTE_ESCONF_PROP		"/plugins/"PLUGIN_ID"/minute-color"
+#define COLOR_SECOND_ESCONF_PROP		"/plugins/"PLUGIN_ID"/second-color"
+#define COLOR_BACKGROUND_ESCONF_PROP	"/plugins/"PLUGIN_ID"/background-color"
 
 
 /* IMPLEMENTATION: GObject */
 
 /* Dispose this object */
-static void _xfdashboard_clock_view_settings_dispose(GObject *inObject)
+static void _esdashboard_clock_view_settings_dispose(GObject *inObject)
 {
-	XfdashboardClockViewSettings			*self=XFDASHBOARD_CLOCK_VIEW_SETTINGS(inObject);
-	XfdashboardClockViewSettingsPrivate		*priv=self->priv;
+	EsdashboardClockViewSettings			*self=ESDASHBOARD_CLOCK_VIEW_SETTINGS(inObject);
+	EsdashboardClockViewSettingsPrivate		*priv=self->priv;
 
 	/* Release allocated resources */
-	if(priv->xfconfHourColorBindingID)
+	if(priv->esconfHourColorBindingID)
 	{
-		xfconf_g_property_unbind(priv->xfconfHourColorBindingID);
-		priv->xfconfHourColorBindingID=0;
+		esconf_g_property_unbind(priv->esconfHourColorBindingID);
+		priv->esconfHourColorBindingID=0;
 	}
 
-	if(priv->xfconfMinuteColorBindingID)
+	if(priv->esconfMinuteColorBindingID)
 	{
-		xfconf_g_property_unbind(priv->xfconfMinuteColorBindingID);
-		priv->xfconfMinuteColorBindingID=0;
+		esconf_g_property_unbind(priv->esconfMinuteColorBindingID);
+		priv->esconfMinuteColorBindingID=0;
 	}
 
-	if(priv->xfconfSecondColorBindingID)
+	if(priv->esconfSecondColorBindingID)
 	{
-		xfconf_g_property_unbind(priv->xfconfSecondColorBindingID);
-		priv->xfconfSecondColorBindingID=0;
+		esconf_g_property_unbind(priv->esconfSecondColorBindingID);
+		priv->esconfSecondColorBindingID=0;
 	}
 
-	if(priv->xfconfBackgroundColorBindingID)
+	if(priv->esconfBackgroundColorBindingID)
 	{
-		xfconf_g_property_unbind(priv->xfconfBackgroundColorBindingID);
-		priv->xfconfBackgroundColorBindingID=0;
+		esconf_g_property_unbind(priv->esconfBackgroundColorBindingID);
+		priv->esconfBackgroundColorBindingID=0;
 	}
 
-	if(priv->xfconfChannel)
+	if(priv->esconfChannel)
 	{
-		priv->xfconfChannel=NULL;
+		priv->esconfChannel=NULL;
 	}
 
 	if(priv->hourColor)
@@ -142,33 +142,33 @@ static void _xfdashboard_clock_view_settings_dispose(GObject *inObject)
 	}
 
 	/* Call parent's class dispose method */
-	G_OBJECT_CLASS(xfdashboard_clock_view_settings_parent_class)->dispose(inObject);
+	G_OBJECT_CLASS(esdashboard_clock_view_settings_parent_class)->dispose(inObject);
 }
 
 /* Set/get properties */
-static void _xfdashboard_clock_view_settings_set_property(GObject *inObject,
+static void _esdashboard_clock_view_settings_set_property(GObject *inObject,
 															guint inPropID,
 															const GValue *inValue,
 															GParamSpec *inSpec)
 {
-	XfdashboardClockViewSettings			*self=XFDASHBOARD_CLOCK_VIEW_SETTINGS(inObject);
+	EsdashboardClockViewSettings			*self=ESDASHBOARD_CLOCK_VIEW_SETTINGS(inObject);
 
 	switch(inPropID)
 	{
 		case PROP_HOUR_COLOR:
-			xfdashboard_clock_view_settings_set_hour_color(self, clutter_value_get_color(inValue));
+			esdashboard_clock_view_settings_set_hour_color(self, clutter_value_get_color(inValue));
 			break;
 
 		case PROP_MINUTE_COLOR:
-			xfdashboard_clock_view_settings_set_minute_color(self, clutter_value_get_color(inValue));
+			esdashboard_clock_view_settings_set_minute_color(self, clutter_value_get_color(inValue));
 			break;
 
 		case PROP_SECOND_COLOR:
-			xfdashboard_clock_view_settings_set_second_color(self, clutter_value_get_color(inValue));
+			esdashboard_clock_view_settings_set_second_color(self, clutter_value_get_color(inValue));
 			break;
 
 		case PROP_BACKGROUOND_COLOR:
-			xfdashboard_clock_view_settings_set_background_color(self, clutter_value_get_color(inValue));
+			esdashboard_clock_view_settings_set_background_color(self, clutter_value_get_color(inValue));
 			break;
 
 		default:
@@ -177,13 +177,13 @@ static void _xfdashboard_clock_view_settings_set_property(GObject *inObject,
 	}
 }
 
-static void _xfdashboard_clock_view_settings_get_property(GObject *inObject,
+static void _esdashboard_clock_view_settings_get_property(GObject *inObject,
 															guint inPropID,
 															GValue *outValue,
 															GParamSpec *inSpec)
 {
-	XfdashboardClockViewSettings			*self=XFDASHBOARD_CLOCK_VIEW_SETTINGS(inObject);
-	XfdashboardClockViewSettingsPrivate		*priv=self->priv;
+	EsdashboardClockViewSettings			*self=ESDASHBOARD_CLOCK_VIEW_SETTINGS(inObject);
+	EsdashboardClockViewSettingsPrivate		*priv=self->priv;
 
 	switch(inPropID)
 	{
@@ -213,93 +213,93 @@ static void _xfdashboard_clock_view_settings_get_property(GObject *inObject,
  * Override functions in parent classes and define properties
  * and signals
  */
-void xfdashboard_clock_view_settings_class_init(XfdashboardClockViewSettingsClass *klass)
+void esdashboard_clock_view_settings_class_init(EsdashboardClockViewSettingsClass *klass)
 {
 	GObjectClass			*gobjectClass=G_OBJECT_CLASS(klass);
 
 	/* Override functions */
-	gobjectClass->dispose=_xfdashboard_clock_view_settings_dispose;
-	gobjectClass->set_property=_xfdashboard_clock_view_settings_set_property;
-	gobjectClass->get_property=_xfdashboard_clock_view_settings_get_property;
+	gobjectClass->dispose=_esdashboard_clock_view_settings_dispose;
+	gobjectClass->set_property=_esdashboard_clock_view_settings_set_property;
+	gobjectClass->get_property=_esdashboard_clock_view_settings_get_property;
 
 	/* Define properties */
-	XfdashboardClockViewSettingsProperties[PROP_HOUR_COLOR]=
+	EsdashboardClockViewSettingsProperties[PROP_HOUR_COLOR]=
 		clutter_param_spec_color("hour-color",
 									"Hour color",
 									"Color to draw the hour hand with",
 									CLUTTER_COLOR_LightChameleon,
 									G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-	XfdashboardClockViewSettingsProperties[PROP_MINUTE_COLOR]=
+	EsdashboardClockViewSettingsProperties[PROP_MINUTE_COLOR]=
 		clutter_param_spec_color("minute-color",
 									"Minute color",
 									"Color to draw the minute hand with",
 									CLUTTER_COLOR_LightChameleon,
 									G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-	XfdashboardClockViewSettingsProperties[PROP_SECOND_COLOR]=
+	EsdashboardClockViewSettingsProperties[PROP_SECOND_COLOR]=
 		clutter_param_spec_color("second-color",
 									"Second color",
 									"Color to draw the second hand with",
 									CLUTTER_COLOR_White,
 									G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-	XfdashboardClockViewSettingsProperties[PROP_BACKGROUOND_COLOR]=
+	EsdashboardClockViewSettingsProperties[PROP_BACKGROUOND_COLOR]=
 		clutter_param_spec_color("background-color",
 									"Background color",
 									"Color to draw the circle with that holds the second hand",
 									CLUTTER_COLOR_Blue,
 									G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-	g_object_class_install_properties(gobjectClass, PROP_LAST, XfdashboardClockViewSettingsProperties);
+	g_object_class_install_properties(gobjectClass, PROP_LAST, EsdashboardClockViewSettingsProperties);
 }
 
 /* Class finalization */
-void xfdashboard_clock_view_settings_class_finalize(XfdashboardClockViewSettingsClass *klass)
+void esdashboard_clock_view_settings_class_finalize(EsdashboardClockViewSettingsClass *klass)
 {
 }
 
 /* Object initialization
  * Create private structure and set up default values
  */
-void xfdashboard_clock_view_settings_init(XfdashboardClockViewSettings *self)
+void esdashboard_clock_view_settings_init(EsdashboardClockViewSettings *self)
 {
-	XfdashboardClockViewSettingsPrivate		*priv;
+	EsdashboardClockViewSettingsPrivate		*priv;
 
-	self->priv=priv=xfdashboard_clock_view_settings_get_instance_private(self);
+	self->priv=priv=esdashboard_clock_view_settings_get_instance_private(self);
 
 	/* Set up default values */
 	priv->hourColor=clutter_color_copy(CLUTTER_COLOR_LightChameleon);
 	priv->minuteColor=clutter_color_copy(CLUTTER_COLOR_LightChameleon);
 	priv->secondColor=clutter_color_copy(CLUTTER_COLOR_White);
 	priv->backgroundColor=clutter_color_copy(CLUTTER_COLOR_Blue);
-	priv->xfconfChannel=xfconf_channel_get(XFDASHBOARD_XFCONF_CHANNEL);
+	priv->esconfChannel=esconf_channel_get(ESDASHBOARD_ESCONF_CHANNEL);
 
-	/* Bind to xfconf to react on changes */
-	priv->xfconfHourColorBindingID=
-		xfconf_g_property_bind(priv->xfconfChannel,
-								COLOR_HOUR_XFCONF_PROP,
+	/* Bind to esconf to react on changes */
+	priv->esconfHourColorBindingID=
+		esconf_g_property_bind(priv->esconfChannel,
+								COLOR_HOUR_ESCONF_PROP,
 								G_TYPE_STRING,
 								self,
 								"hour-color");
 
-	priv->xfconfMinuteColorBindingID=
-		xfconf_g_property_bind(priv->xfconfChannel,
-								COLOR_MINUTE_XFCONF_PROP,
+	priv->esconfMinuteColorBindingID=
+		esconf_g_property_bind(priv->esconfChannel,
+								COLOR_MINUTE_ESCONF_PROP,
 								G_TYPE_STRING,
 								self,
 								"minute-color");
 
-	priv->xfconfSecondColorBindingID=
-		xfconf_g_property_bind(priv->xfconfChannel,
-								COLOR_SECOND_XFCONF_PROP,
+	priv->esconfSecondColorBindingID=
+		esconf_g_property_bind(priv->esconfChannel,
+								COLOR_SECOND_ESCONF_PROP,
 								G_TYPE_STRING,
 								self,
 								"second-color");
 
-	priv->xfconfBackgroundColorBindingID=
-		xfconf_g_property_bind(priv->xfconfChannel,
-								COLOR_BACKGROUND_XFCONF_PROP,
+	priv->esconfBackgroundColorBindingID=
+		esconf_g_property_bind(priv->esconfChannel,
+								COLOR_BACKGROUND_ESCONF_PROP,
 								G_TYPE_STRING,
 								self,
 								"background-color");
@@ -309,24 +309,24 @@ void xfdashboard_clock_view_settings_init(XfdashboardClockViewSettings *self)
 /* IMPLEMENTATION: Public API */
 
 /* Create new instance */
-XfdashboardClockViewSettings* xfdashboard_clock_view_settings_new(void)
+EsdashboardClockViewSettings* esdashboard_clock_view_settings_new(void)
 {
-	return(XFDASHBOARD_CLOCK_VIEW_SETTINGS(g_object_new(XFDASHBOARD_TYPE_CLOCK_VIEW_SETTINGS, NULL)));	
+	return(ESDASHBOARD_CLOCK_VIEW_SETTINGS(g_object_new(ESDASHBOARD_TYPE_CLOCK_VIEW_SETTINGS, NULL)));	
 }
 
 /* Get/set color to draw hour hand with */
-const ClutterColor* xfdashboard_clock_view_settings_get_hour_color(XfdashboardClockViewSettings *self)
+const ClutterColor* esdashboard_clock_view_settings_get_hour_color(EsdashboardClockViewSettings *self)
 {
-	g_return_val_if_fail(XFDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self), NULL);
+	g_return_val_if_fail(ESDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self), NULL);
 
 	return(self->priv->hourColor);
 }
 
-void xfdashboard_clock_view_settings_set_hour_color(XfdashboardClockViewSettings *self, const ClutterColor *inColor)
+void esdashboard_clock_view_settings_set_hour_color(EsdashboardClockViewSettings *self, const ClutterColor *inColor)
 {
-	XfdashboardClockViewSettingsPrivate		*priv;
+	EsdashboardClockViewSettingsPrivate		*priv;
 
-	g_return_if_fail(XFDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self));
+	g_return_if_fail(ESDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self));
 	g_return_if_fail(inColor);
 
 	priv=self->priv;
@@ -340,23 +340,23 @@ void xfdashboard_clock_view_settings_set_hour_color(XfdashboardClockViewSettings
 		priv->hourColor=clutter_color_copy(inColor);
 
 		/* Notify about property change */
-		g_object_notify_by_pspec(G_OBJECT(self), XfdashboardClockViewSettingsProperties[PROP_HOUR_COLOR]);
+		g_object_notify_by_pspec(G_OBJECT(self), EsdashboardClockViewSettingsProperties[PROP_HOUR_COLOR]);
 	}
 }
 
 /* Get/set color to draw minute hand with */
-const ClutterColor* xfdashboard_clock_view_settings_get_minute_color(XfdashboardClockViewSettings *self)
+const ClutterColor* esdashboard_clock_view_settings_get_minute_color(EsdashboardClockViewSettings *self)
 {
-	g_return_val_if_fail(XFDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self), NULL);
+	g_return_val_if_fail(ESDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self), NULL);
 
 	return(self->priv->minuteColor);
 }
 
-void xfdashboard_clock_view_settings_set_minute_color(XfdashboardClockViewSettings *self, const ClutterColor *inColor)
+void esdashboard_clock_view_settings_set_minute_color(EsdashboardClockViewSettings *self, const ClutterColor *inColor)
 {
-	XfdashboardClockViewSettingsPrivate		*priv;
+	EsdashboardClockViewSettingsPrivate		*priv;
 
-	g_return_if_fail(XFDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self));
+	g_return_if_fail(ESDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self));
 	g_return_if_fail(inColor);
 
 	priv=self->priv;
@@ -370,23 +370,23 @@ void xfdashboard_clock_view_settings_set_minute_color(XfdashboardClockViewSettin
 		priv->minuteColor=clutter_color_copy(inColor);
 
 		/* Notify about property change */
-		g_object_notify_by_pspec(G_OBJECT(self), XfdashboardClockViewSettingsProperties[PROP_MINUTE_COLOR]);
+		g_object_notify_by_pspec(G_OBJECT(self), EsdashboardClockViewSettingsProperties[PROP_MINUTE_COLOR]);
 	}
 }
 
 /* Get/set color to draw second hand with */
-const ClutterColor* xfdashboard_clock_view_settings_get_second_color(XfdashboardClockViewSettings *self)
+const ClutterColor* esdashboard_clock_view_settings_get_second_color(EsdashboardClockViewSettings *self)
 {
-	g_return_val_if_fail(XFDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self), NULL);
+	g_return_val_if_fail(ESDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self), NULL);
 
 	return(self->priv->secondColor);
 }
 
-void xfdashboard_clock_view_settings_set_second_color(XfdashboardClockViewSettings *self, const ClutterColor *inColor)
+void esdashboard_clock_view_settings_set_second_color(EsdashboardClockViewSettings *self, const ClutterColor *inColor)
 {
-	XfdashboardClockViewSettingsPrivate		*priv;
+	EsdashboardClockViewSettingsPrivate		*priv;
 
-	g_return_if_fail(XFDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self));
+	g_return_if_fail(ESDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self));
 	g_return_if_fail(inColor);
 
 	priv=self->priv;
@@ -400,23 +400,23 @@ void xfdashboard_clock_view_settings_set_second_color(XfdashboardClockViewSettin
 		priv->secondColor=clutter_color_copy(inColor);
 
 		/* Notify about property change */
-		g_object_notify_by_pspec(G_OBJECT(self), XfdashboardClockViewSettingsProperties[PROP_SECOND_COLOR]);
+		g_object_notify_by_pspec(G_OBJECT(self), EsdashboardClockViewSettingsProperties[PROP_SECOND_COLOR]);
 	}
 }
 
 /* Get/set color to draw background with that holds second hand */
-const ClutterColor* xfdashboard_clock_view_settings_get_background_color(XfdashboardClockViewSettings *self)
+const ClutterColor* esdashboard_clock_view_settings_get_background_color(EsdashboardClockViewSettings *self)
 {
-	g_return_val_if_fail(XFDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self), NULL);
+	g_return_val_if_fail(ESDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self), NULL);
 
 	return(self->priv->backgroundColor);
 }
 
-void xfdashboard_clock_view_settings_set_background_color(XfdashboardClockViewSettings *self, const ClutterColor *inColor)
+void esdashboard_clock_view_settings_set_background_color(EsdashboardClockViewSettings *self, const ClutterColor *inColor)
 {
-	XfdashboardClockViewSettingsPrivate		*priv;
+	EsdashboardClockViewSettingsPrivate		*priv;
 
-	g_return_if_fail(XFDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self));
+	g_return_if_fail(ESDASHBOARD_IS_CLOCK_VIEW_SETTINGS(self));
 	g_return_if_fail(inColor);
 
 	priv=self->priv;
@@ -430,6 +430,6 @@ void xfdashboard_clock_view_settings_set_background_color(XfdashboardClockViewSe
 		priv->backgroundColor=clutter_color_copy(inColor);
 
 		/* Notify about property change */
-		g_object_notify_by_pspec(G_OBJECT(self), XfdashboardClockViewSettingsProperties[PROP_BACKGROUOND_COLOR]);
+		g_object_notify_by_pspec(G_OBJECT(self), EsdashboardClockViewSettingsProperties[PROP_BACKGROUOND_COLOR]);
 	}
 }

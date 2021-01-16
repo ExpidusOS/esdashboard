@@ -21,34 +21,34 @@
  * 
  */
 
-#ifndef __XFDASHBOARD_SETTINGS_GENERAL__
-#define __XFDASHBOARD_SETTINGS_GENERAL__
+#ifndef __ESDASHBOARD_SETTINGS_GENERAL__
+#define __ESDASHBOARD_SETTINGS_GENERAL__
 
 #include <gtk/gtkx.h>
 
 G_BEGIN_DECLS
 
-#define XFDASHBOARD_TYPE_SETTINGS_GENERAL				(xfdashboard_settings_general_get_type())
-#define XFDASHBOARD_SETTINGS_GENERAL(obj)				(G_TYPE_CHECK_INSTANCE_CAST((obj), XFDASHBOARD_TYPE_SETTINGS_GENERAL, XfdashboardSettingsGeneral))
-#define XFDASHBOARD_IS_SETTINGS_GENERAL(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), XFDASHBOARD_TYPE_SETTINGS_GENERAL))
-#define XFDASHBOARD_SETTINGS_GENERAL_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), XFDASHBOARD_TYPE_SETTINGS_GENERAL, XfdashboardSettingsGeneralClass))
-#define XFDASHBOARD_IS_SETTINGS_GENERAL_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), XFDASHBOARD_TYPE_SETTINGS_GENERAL))
-#define XFDASHBOARD_SETTINGS_GENERAL_GET_CLASS(obj)		(G_TYPE_INSTANCE_GET_CLASS((obj), XFDASHBOARD_TYPE_SETTINGS_GENERAL, XfdashboardSettingsGeneralClass))
+#define ESDASHBOARD_TYPE_SETTINGS_GENERAL				(esdashboard_settings_general_get_type())
+#define ESDASHBOARD_SETTINGS_GENERAL(obj)				(G_TYPE_CHECK_INSTANCE_CAST((obj), ESDASHBOARD_TYPE_SETTINGS_GENERAL, EsdashboardSettingsGeneral))
+#define ESDASHBOARD_IS_SETTINGS_GENERAL(obj)			(G_TYPE_CHECK_INSTANCE_TYPE((obj), ESDASHBOARD_TYPE_SETTINGS_GENERAL))
+#define ESDASHBOARD_SETTINGS_GENERAL_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST((klass), ESDASHBOARD_TYPE_SETTINGS_GENERAL, EsdashboardSettingsGeneralClass))
+#define ESDASHBOARD_IS_SETTINGS_GENERAL_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE((klass), ESDASHBOARD_TYPE_SETTINGS_GENERAL))
+#define ESDASHBOARD_SETTINGS_GENERAL_GET_CLASS(obj)		(G_TYPE_INSTANCE_GET_CLASS((obj), ESDASHBOARD_TYPE_SETTINGS_GENERAL, EsdashboardSettingsGeneralClass))
 
-typedef struct _XfdashboardSettingsGeneral				XfdashboardSettingsGeneral;
-typedef struct _XfdashboardSettingsGeneralClass			XfdashboardSettingsGeneralClass;
-typedef struct _XfdashboardSettingsGeneralPrivate		XfdashboardSettingsGeneralPrivate;
+typedef struct _EsdashboardSettingsGeneral				EsdashboardSettingsGeneral;
+typedef struct _EsdashboardSettingsGeneralClass			EsdashboardSettingsGeneralClass;
+typedef struct _EsdashboardSettingsGeneralPrivate		EsdashboardSettingsGeneralPrivate;
 
-struct _XfdashboardSettingsGeneral
+struct _EsdashboardSettingsGeneral
 {
 	/* Parent instance */
 	GObject								parent_instance;
 
 	/* Private structure */
-	XfdashboardSettingsGeneralPrivate	*priv;
+	EsdashboardSettingsGeneralPrivate	*priv;
 };
 
-struct _XfdashboardSettingsGeneralClass
+struct _EsdashboardSettingsGeneralClass
 {
 	/*< private >*/
 	/* Parent class */
@@ -59,10 +59,10 @@ struct _XfdashboardSettingsGeneralClass
 };
 
 /* Public API */
-GType xfdashboard_settings_general_get_type(void) G_GNUC_CONST;
+GType esdashboard_settings_general_get_type(void) G_GNUC_CONST;
 
-XfdashboardSettingsGeneral* xfdashboard_settings_general_new(GtkBuilder *inBuilder);
+EsdashboardSettingsGeneral* esdashboard_settings_general_new(GtkBuilder *inBuilder);
 
 G_END_DECLS
 
-#endif	/* __XFDASHBOARD_SETTINGS_GENERAL__ */
+#endif	/* __ESDASHBOARD_SETTINGS_GENERAL__ */

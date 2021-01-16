@@ -28,18 +28,18 @@
 #include "general.h"
 
 #include <glib/gi18n-lib.h>
-#include <xfconf/xfconf.h>
+#include <esconf/esconf.h>
 #include <math.h>
 
 
 /* Define this class in GObject system */
-struct _XfdashboardSettingsGeneralPrivate
+struct _EsdashboardSettingsGeneralPrivate
 {
 	/* Properties related */
 	GtkBuilder		*builder;
 
 	/* Instance related */
-	XfconfChannel	*xfconfChannel;
+	EsconfChannel	*esconfChannel;
 
 	GtkWidget		*widgetResetSearchOnResume;
 	GtkWidget		*widgetSwitchToViewOnResume;
@@ -54,8 +54,8 @@ struct _XfdashboardSettingsGeneralPrivate
 	GtkWidget		*widgetEnableAnimations;
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE(XfdashboardSettingsGeneral,
-							xfdashboard_settings_general,
+G_DEFINE_TYPE_WITH_PRIVATE(EsdashboardSettingsGeneral,
+							esdashboard_settings_general,
 							G_TYPE_OBJECT)
 
 /* Properties */
@@ -68,54 +68,54 @@ enum
 	PROP_LAST
 };
 
-static GParamSpec* XfdashboardSettingsGeneralProperties[PROP_LAST]={ 0, };
+static GParamSpec* EsdashboardSettingsGeneralProperties[PROP_LAST]={ 0, };
 
 
 /* IMPLEMENTATION: Private variables and methods */
-#define XFDASHBOARD_XFCONF_CHANNEL							"xfdashboard"
+#define ESDASHBOARD_ESCONF_CHANNEL							"esdashboard"
 
-#define RESET_SEARCH_ON_RESUME_XFCONF_PROP					"/reset-search-on-resume"
+#define RESET_SEARCH_ON_RESUME_ESCONF_PROP					"/reset-search-on-resume"
 #define DEFAULT_RESET_SEARCH_ON_RESUME						TRUE
 
-#define SWITCH_TO_VIEW_ON_RESUME_XFCONF_PROP				"/switch-to-view-on-resume"
+#define SWITCH_TO_VIEW_ON_RESUME_ESCONF_PROP				"/switch-to-view-on-resume"
 #define DEFAULT_SWITCH_TO_VIEW_ON_RESUME					NULL
 
-#define MIN_NOTIFICATION_TIMEOUT_XFCONF_PROP				"/min-notification-timeout"
+#define MIN_NOTIFICATION_TIMEOUT_ESCONF_PROP				"/min-notification-timeout"
 #define DEFAULT_MIN_NOTIFICATION_TIMEOUT					3000
 
-#define ENABLE_UNMAPPED_WINDOW_WORKAROUND_XFCONF_PROP		"enable-unmapped-window-workaround"
+#define ENABLE_UNMAPPED_WINDOW_WORKAROUND_ESCONF_PROP		"enable-unmapped-window-workaround"
 #define DEFAULT_ENABLE_UNMAPPED_WINDOW_WORKAROUND			FALSE
 
 #define ALWAYS_LAUNCH_NEW_INSTANCE							"/always-launch-new-instance"
 #define DEFAULT_ALWAYS_LAUNCH_NEW_INSTANCE					TRUE
 
-#define SHOW_ALL_APPS_XFCONF_PROP							"/components/applications-view/show-all-apps"
+#define SHOW_ALL_APPS_ESCONF_PROP							"/components/applications-view/show-all-apps"
 #define DEFAULT_SHOW_ALL_APPS								FALSE
 
-#define SCROLL_EVENT_CHANGES_WORKSPACE_XFCONF_PROP			"/components/windows-view/scroll-event-changes-workspace"
+#define SCROLL_EVENT_CHANGES_WORKSPACE_ESCONF_PROP			"/components/windows-view/scroll-event-changes-workspace"
 #define DEFAULT_SCROLL_EVENT_CHANGES_WORKSPACE				FALSE
 
-#define DELAY_SEARCH_TIMEOUT_XFCONF_PROP					"/components/search-view/delay-search-timeout"
+#define DELAY_SEARCH_TIMEOUT_ESCONF_PROP					"/components/search-view/delay-search-timeout"
 #define DEFAULT_DELAY_SEARCH_TIMEOUT						0
 
-#define WINDOW_CONTENT_CREATION_PRIORITY_XFCONF_PROP		"/window-content-creation-priority"
+#define WINDOW_CONTENT_CREATION_PRIORITY_ESCONF_PROP		"/window-content-creation-priority"
 #define DEFAULT_WINDOW_CONTENT_CREATION_PRIORITY			"immediate"
 
-#define ALLOW_SUBWINDOWS_XFCONF_PROP						"/allow-subwindows"
+#define ALLOW_SUBWINDOWS_ESCONF_PROP						"/allow-subwindows"
 #define DEFAULT_ALLOW_SUBWINDOWS							TRUE
 
-#define ENABLE_ANIMATIONS_XFCONF_PROP						"/enable-animations"
+#define ENABLE_ANIMATIONS_ESCONF_PROP						"/enable-animations"
 #define DEFAULT_ENABLE_ANIMATIONS							TRUE
 
 
-typedef struct _XfdashboardSettingsGeneralNameValuePair		XfdashboardSettingsGeneralNameValuePair;
-struct _XfdashboardSettingsGeneralNameValuePair
+typedef struct _EsdashboardSettingsGeneralNameValuePair		EsdashboardSettingsGeneralNameValuePair;
+struct _EsdashboardSettingsGeneralNameValuePair
 {
 	const gchar		*displayName;
 	const gchar		*value;
 };
 
-static XfdashboardSettingsGeneralNameValuePair				_xfdashboard_settings_general_resumable_views_values[]=
+static EsdashboardSettingsGeneralNameValuePair				_esdashboard_settings_general_resumable_views_values[]=
 {
 	{ N_("Do nothing"), NULL },
 	{ N_("Windows view"), "builtin.windows" },
@@ -123,7 +123,7 @@ static XfdashboardSettingsGeneralNameValuePair				_xfdashboard_settings_general_
 	{ NULL, NULL }
 };
 
-static XfdashboardSettingsGeneralNameValuePair				_xfdashboard_settings_general_window_creation_priorities_values[]=
+static EsdashboardSettingsGeneralNameValuePair				_esdashboard_settings_general_window_creation_priorities_values[]=
 {
 	{ N_("Immediately"), "immediate", },
 	{ N_("High"), "high"},
@@ -133,16 +133,16 @@ static XfdashboardSettingsGeneralNameValuePair				_xfdashboard_settings_general_
 };
 
 
-/* Setting '/switch-to-view-on-resume' changed either at widget or at xfconf property */
-static void _xfdashboard_settings_general_switch_to_view_on_resume_changed_by_widget(XfdashboardSettingsGeneral *self,
+/* Setting '/switch-to-view-on-resume' changed either at widget or at esconf property */
+static void _esdashboard_settings_general_switch_to_view_on_resume_changed_by_widget(EsdashboardSettingsGeneral *self,
 																						GtkComboBox *inComboBox)
 {
-	XfdashboardSettingsGeneralPrivate		*priv;
+	EsdashboardSettingsGeneralPrivate		*priv;
 	GtkTreeModel							*model;
 	GtkTreeIter								iter;
 	gchar									*value;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_GENERAL(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_GENERAL(self));
 	g_return_if_fail(GTK_IS_COMBO_BOX(inComboBox));
 
 	priv=self->priv;
@@ -152,34 +152,34 @@ static void _xfdashboard_settings_general_switch_to_view_on_resume_changed_by_wi
 	gtk_combo_box_get_active_iter(inComboBox, &iter);
 	gtk_tree_model_get(model, &iter, 1, &value, -1);
 
-	/* Set value at xfconf property */
+	/* Set value at esconf property */
 	if(value)
 	{
-		xfconf_channel_set_string(priv->xfconfChannel, SWITCH_TO_VIEW_ON_RESUME_XFCONF_PROP, value);
+		esconf_channel_set_string(priv->esconfChannel, SWITCH_TO_VIEW_ON_RESUME_ESCONF_PROP, value);
 	}
 		else
 		{
-			xfconf_channel_reset_property(priv->xfconfChannel, SWITCH_TO_VIEW_ON_RESUME_XFCONF_PROP, FALSE);
+			esconf_channel_reset_property(priv->esconfChannel, SWITCH_TO_VIEW_ON_RESUME_ESCONF_PROP, FALSE);
 		}
 
 	/* Release allocated resources */
 	if(value) g_free(value);
 }
 
-static void _xfdashboard_settings_general_switch_to_view_on_resume_changed_by_xfconf(XfdashboardSettingsGeneral *self,
+static void _esdashboard_settings_general_switch_to_view_on_resume_changed_by_esconf(EsdashboardSettingsGeneral *self,
 																						const gchar *inProperty,
 																						const GValue *inValue,
-																						XfconfChannel *inChannel)
+																						EsconfChannel *inChannel)
 {
-	XfdashboardSettingsGeneralPrivate		*priv;
+	EsdashboardSettingsGeneralPrivate		*priv;
 	GtkTreeModel							*model;
 	GtkTreeIter								iter;
 	gchar									*value;
 	const gchar								*newValue;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_GENERAL(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_GENERAL(self));
 	g_return_if_fail(inValue);
-	g_return_if_fail(XFCONF_IS_CHANNEL(inChannel));
+	g_return_if_fail(ESCONF_IS_CHANNEL(inChannel));
 
 	priv=self->priv;
 
@@ -207,16 +207,16 @@ static void _xfdashboard_settings_general_switch_to_view_on_resume_changed_by_xf
 	}
 }
 
-/* Setting '/window-content-creation-priority' changed either at widget or at xfconf property */
-static void _xfdashboard_settings_general_window_creation_priority_changed_by_widget(XfdashboardSettingsGeneral *self,
+/* Setting '/window-content-creation-priority' changed either at widget or at esconf property */
+static void _esdashboard_settings_general_window_creation_priority_changed_by_widget(EsdashboardSettingsGeneral *self,
 																						GtkComboBox *inComboBox)
 {
-	XfdashboardSettingsGeneralPrivate		*priv;
+	EsdashboardSettingsGeneralPrivate		*priv;
 	GtkTreeModel							*model;
 	GtkTreeIter								iter;
 	gchar									*value;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_GENERAL(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_GENERAL(self));
 	g_return_if_fail(GTK_IS_COMBO_BOX(inComboBox));
 
 	priv=self->priv;
@@ -226,27 +226,27 @@ static void _xfdashboard_settings_general_window_creation_priority_changed_by_wi
 	gtk_combo_box_get_active_iter(inComboBox, &iter);
 	gtk_tree_model_get(model, &iter, 1, &value, -1);
 
-	/* Set value at xfconf property */
-	xfconf_channel_set_string(priv->xfconfChannel, WINDOW_CONTENT_CREATION_PRIORITY_XFCONF_PROP, value);
+	/* Set value at esconf property */
+	esconf_channel_set_string(priv->esconfChannel, WINDOW_CONTENT_CREATION_PRIORITY_ESCONF_PROP, value);
 
 	/* Release allocated resources */
 	if(value) g_free(value);
 }
 
-static void _xfdashboard_settings_general_window_creation_priority_changed_by_xfconf(XfdashboardSettingsGeneral *self,
+static void _esdashboard_settings_general_window_creation_priority_changed_by_esconf(EsdashboardSettingsGeneral *self,
 																						const gchar *inProperty,
 																						const GValue *inValue,
-																						XfconfChannel *inChannel)
+																						EsconfChannel *inChannel)
 {
-	XfdashboardSettingsGeneralPrivate		*priv;
+	EsdashboardSettingsGeneralPrivate		*priv;
 	GtkTreeModel							*model;
 	GtkTreeIter								iter;
 	gchar									*value;
 	const gchar								*newValue;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_GENERAL(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_GENERAL(self));
 	g_return_if_fail(inValue);
-	g_return_if_fail(XFCONF_IS_CHANNEL(inChannel));
+	g_return_if_fail(ESCONF_IS_CHANNEL(inChannel));
 
 	priv=self->priv;
 
@@ -273,14 +273,14 @@ static void _xfdashboard_settings_general_window_creation_priority_changed_by_xf
 	}
 }
 
-/* Setting '/min-notification-timeout' changed either at widget or at xfconf property */
-static void _xfdashboard_settings_general_notification_timeout_changed_by_widget(XfdashboardSettingsGeneral *self,
+/* Setting '/min-notification-timeout' changed either at widget or at esconf property */
+static void _esdashboard_settings_general_notification_timeout_changed_by_widget(EsdashboardSettingsGeneral *self,
 																					GtkRange *inRange)
 {
-	XfdashboardSettingsGeneralPrivate		*priv;
+	EsdashboardSettingsGeneralPrivate		*priv;
 	guint									value;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_GENERAL(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_GENERAL(self));
 	g_return_if_fail(GTK_IS_RANGE(inRange));
 
 	priv=self->priv;
@@ -288,21 +288,21 @@ static void _xfdashboard_settings_general_notification_timeout_changed_by_widget
 	/* Get value from widget */
 	value=floor(gtk_range_get_value(inRange)*1000);
 
-	/* Set value at xfconf property */
-	xfconf_channel_set_uint(priv->xfconfChannel, MIN_NOTIFICATION_TIMEOUT_XFCONF_PROP, value);
+	/* Set value at esconf property */
+	esconf_channel_set_uint(priv->esconfChannel, MIN_NOTIFICATION_TIMEOUT_ESCONF_PROP, value);
 }
 
-static void _xfdashboard_settings_general_notification_timeout_changed_by_xfconf(XfdashboardSettingsGeneral *self,
+static void _esdashboard_settings_general_notification_timeout_changed_by_esconf(EsdashboardSettingsGeneral *self,
 																					const gchar *inProperty,
 																					const GValue *inValue,
-																					XfconfChannel *inChannel)
+																					EsconfChannel *inChannel)
 {
-	XfdashboardSettingsGeneralPrivate		*priv;
+	EsdashboardSettingsGeneralPrivate		*priv;
 	guint									newValue;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_GENERAL(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_GENERAL(self));
 	g_return_if_fail(inValue);
-	g_return_if_fail(XFCONF_IS_CHANNEL(inChannel));
+	g_return_if_fail(ESCONF_IS_CHANNEL(inChannel));
 
 	priv=self->priv;
 
@@ -315,7 +315,7 @@ static void _xfdashboard_settings_general_notification_timeout_changed_by_xfconf
 }
 
 /* Format value to show in notification timeout slider */
-static gchar* _xfdashboard_settings_general_on_format_notification_timeout_value(GtkScale *inWidget,
+static gchar* _esdashboard_settings_general_on_format_notification_timeout_value(GtkScale *inWidget,
 																					gdouble inValue,
 																					gpointer inUserData)
 {
@@ -326,14 +326,14 @@ static gchar* _xfdashboard_settings_general_on_format_notification_timeout_value
 	return(text);
 }
 
-/* Setting '/components/search-view/delay-search-timeout' changed either at widget or at xfconf property */
-static void _xfdashboard_settings_general_delay_search_timeout_changed_by_widget(XfdashboardSettingsGeneral *self,
+/* Setting '/components/search-view/delay-search-timeout' changed either at widget or at esconf property */
+static void _esdashboard_settings_general_delay_search_timeout_changed_by_widget(EsdashboardSettingsGeneral *self,
 																					GtkRange *inRange)
 {
-	XfdashboardSettingsGeneralPrivate		*priv;
+	EsdashboardSettingsGeneralPrivate		*priv;
 	guint									value;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_GENERAL(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_GENERAL(self));
 	g_return_if_fail(GTK_IS_RANGE(inRange));
 
 	priv=self->priv;
@@ -341,21 +341,21 @@ static void _xfdashboard_settings_general_delay_search_timeout_changed_by_widget
 	/* Get value from widget */
 	value=floor(gtk_range_get_value(inRange));
 
-	/* Set value at xfconf property */
-	xfconf_channel_set_uint(priv->xfconfChannel, DELAY_SEARCH_TIMEOUT_XFCONF_PROP, value);
+	/* Set value at esconf property */
+	esconf_channel_set_uint(priv->esconfChannel, DELAY_SEARCH_TIMEOUT_ESCONF_PROP, value);
 }
 
-static void _xfdashboard_settings_general_delay_search_timeout_changed_by_xfconf(XfdashboardSettingsGeneral *self,
+static void _esdashboard_settings_general_delay_search_timeout_changed_by_esconf(EsdashboardSettingsGeneral *self,
 																					const gchar *inProperty,
 																					const GValue *inValue,
-																					XfconfChannel *inChannel)
+																					EsconfChannel *inChannel)
 {
-	XfdashboardSettingsGeneralPrivate		*priv;
+	EsdashboardSettingsGeneralPrivate		*priv;
 	guint									newValue;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_GENERAL(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_GENERAL(self));
 	g_return_if_fail(inValue);
-	g_return_if_fail(XFCONF_IS_CHANNEL(inChannel));
+	g_return_if_fail(ESCONF_IS_CHANNEL(inChannel));
 
 	priv=self->priv;
 
@@ -368,7 +368,7 @@ static void _xfdashboard_settings_general_delay_search_timeout_changed_by_xfconf
 }
 
 /* Format value to show in delay search timeout slider */
-static gchar* _xfdashboard_settings_general_on_format_delay_search_timeout_value(GtkScale *inWidget,
+static gchar* _esdashboard_settings_general_on_format_delay_search_timeout_value(GtkScale *inWidget,
 																					gdouble inValue,
 																					gpointer inUserData)
 {
@@ -387,12 +387,12 @@ static gchar* _xfdashboard_settings_general_on_format_delay_search_timeout_value
 }
 
 /* Create and set up GtkBuilder */
-static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral *self,
+static void _esdashboard_settings_general_set_builder(EsdashboardSettingsGeneral *self,
 														GtkBuilder *inBuilder)
 {
-	XfdashboardSettingsGeneralPrivate				*priv;
+	EsdashboardSettingsGeneralPrivate				*priv;
 
-	g_return_if_fail(XFDASHBOARD_IS_SETTINGS_GENERAL(self));
+	g_return_if_fail(ESDASHBOARD_IS_SETTINGS_GENERAL(self));
 	g_return_if_fail(GTK_IS_BUILDER(inBuilder));
 
 	priv=self->priv;
@@ -405,8 +405,8 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 	/* Get widgets from builder */
 	priv->widgetResetSearchOnResume=GTK_WIDGET(gtk_builder_get_object(priv->builder, "reset-search-on-resume"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(priv->widgetResetSearchOnResume), DEFAULT_RESET_SEARCH_ON_RESUME);
-	xfconf_g_property_bind(priv->xfconfChannel,
-							RESET_SEARCH_ON_RESUME_XFCONF_PROP,
+	esconf_g_property_bind(priv->esconfChannel,
+							RESET_SEARCH_ON_RESUME_ESCONF_PROP,
 							G_TYPE_BOOLEAN,
 							priv->widgetResetSearchOnResume,
 							"active");
@@ -418,11 +418,11 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 		GtkListStore								*listStore;
 		GtkTreeIter									listStoreIter;
 		GtkTreeIter									*defaultListStoreIter;
-		XfdashboardSettingsGeneralNameValuePair		*iter;
+		EsdashboardSettingsGeneralNameValuePair		*iter;
 		gchar										*defaultValue;
 
 		/* Get default value from settings */
-		defaultValue=xfconf_channel_get_string(priv->xfconfChannel, SWITCH_TO_VIEW_ON_RESUME_XFCONF_PROP, DEFAULT_SWITCH_TO_VIEW_ON_RESUME);
+		defaultValue=esconf_channel_get_string(priv->esconfChannel, SWITCH_TO_VIEW_ON_RESUME_ESCONF_PROP, DEFAULT_SWITCH_TO_VIEW_ON_RESUME);
 
 		/* Clear combo box */
 		gtk_cell_layout_clear(GTK_CELL_LAYOUT(priv->widgetSwitchToViewOnResume));
@@ -435,7 +435,7 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 		/* Set up list to show at combo box */
 		defaultListStoreIter=NULL;
 		listStore=gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
-		for(iter=_xfdashboard_settings_general_resumable_views_values; iter->displayName; ++iter)
+		for(iter=_esdashboard_settings_general_resumable_views_values; iter->displayName; ++iter)
 		{
 			gtk_list_store_append(listStore, &listStoreIter);
 			gtk_list_store_set(listStore, &listStoreIter, 0, _(iter->displayName), 1, iter->value, -1);
@@ -459,11 +459,11 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 		/* Connect signals */
 		g_signal_connect_swapped(priv->widgetSwitchToViewOnResume,
 									"changed",
-									G_CALLBACK(_xfdashboard_settings_general_switch_to_view_on_resume_changed_by_widget),
+									G_CALLBACK(_esdashboard_settings_general_switch_to_view_on_resume_changed_by_widget),
 									self);
-		g_signal_connect_swapped(priv->xfconfChannel,
-									"property-changed::"SWITCH_TO_VIEW_ON_RESUME_XFCONF_PROP,
-									G_CALLBACK(_xfdashboard_settings_general_switch_to_view_on_resume_changed_by_xfconf),
+		g_signal_connect_swapped(priv->esconfChannel,
+									"property-changed::"SWITCH_TO_VIEW_ON_RESUME_ESCONF_PROP,
+									G_CALLBACK(_esdashboard_settings_general_switch_to_view_on_resume_changed_by_esconf),
 									self);
 
 		/* Release allocated resources */
@@ -477,7 +477,7 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 		gdouble										defaultValue;
 
 		/* Get default value */
-		defaultValue=xfconf_channel_get_uint(priv->xfconfChannel, MIN_NOTIFICATION_TIMEOUT_XFCONF_PROP, DEFAULT_MIN_NOTIFICATION_TIMEOUT)/1000.0;
+		defaultValue=esconf_channel_get_uint(priv->esconfChannel, MIN_NOTIFICATION_TIMEOUT_ESCONF_PROP, DEFAULT_MIN_NOTIFICATION_TIMEOUT)/1000.0;
 
 		/* Set up scaling settings of widget */
 		adjustment=GTK_ADJUSTMENT(gtk_builder_get_object(priv->builder, "notification-timeout-adjustment"));
@@ -489,21 +489,21 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 		/* Connect signals */
 		g_signal_connect(priv->widgetMinNotificationTimeout,
 							"format-value",
-							G_CALLBACK(_xfdashboard_settings_general_on_format_notification_timeout_value),
+							G_CALLBACK(_esdashboard_settings_general_on_format_notification_timeout_value),
 							NULL);
 		g_signal_connect_swapped(priv->widgetMinNotificationTimeout,
 									"value-changed",
-									G_CALLBACK(_xfdashboard_settings_general_notification_timeout_changed_by_widget),
+									G_CALLBACK(_esdashboard_settings_general_notification_timeout_changed_by_widget),
 									self);
-		g_signal_connect_swapped(priv->xfconfChannel,
-									"property-changed::"MIN_NOTIFICATION_TIMEOUT_XFCONF_PROP,
-									G_CALLBACK(_xfdashboard_settings_general_notification_timeout_changed_by_xfconf),
+		g_signal_connect_swapped(priv->esconfChannel,
+									"property-changed::"MIN_NOTIFICATION_TIMEOUT_ESCONF_PROP,
+									G_CALLBACK(_esdashboard_settings_general_notification_timeout_changed_by_esconf),
 									self);
 	}
 
-	priv->widgetEnableUnmappedWindowWorkaround=GTK_WIDGET(gtk_builder_get_object(priv->builder, ENABLE_UNMAPPED_WINDOW_WORKAROUND_XFCONF_PROP));
+	priv->widgetEnableUnmappedWindowWorkaround=GTK_WIDGET(gtk_builder_get_object(priv->builder, ENABLE_UNMAPPED_WINDOW_WORKAROUND_ESCONF_PROP));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(priv->widgetEnableUnmappedWindowWorkaround), DEFAULT_ENABLE_UNMAPPED_WINDOW_WORKAROUND);
-	xfconf_g_property_bind(priv->xfconfChannel,
+	esconf_g_property_bind(priv->esconfChannel,
 							"/enable-unmapped-window-workaround",
 							G_TYPE_BOOLEAN,
 							priv->widgetEnableUnmappedWindowWorkaround,
@@ -511,7 +511,7 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 
 	priv->widgetAlwaysLaunchNewInstance=GTK_WIDGET(gtk_builder_get_object(priv->builder, "always-launch-new-instance"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(priv->widgetAlwaysLaunchNewInstance), DEFAULT_ALWAYS_LAUNCH_NEW_INSTANCE);
-	xfconf_g_property_bind(priv->xfconfChannel,
+	esconf_g_property_bind(priv->esconfChannel,
 							ALWAYS_LAUNCH_NEW_INSTANCE,
 							G_TYPE_BOOLEAN,
 							priv->widgetAlwaysLaunchNewInstance,
@@ -519,16 +519,16 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 
 	priv->widgetShowAllApps=GTK_WIDGET(gtk_builder_get_object(priv->builder, "show-all-apps"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(priv->widgetShowAllApps), DEFAULT_SHOW_ALL_APPS);
-	xfconf_g_property_bind(priv->xfconfChannel,
-							SHOW_ALL_APPS_XFCONF_PROP,
+	esconf_g_property_bind(priv->esconfChannel,
+							SHOW_ALL_APPS_ESCONF_PROP,
 							G_TYPE_BOOLEAN,
 							priv->widgetShowAllApps,
 							"active");
 
 	priv->widgetScrollEventChangesWorkspace=GTK_WIDGET(gtk_builder_get_object(priv->builder, "scroll-event-changes-workspace"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(priv->widgetScrollEventChangesWorkspace), DEFAULT_SCROLL_EVENT_CHANGES_WORKSPACE);
-	xfconf_g_property_bind(priv->xfconfChannel,
-							SCROLL_EVENT_CHANGES_WORKSPACE_XFCONF_PROP,
+	esconf_g_property_bind(priv->esconfChannel,
+							SCROLL_EVENT_CHANGES_WORKSPACE_ESCONF_PROP,
 							G_TYPE_BOOLEAN,
 							priv->widgetScrollEventChangesWorkspace,
 							"active");
@@ -540,7 +540,7 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 		gdouble										defaultValue;
 
 		/* Get default value */
-		defaultValue=xfconf_channel_get_uint(priv->xfconfChannel, DELAY_SEARCH_TIMEOUT_XFCONF_PROP, DEFAULT_DELAY_SEARCH_TIMEOUT);
+		defaultValue=esconf_channel_get_uint(priv->esconfChannel, DELAY_SEARCH_TIMEOUT_ESCONF_PROP, DEFAULT_DELAY_SEARCH_TIMEOUT);
 
 		/* Set up scaling settings of widget */
 		adjustment=GTK_ADJUSTMENT(gtk_builder_get_object(priv->builder, "delay-search-timeout-adjustment"));
@@ -552,15 +552,15 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 		/* Connect signals */
 		g_signal_connect(priv->widgetDelaySearchTimeout,
 							"format-value",
-							G_CALLBACK(_xfdashboard_settings_general_on_format_delay_search_timeout_value),
+							G_CALLBACK(_esdashboard_settings_general_on_format_delay_search_timeout_value),
 							NULL);
 		g_signal_connect_swapped(priv->widgetDelaySearchTimeout,
 									"value-changed",
-									G_CALLBACK(_xfdashboard_settings_general_delay_search_timeout_changed_by_widget),
+									G_CALLBACK(_esdashboard_settings_general_delay_search_timeout_changed_by_widget),
 									self);
-		g_signal_connect_swapped(priv->xfconfChannel,
-									"property-changed::"DELAY_SEARCH_TIMEOUT_XFCONF_PROP,
-									G_CALLBACK(_xfdashboard_settings_general_delay_search_timeout_changed_by_xfconf),
+		g_signal_connect_swapped(priv->esconfChannel,
+									"property-changed::"DELAY_SEARCH_TIMEOUT_ESCONF_PROP,
+									G_CALLBACK(_esdashboard_settings_general_delay_search_timeout_changed_by_esconf),
 									self);
 	}
 
@@ -571,12 +571,12 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 		GtkListStore								*listStore;
 		GtkTreeIter									listStoreIter;
 		GtkTreeIter									*defaultListStoreIter;
-		XfdashboardSettingsGeneralNameValuePair		*iter;
+		EsdashboardSettingsGeneralNameValuePair		*iter;
 		gchar										*defaultValue;
 
 		/* Get default value from settings */
-		defaultValue=xfconf_channel_get_string(priv->xfconfChannel, WINDOW_CONTENT_CREATION_PRIORITY_XFCONF_PROP, DEFAULT_WINDOW_CONTENT_CREATION_PRIORITY);
-		if(!defaultValue) defaultValue=g_strdup(_xfdashboard_settings_general_window_creation_priorities_values[0].value);
+		defaultValue=esconf_channel_get_string(priv->esconfChannel, WINDOW_CONTENT_CREATION_PRIORITY_ESCONF_PROP, DEFAULT_WINDOW_CONTENT_CREATION_PRIORITY);
+		if(!defaultValue) defaultValue=g_strdup(_esdashboard_settings_general_window_creation_priorities_values[0].value);
 
 		/* Clear combo box */
 		gtk_cell_layout_clear(GTK_CELL_LAYOUT(priv->widgetWindowCreationPriority));
@@ -589,7 +589,7 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 		/* Set up list to show at combo box */
 		defaultListStoreIter=NULL;
 		listStore=gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
-		for(iter=_xfdashboard_settings_general_window_creation_priorities_values; iter->displayName; ++iter)
+		for(iter=_esdashboard_settings_general_window_creation_priorities_values; iter->displayName; ++iter)
 		{
 			gtk_list_store_append(listStore, &listStoreIter);
 			gtk_list_store_set(listStore, &listStoreIter, 0, _(iter->displayName), 1, iter->value, -1);
@@ -612,11 +612,11 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 		/* Connect signals */
 		g_signal_connect_swapped(priv->widgetWindowCreationPriority,
 									"changed",
-									G_CALLBACK(_xfdashboard_settings_general_window_creation_priority_changed_by_widget),
+									G_CALLBACK(_esdashboard_settings_general_window_creation_priority_changed_by_widget),
 									self);
-		g_signal_connect_swapped(priv->xfconfChannel,
-									"property-changed::"WINDOW_CONTENT_CREATION_PRIORITY_XFCONF_PROP,
-									G_CALLBACK(_xfdashboard_settings_general_window_creation_priority_changed_by_xfconf),
+		g_signal_connect_swapped(priv->esconfChannel,
+									"property-changed::"WINDOW_CONTENT_CREATION_PRIORITY_ESCONF_PROP,
+									G_CALLBACK(_esdashboard_settings_general_window_creation_priority_changed_by_esconf),
 									self);
 
 		/* Release allocated resources */
@@ -625,16 +625,16 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 
 	priv->widgetAllowSubwindows=GTK_WIDGET(gtk_builder_get_object(priv->builder, "allow-subwindows"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(priv->widgetAllowSubwindows), DEFAULT_ALLOW_SUBWINDOWS);
-	xfconf_g_property_bind(priv->xfconfChannel,
-							ALLOW_SUBWINDOWS_XFCONF_PROP,
+	esconf_g_property_bind(priv->esconfChannel,
+							ALLOW_SUBWINDOWS_ESCONF_PROP,
 							G_TYPE_BOOLEAN,
 							priv->widgetAllowSubwindows,
 							"active");
 
 	priv->widgetEnableAnimations=GTK_WIDGET(gtk_builder_get_object(priv->builder, "enable-animations"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(priv->widgetEnableAnimations), DEFAULT_ENABLE_ANIMATIONS);
-	xfconf_g_property_bind(priv->xfconfChannel,
-							ENABLE_ANIMATIONS_XFCONF_PROP,
+	esconf_g_property_bind(priv->esconfChannel,
+							ENABLE_ANIMATIONS_ESCONF_PROP,
 							G_TYPE_BOOLEAN,
 							priv->widgetEnableAnimations,
 							"active");
@@ -643,10 +643,10 @@ static void _xfdashboard_settings_general_set_builder(XfdashboardSettingsGeneral
 /* IMPLEMENTATION: GObject */
 
 /* Dispose this object */
-static void _xfdashboard_settings_general_dispose(GObject *inObject)
+static void _esdashboard_settings_general_dispose(GObject *inObject)
 {
-	XfdashboardSettingsGeneral			*self=XFDASHBOARD_SETTINGS_GENERAL(inObject);
-	XfdashboardSettingsGeneralPrivate	*priv=self->priv;
+	EsdashboardSettingsGeneral			*self=ESDASHBOARD_SETTINGS_GENERAL(inObject);
+	EsdashboardSettingsGeneralPrivate	*priv=self->priv;
 
 	/* Release allocated resouces */
 	priv->widgetResetSearchOnResume=NULL;
@@ -664,27 +664,27 @@ static void _xfdashboard_settings_general_dispose(GObject *inObject)
 		priv->builder=NULL;
 	}
 
-	if(priv->xfconfChannel)
+	if(priv->esconfChannel)
 	{
-		priv->xfconfChannel=NULL;
+		priv->esconfChannel=NULL;
 	}
 
 	/* Call parent's class dispose method */
-	G_OBJECT_CLASS(xfdashboard_settings_general_parent_class)->dispose(inObject);
+	G_OBJECT_CLASS(esdashboard_settings_general_parent_class)->dispose(inObject);
 }
 
 /* Set/get properties */
-static void _xfdashboard_settings_general_set_property(GObject *inObject,
+static void _esdashboard_settings_general_set_property(GObject *inObject,
 														guint inPropID,
 														const GValue *inValue,
 														GParamSpec *inSpec)
 {
-	XfdashboardSettingsGeneral				*self=XFDASHBOARD_SETTINGS_GENERAL(inObject);
+	EsdashboardSettingsGeneral				*self=ESDASHBOARD_SETTINGS_GENERAL(inObject);
 
 	switch(inPropID)
 	{
 		case PROP_BUILDER:
-			_xfdashboard_settings_general_set_builder(self, GTK_BUILDER(g_value_get_object(inValue)));
+			_esdashboard_settings_general_set_builder(self, GTK_BUILDER(g_value_get_object(inValue)));
 			break;
 
 		default:
@@ -693,13 +693,13 @@ static void _xfdashboard_settings_general_set_property(GObject *inObject,
 	}
 }
 
-static void _xfdashboard_settings_general_get_property(GObject *inObject,
+static void _esdashboard_settings_general_get_property(GObject *inObject,
 														guint inPropID,
 														GValue *outValue,
 														GParamSpec *inSpec)
 {
-	XfdashboardSettingsGeneral				*self=XFDASHBOARD_SETTINGS_GENERAL(inObject);
-	XfdashboardSettingsGeneralPrivate		*priv=self->priv;
+	EsdashboardSettingsGeneral				*self=ESDASHBOARD_SETTINGS_GENERAL(inObject);
+	EsdashboardSettingsGeneralPrivate		*priv=self->priv;
 
 	switch(inPropID)
 	{
@@ -717,39 +717,39 @@ static void _xfdashboard_settings_general_get_property(GObject *inObject,
  * Override functions in parent classes and define properties
  * and signals
  */
-static void xfdashboard_settings_general_class_init(XfdashboardSettingsGeneralClass *klass)
+static void esdashboard_settings_general_class_init(EsdashboardSettingsGeneralClass *klass)
 {
 	GObjectClass		*gobjectClass=G_OBJECT_CLASS(klass);
 
 	/* Override functions */
-	gobjectClass->dispose=_xfdashboard_settings_general_dispose;
-	gobjectClass->set_property=_xfdashboard_settings_general_set_property;
-	gobjectClass->get_property=_xfdashboard_settings_general_get_property;
+	gobjectClass->dispose=_esdashboard_settings_general_dispose;
+	gobjectClass->set_property=_esdashboard_settings_general_set_property;
+	gobjectClass->get_property=_esdashboard_settings_general_get_property;
 
 	/* Define properties */
-	XfdashboardSettingsGeneralProperties[PROP_BUILDER]=
+	EsdashboardSettingsGeneralProperties[PROP_BUILDER]=
 		g_param_spec_object("builder",
 								"Builder",
 								"The initialized GtkBuilder object where to set up themes tab from",
 								GTK_TYPE_BUILDER,
 								G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT_ONLY);
 
-	g_object_class_install_properties(gobjectClass, PROP_LAST, XfdashboardSettingsGeneralProperties);
+	g_object_class_install_properties(gobjectClass, PROP_LAST, EsdashboardSettingsGeneralProperties);
 }
 
 /* Object initialization
  * Create private structure and set up default values
  */
-static void xfdashboard_settings_general_init(XfdashboardSettingsGeneral *self)
+static void esdashboard_settings_general_init(EsdashboardSettingsGeneral *self)
 {
-	XfdashboardSettingsGeneralPrivate	*priv;
+	EsdashboardSettingsGeneralPrivate	*priv;
 
-	priv=self->priv=xfdashboard_settings_general_get_instance_private(self);
+	priv=self->priv=esdashboard_settings_general_get_instance_private(self);
 
 	/* Set default values */
 	priv->builder=NULL;
 
-	priv->xfconfChannel=xfconf_channel_get(XFDASHBOARD_XFCONF_CHANNEL);
+	priv->esconfChannel=esconf_channel_get(ESDASHBOARD_ESCONF_CHANNEL);
 
 	priv->widgetResetSearchOnResume=NULL;
 	priv->widgetSwitchToViewOnResume=NULL;
@@ -764,17 +764,17 @@ static void xfdashboard_settings_general_init(XfdashboardSettingsGeneral *self)
 /* IMPLEMENTATION: Public API */
 
 /* Create instance of this class */
-XfdashboardSettingsGeneral* xfdashboard_settings_general_new(GtkBuilder *inBuilder)
+EsdashboardSettingsGeneral* esdashboard_settings_general_new(GtkBuilder *inBuilder)
 {
 	GObject		*instance;
 
 	g_return_val_if_fail(GTK_IS_BUILDER(inBuilder), NULL);
 
 	/* Create instance */
-	instance=g_object_new(XFDASHBOARD_TYPE_SETTINGS_GENERAL,
+	instance=g_object_new(ESDASHBOARD_TYPE_SETTINGS_GENERAL,
 							"builder", inBuilder,
 							NULL);
 
 	/* Return newly created instance */
-	return(XFDASHBOARD_SETTINGS_GENERAL(instance));
+	return(ESDASHBOARD_SETTINGS_GENERAL(instance));
 }
