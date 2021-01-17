@@ -525,8 +525,6 @@ static gboolean _esdashboard_application_initialize_full(EsdashboardApplication 
 
 #ifdef DEBUG
 	esdashboard_notify(NULL, NULL, _("Welcome to %s (%s)!"), PACKAGE_NAME, PACKAGE_VERSION);
-#else
-	esdashboard_notify(NULL, NULL, _("Welcome to %s!"), PACKAGE_NAME);
 #endif
 
 	return(TRUE);
